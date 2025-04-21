@@ -1,4 +1,5 @@
 // button componet
+
 'use client';
 import React from "react";
 import {HTMLMotionProps, motion} from 'framer-motion'
@@ -6,6 +7,13 @@ import { cn } from "@/lib/utils";
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+
+/**
+ * “Create a new interface called ButtonProps that inherits all the built-in 
+ * props of a standard <button> element in React (like onClick, disabled, type, etc.).
+ */
+// Define conflicting event handlers
+
 type MotionDragHandlers = 
   'onDrag' | 
   'onDragStart' |
@@ -15,11 +23,6 @@ type MotionDragHandlers =
   'onDragOver' | 
   'onDrop';
 
-/**
- * “Create a new interface called ButtonProps that inherits all the built-in 
- * props of a standard <button> element in React (like onClick, disabled, type, etc.).
- */
-// Define conflicting event handlers
 
 
 type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, MotionDragHandlers> & 
@@ -58,7 +61,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         lg: 'h-12 rounded-lg px-6 py-3 text-lg',
         xl: 'h-14 rounded-md px-8 py-4 text-xl',
     }
+
     
+
     return (
         <motion.button
         ref={ref}
