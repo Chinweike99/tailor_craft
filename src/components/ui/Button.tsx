@@ -6,13 +6,6 @@ import { cn } from "@/lib/utils";
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
-
-/**
- * “Create a new interface called ButtonProps that inherits all the built-in 
- * props of a standard <button> element in React (like onClick, disabled, type, etc.).
- */
-// Define conflicting event handlers
-
 type MotionDragHandlers = 
   'onDrag' | 
   'onDragStart' |
@@ -21,6 +14,12 @@ type MotionDragHandlers =
   'onDragLeave' | 
   'onDragOver' | 
   'onDrop';
+
+/**
+ * “Create a new interface called ButtonProps that inherits all the built-in 
+ * props of a standard <button> element in React (like onClick, disabled, type, etc.).
+ */
+// Define conflicting event handlers
 
 
 type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, MotionDragHandlers> & 
