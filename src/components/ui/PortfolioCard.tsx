@@ -58,9 +58,6 @@ export const PortfolioCard = ({item, onClick}: PortfolioCardProps) => {
                 >
                     {item.title}
                 </motion.h3>
-                <p className="text-white">
-                    {item.description}
-                </p>
                 <motion.p
                 className="text-white/90 mt-2"
                 initial={{y:20, opacity: 0}}
