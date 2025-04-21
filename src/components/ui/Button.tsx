@@ -1,7 +1,6 @@
 // button componet
 
 'use client';
-
 import React from "react";
 import {HTMLMotionProps, motion} from 'framer-motion'
 import { cn } from "@/lib/utils";
@@ -9,21 +8,22 @@ import { cn } from "@/lib/utils";
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
-
 /**
- * “Create a new interface called ButtonProps that inherits all the built-in props of a 
- * standard <button> element in React (like onClick, disabled, type, etc.).
+ * “Create a new interface called ButtonProps that inherits all the built-in 
+ * props of a standard <button> element in React (like onClick, disabled, type, etc.).
  */
-
 // Define conflicting event handlers
+
 type MotionDragHandlers = 
   'onDrag' | 
-  'onDragStart' | 
+  'onDragStart' |
   'onDragEnd' | 
   'onDragEnter' | 
   'onDragLeave' | 
   'onDragOver' | 
   'onDrop';
+
+
 
 type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, MotionDragHandlers> & 
   Omit<HTMLMotionProps<"button">, "ref"> & {
@@ -49,7 +49,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const variantStyles = {
       primary: "bg-primary text-primary-foreground hover:bg-primary/90",
       secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/90",
-      outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+      outline: "border border-input bg-background hover:bg-accent bg-green-800 hover:text-accent-foreground",
       ghost: "hover:bg-accent hover:text-accent-foreground",
       link: "text-primary underline-offset-4 hover:underline",
     };
@@ -61,6 +61,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         lg: 'h-12 rounded-lg px-6 py-3 text-lg',
         xl: 'h-14 rounded-md px-8 py-4 text-xl',
     }
+
+    
 
     return (
         <motion.button
