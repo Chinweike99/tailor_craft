@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Service } from '@/types/types';
+import { useState } from 'react';
 
 
 interface ServiceCardProps {
@@ -12,13 +13,17 @@ interface ServiceCardProps {
 }
 
 export const ServiceCard = ({ service, index }: ServiceCardProps) => {
+   const [isHovered, setIsHovered] = useState(false);
+
   return (
     <motion.div
-      className="group rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-md h-full flex flex-col"
+      className="group rounded-xl cursor-pointer overflow-hidden bg-white dark:bg-gray-800 shadow-md h-full flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
+      onMouseEnter={()=> setIsHovered(true)}
+        onMouseLeave={()=> setIsHovered(false)}
     >
       <div className="relative h-60 overflow-hidden">
         <Image
@@ -29,21 +34,36 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         
-        <div className="absolute bottom-4 left-4 z-10">
-          <span className="px-3 py-1 bg-primary text-white text-sm rounded-full">
+        <div className="absolute bottom-4 left-4 z-10 px-2  bg-gray-500 rounded-xl">
+          <span className="px-3 py-1 bg-primary text-white text-2xl font-semibold rounded-full">
             {service.category.charAt(0).toUpperCase() + service.category.slice(1)}
           </span>
         </div>
       </div>
       
       <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-        <p className="text-gray-600 dark:text-gray-400 mb-4 flex-grow">{service.description}</p>
+        <motion.h3 className="text-xl mb-2"
+        initial={{y:20, opacity: 0}}
+        animate={{y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0.8}}
+        >
+          {service.title}
+        </motion.h3>
+        <motion.p className="text-gray-600 dark:text-gray-400 mb-4 flex-grow"
+        initial={{y:20, opacity: 0}}
+        animate={{y: isHovered ? 0 : 20, opacity: isHovered ? 0.4 : 1}}
+        transition={{duration: 0.2, delay: 0.3}}
+        >
+          {service.description}
+        </motion.p>
         
-        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
-          <span className="text-sm font-medium">From {service.priceRange}</span>
-          <span className="text-sm font-medium">{service.estimatedDays} days</span>
-        </div>
+        <motion.div className="md:text-xl flex justify-between items-center mt-auto pt-4 border-t border-gray-200 dark:border-gray-700"
+        initial={{y:20, opacity: 0}}
+        animate={{y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0}}
+        transition={{duration: 0.2, delay: 0.3}}
+        >
+          <span className=" font-medium">{service.priceRange}</span>
+          <span className=" font-medium">{service.estimatedDays} days</span>
+        </motion.div>
       </div>
       
       <Link 

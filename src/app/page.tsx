@@ -21,7 +21,7 @@ const featuredServices = [
     description: 'Traditional Agbada, Senator styles and other native designs tailored to perfection.',
     category: 'native' as ServiceCategory,
     priceRange: '$150 - $500',
-    imageUrl: '/assets/images/Astronaut.png',
+    imageUrl: '/assets/images/native.jpg',
     estimatedDays: 14,
   },
   {
@@ -30,7 +30,7 @@ const featuredServices = [
     description: 'Professional suits for corporate environments, perfectly fitted for comfort and style.',
     category: 'corporate' as ServiceCategory,
     priceRange: '$300 - $800',
-    imageUrl: '/assets/images/Astronaut.png',
+    imageUrl: '/assets/images/corporate.jpg',
     estimatedDays: 21,
   },
   {
@@ -39,7 +39,7 @@ const featuredServices = [
     description: 'Everyday comfortable clothing tailored for both style and practicality.',
     category: 'casual' as ServiceCategory,
     priceRange: '$80 - $250',
-    imageUrl: '/assets/images/Astronaut.png',
+    imageUrl: '/assets/images/casual.jpg',
     estimatedDays: 10,
   },
 ]
@@ -78,7 +78,7 @@ export default function HomePage(){
 
   useEffect(() => {
     setIsLoaded(true)
-  }, [isLoaded]);
+  }, []);
 
   const containerVariants = {
     hidden: {opacity: 0},
@@ -115,17 +115,15 @@ export default function HomePage(){
   }
 
 
-
-
   return(
-<main className=" flex-col w-full flex items-center justify-center">
+<main className=" flex-col w-full outfit flex items-center justify-center">
       {/* Hero Section */}
       <div className="max-w-[1440px]">
       <section className="relative h-screen flex items-center justify-center overflow-hidden w-full">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/assets/images/Astronaut.png" 
+            src="/assets/images/hero.jpg" 
             alt="Master tailor at work"
             fill
             priority
@@ -186,7 +184,7 @@ export default function HomePage(){
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
+          transition={{ delay: 3, duration: 3, repeat: Infinity, repeatType: "reverse" }}
         >
           <div className="flex flex-col items-center">
             <span className="text-white text-sm mb-2">Scroll Down</span>
@@ -244,6 +242,11 @@ export default function HomePage(){
               />
             ))}
           </div>
+
+          {/* <PortfolioCard 
+          item={item}
+          onClick={()=>alert("Hello")}
+          /> */}
           
           <motion.div 
             className="mt-16 text-center"
@@ -284,7 +287,7 @@ export default function HomePage(){
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
-                className="p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
+                className=" flex flex-col items-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -294,7 +297,7 @@ export default function HomePage(){
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400">{feature.description}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-center">{feature.description}</p>
               </motion.div>
             ))}
           </div>

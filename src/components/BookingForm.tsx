@@ -315,6 +315,7 @@ export const BookingForm = () => {
                   <div className="mt-4">
                     <p className="text-sm font-medium mb-2">Preview:</p>
                     <div className="relative h-40 w-40">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={imagePreview}
                         alt="Inspiration preview" 
