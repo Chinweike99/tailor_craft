@@ -31,7 +31,7 @@ export interface Measurements {
 // Services 
 export type ServiceCategory =
     | 'native'
-    | 'copoerate'
+    | 'corporate'
     | 'casual'
     | 'sportswear'
     | 'custom';
