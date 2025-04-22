@@ -24,7 +24,6 @@ export const PortfolioModal = ({item, isOpen, onClose}: PortfolioModalProps) => 
         return ()=>window.removeEventListener("keydown", handleEsc);
     }, [onClose])
 
-
 // Prevent body scroll when modal is open
 
     useEffect(()=> {

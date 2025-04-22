@@ -1,18 +1,17 @@
+"use client";
+
 import { BookingFormData, ServiceCategory } from "@/types/types";
-// import { data } from "framer-motion/client";
 import React, { useState } from "react";
 import { Controller, useForm } from  'react-hook-form'
 import { motion } from "framer-motion"
 import { CalendarIcon, UploadIcon } from "lucide-react";
 import { Button } from "./ui/Button";
-
-
-
+// import Image from "next/image";
 
 
 const serviceCategories: {value: ServiceCategory; label: string}[] = [
     {value: "native", label: "Native"},
-    {value: "copoerate", label: "Corporate"},
+    {value: "corporate", label: "Corporate"},
     {value: "casual", label: "Casual"},
     {value: "sportswear", label: "Sportswear"},
     {value: "custom", label: "Custom Orders"},
@@ -316,6 +315,7 @@ export const BookingForm = () => {
                   <div className="mt-4">
                     <p className="text-sm font-medium mb-2">Preview:</p>
                     <div className="relative h-40 w-40">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
                         src={imagePreview}
                         alt="Inspiration preview" 
