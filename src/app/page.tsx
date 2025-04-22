@@ -9,7 +9,6 @@ import { motion } from "framer-motion";
 import { ChevronRight, Scissors, Star, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// import { ServiceCard } from '@/components/ui/ServiceCard';
 import { useEffect, useState } from "react";
 
 
@@ -101,7 +100,7 @@ export default function HomePage(){
     hidden: {opacity: 0},
     visible: {
       opacity: 1,
-      transition: {stagger: 0.1}
+      transition: {staggerChildren: 0.1}
     }
   }
 
@@ -287,7 +286,7 @@ export default function HomePage(){
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
-                className=" flex flex-col items-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-sm"
+                className=" flex flex-col items-center p-8  dark:bg-gray-800 hover:bg-[#332f4f] hover:text-black rounded-xl shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

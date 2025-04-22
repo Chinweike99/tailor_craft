@@ -58,7 +58,7 @@ export const TestimonialCarousel = () => {
     
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 8000);
     
     return () => clearInterval(interval);
   }, [currentIndex, autoplay]);
@@ -99,7 +99,7 @@ export const TestimonialCarousel = () => {
       onMouseEnter={() => setAutoplay(false)}
       onMouseLeave={() => setAutoplay(true)}
     >
-      <div className="relative h-96 overflow-hidden rounded-2xl">
+      <div className="relative h-[450px] overflow-hidden rounded-2xl">
         <AnimatePresence mode="wait" initial={false} custom={direction}>
           <motion.div
             key={currentIndex}
@@ -111,9 +111,9 @@ export const TestimonialCarousel = () => {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="absolute inset-0 flex items-center justify-center p-8"
           >
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 md:p-12 w-full h-full flex flex-col md:flex-row items-center">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 md:p-12 w-full h-full flex flex-col md:flex-row items-center">
               <div className="md:w-1/3 mb-6 md:mb-0 md:mr-8 flex-shrink-0">
-                <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full overflow-hidden border-4 border-primary/20">
+                <div className="relative w-16 h-16 md:w-32 md:h-32 mx-auto rounded-full overflow-hidden border-4 border-primary/20">
                   {testimonials[currentIndex].clientImage ? (
                     <Image
                       src={testimonials[currentIndex].clientImage}
@@ -154,11 +154,11 @@ export const TestimonialCarousel = () => {
               
               <div className="md:w-2/3 flex flex-col justify-center">
                 <div className="flex-grow">
-                  <div className="text-4xl text-primary font-serif leading-none">&apos;</div>
-                  <p className="text-gray-700 dark:text-gray-300 text-lg md:text-xl italic">
-                    {testimonials[currentIndex].text}
+                  {/* <div className="text-4xl text-primary font-serif leading-none">&apos;</div> */}
+                  <p className="text-gray-700 dark:text-gray-300 text-lg text-center md:text-xl italic">
+                  &apos;{testimonials[currentIndex].text}&apos;
                   </p>
-                  <div className="text-4xl text-primary font-serif leading-none text-right">&apos;</div>
+                  {/* <div className="text-4xl text-primary font-serif leading-none text-right">&apos;</div> */}
                 </div>
               </div>
             </div>
@@ -192,7 +192,7 @@ export const TestimonialCarousel = () => {
             className={`mx-1 h-2 w-2 rounded-full ${
               index === currentIndex
                 ? "bg-primary w-6"
-                : "bg-gray-300 dark:bg-gray-700"
+                : "bg-gray-300 dark:bg-white/80"
             } transition-all duration-300`}
             aria-label={`Go to testimonial ${index + 1}`}
           />

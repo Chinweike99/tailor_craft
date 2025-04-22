@@ -143,7 +143,7 @@ export const BookingForm = () => {
                     render={({ field }) => (
                       <select
                         {...field}
-                        className="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-700 p-3 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="mt-1 w-full rounded-md border border-gray-300 dark:bg-black/80 dark:text-white dark:border-gray-700 p-3 bg-transparent focus:outline-none focus:ring-2 focus:ring-primary"
                       >
                         <option value="">Select a category</option>
                         {serviceCategories.map((category) => (
