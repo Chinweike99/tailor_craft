@@ -1,8 +1,6 @@
 import { forwardRef } from "react";
 import { FieldError } from "react-hook-form";
 
-
-
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>{
     label: string | number;
     error?: FieldError;

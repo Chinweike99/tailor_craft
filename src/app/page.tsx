@@ -215,6 +215,15 @@ export default function HomePage(){
           </div>
         </div>
       </motion.section>
+
+
+      {/* <Card 
+      children = {
+        <div className="text-4xl text-red-500 mt-5 px-4">
+          Hello And welcome to base
+        </div>
+      }
+      /> */}
       
       {/* Featured Services */}
       <section className="py-24">
