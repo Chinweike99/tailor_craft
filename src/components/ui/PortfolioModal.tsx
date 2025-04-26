@@ -1,6 +1,6 @@
 import { PortfolioItem } from "@/types/types";
 import { motion, AnimatePresence } from "framer-motion";
-import { XIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
 
@@ -10,19 +10,27 @@ interface PortfolioModalProps {
     item: PortfolioItem | null;
     isOpen: boolean;
     onClose: () => void;
+    onNext?: () => void;
+    onPrevious?: ()=>void;
 }
 
-export const PortfolioModal = ({item, isOpen, onClose}: PortfolioModalProps) => {
+export const PortfolioModal = ({item, isOpen, onClose, onNext, onPrevious}: PortfolioModalProps) => {
 
     // Close on escape Key
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
-            if(e.key === "Escape") onClose();
+            if(e.key === "Escape") {
+              onClose();
+            }else if(e.key === "ArrowRight" && onNext){
+              onNext();
+            }else if(e.key === "ArrowLeft" && onPrevious){
+              onPrevious();
+            }
         }
 
         window.addEventListener("keydown", handleEsc);
         return ()=>window.removeEventListener("keydown", handleEsc);
-    }, [onClose])
+    }, [onClose, onNext, onPrevious])
 
 // Prevent body scroll when modal is open
 
@@ -75,6 +83,33 @@ export const PortfolioModal = ({item, isOpen, onClose}: PortfolioModalProps) => 
             >
               <XIcon size={20} />
             </button>
+
+
+          {/* Navigation buttons */}
+        {onPrevious && (
+          <button
+            onClick={onPrevious}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Previous item"
+          >
+            <ChevronLeft size={24} />
+          </button>
+        )}
+
+        {onNext && (
+          <button
+            onClick={onNext}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Next item"
+          >
+            <ChevronRight size={24} />
+          </button>
+        )}
+
+
+
+
+
             
             <div className="grid md:grid-cols-2 h-full">
               <div className="relative h-72 md:h-full">

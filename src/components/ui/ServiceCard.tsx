@@ -1,4 +1,3 @@
-// components/ui/ServiceCard.tsx
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,7 +26,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
     >
       <div className="relative h-60 overflow-hidden">
         <Image
-          src={service.imageUrl}
+          src={service.imageUrl[0]}
           alt={service.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"

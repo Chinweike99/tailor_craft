@@ -13,7 +13,7 @@ const PortfolioItems: PortfolioItem[] = [
         category: 'native',
         description: "A modern twist on the classic fashion brand",
         tags: ["Tailoring", "Modern", "Landing Page"],
-        featured: "yes"
+        featured: true
     },
     {
         id: "2",
@@ -22,7 +22,7 @@ const PortfolioItems: PortfolioItem[] = [
         category: 'native',
         description: "A modern twist on the classic fashion brand",
         tags: ["Fashion", "Modern", "Landing Page"],
-        featured: "yes"
+        featured: true
     },
 ]
 

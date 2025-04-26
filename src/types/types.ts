@@ -43,8 +43,9 @@ export interface Service {
     description: string;
     category: ServiceCategory;
     priceRange: string;
-    imageUrl: string;
+    imageUrl: string[];
     estimatedDays: number;
+    features?: string[];
 }
 
 // Portfolio
@@ -54,8 +55,8 @@ export interface PortfolioItem {
     description: string;
     category: ServiceCategory;
     imageUrl: string;
-    featured: string;
-    tags: string[];
+    featured: boolean;
+    tags?: string[];
 }
 
 //Booking / Appointment
