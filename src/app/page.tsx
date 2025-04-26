@@ -1,7 +1,5 @@
 
 'use client';
-
-import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { Button } from "@/components/ui/Button";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { ServiceCategory } from "@/types/types";
@@ -11,8 +9,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-
-
 const featuredServices = [
   {
     id: '1',
@@ -20,7 +16,7 @@ const featuredServices = [
     description: 'Traditional Agbada, Senator styles and other native designs tailored to perfection.',
     category: 'native' as ServiceCategory,
     priceRange: '$150 - $500',
-    imageUrl: '/assets/images/native.jpg',
+    imageUrl: ['/assets/images/native.jpg'],
     estimatedDays: 14,
   },
   {
@@ -29,7 +25,7 @@ const featuredServices = [
     description: 'Professional suits for corporate environments, perfectly fitted for comfort and style.',
     category: 'corporate' as ServiceCategory,
     priceRange: '$300 - $800',
-    imageUrl: '/assets/images/corporate.jpg',
+    imageUrl: ['/assets/images/corporate.jpg'],
     estimatedDays: 21,
   },
   {
@@ -38,7 +34,7 @@ const featuredServices = [
     description: 'Everyday comfortable clothing tailored for both style and practicality.',
     category: 'casual' as ServiceCategory,
     priceRange: '$80 - $250',
-    imageUrl: '/assets/images/casual.jpg',
+    imageUrl: ['/assets/images/casual.jpg'],
     estimatedDays: 10,
   },
 ]
@@ -216,15 +212,6 @@ export default function HomePage(){
         </div>
       </motion.section>
 
-
-      {/* <Card 
-      children = {
-        <div className="text-4xl text-red-500 mt-5 px-4">
-          Hello And welcome to base
-        </div>
-      }
-      /> */}
-      
       {/* Featured Services */}
       <section className="py-24">
         <div className="container mx-auto px-4">
@@ -328,7 +315,7 @@ export default function HomePage(){
             </p>
           </motion.div>
           
-          <TestimonialCarousel />
+          {/* <TestimonialCarousel /> */}
         </div>
       </section>
       

@@ -143,7 +143,7 @@ const Footer = () => {
                   href="mailto:info@bespoketailor.com"
                   className="text-gray-300 hover:text-primary transition-colors"
                 >
-                  info@bespoketailor.com
+                  info@Tailorcraft.com
                 </a>
               </li>
             </ul>
@@ -151,7 +151,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-          <p>&copy; {currentYear} BespokeTailor. All rights reserved.</p>
+          <p>&copy; {currentYear} Tailorcraft. All rights reserved.</p>
         </div>
       </div>
     </footer>
