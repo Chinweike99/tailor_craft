@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ServiceCategory } from '@/types/types';
+import { BookingForm } from '@/components/BookingForm';
 
 const categories: { value: ServiceCategory; label: string }[] = [
   { value: 'native', label: 'Native (Agbada, Senator)' },
@@ -84,7 +85,7 @@ export default function BookingPage() {
           transition={{ duration: 0.5 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="flex justify-between items-center mb-8">
+          <div className="md:px-16 flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">
               {categories.find(cat => cat.value === selectedCategory)?.label}
             </h2>
@@ -92,18 +93,19 @@ export default function BookingPage() {
               onClick={() => setSelectedCategory(null)}
               className="text-primary-600 hover:underline flex items-center"
             >
-              ← Back to categories
+              ← Back 
             </button>
+            
           </div>
           
-          {/* <BookingForm 
-            initialCategory={selectedCategory} 
-            onSubmitSuccess={() => {
-              // In a real app, you might redirect or show success message
-              alert("Booking submitted successfully! We'll contact you soon.");
-              setSelectedCategory(null);
-            }}
-          /> */}
+          <BookingForm 
+            // initialCategory={selectedCategory} 
+            // onSubmitSuccess={() => {
+            //   // When backend is added implement a success modal redirect or show success message
+            //   alert("Booking submitted successfully! We'll contact you soon.");
+            //   setSelectedCategory(null);
+            // }}
+          />
         </motion.div>
       )}
     </div>

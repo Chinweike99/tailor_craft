@@ -347,7 +347,7 @@ export default function ServicesPage() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold mb-4">
-              Ready for a Bespoke Experience?
+              Ready for a TailorCraft Experience?
             </h2>
             <p className="max-w-xl mx-auto mb-8">
               Get started with your custom tailoring journey today. Our expert
@@ -355,7 +355,7 @@ export default function ServicesPage() {
             </p>
             <Link
               href="/booking"
-              className="inline-block bg-white text-primary font-medium px-6 py-3 rounded-md hover:bg-gray-100 transition-colors"
+              className="inline-block bg-white text-black/80 font-medium px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               Book an Appointment
             </Link>

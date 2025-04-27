@@ -228,7 +228,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "1",
     clientName: "Oluwaseun Adebayo",
-    clientImage: "/images/testimonials/client1.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 5,
     text: "The Agbada set I ordered was absolutely stunning! The attention to detail in the embroidery was beyond my expectations. I received so many compliments at my brother's wedding. Will definitely be ordering more pieces soon.",
     date: "2025-01-15",
@@ -237,7 +237,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "2",
     clientName: "David Okoye",
-    clientImage: "/images/testimonials/client2.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 5,
     text: "As a business executive, I need suits that make a statement without being flashy. The three-piece suit I received was perfect - excellent fabric, immaculate stitching, and a perfect fit. My go-to tailor from now on.",
     date: "2025-02-03",
@@ -246,7 +246,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "3",
     clientName: "Amina Ibrahim",
-    clientImage: "/images/testimonials/client3.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 4,
     text: "I ordered custom outfits for my entire bridal train and was very impressed with the consistency in quality. Each piece was tailored to perfection, and the team was very patient with all our adjustments.",
     date: "2024-12-20",
@@ -255,7 +255,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "4",
     clientName: "Chinedu Eze",
-    clientImage: "/images/testimonials/client4.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 5,
     text: "The linen sets I ordered for my vacation were perfect - light, comfortable, and very stylish. The tailor really understood what I was looking for, and the fits were spot on. Will definitely order again.",
     date: "2025-03-11",
@@ -264,7 +264,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "5",
     clientName: "Folake Adeyemi",
-    clientImage: "/images/testimonials/client5.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 5,
     text: "I was skeptical about ordering a Senator style outfit online but decided to give it a try. The result was amazing! The fabric quality, the stitching, and most importantly, the fit were all perfect. Thank you!",
     date: "2025-01-30",
@@ -273,7 +273,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "6",
     clientName: "Tunde Johnson",
-    clientImage: "/images/testimonials/client6.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 4,
     text: "As a fitness instructor, I needed sportswear that's both functional and presentable. The custom pieces designed for me work perfectly for both training sessions and casual outings. Great quality and very durable.",
     date: "2025-02-18",
@@ -282,7 +282,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "7",
     clientName: "Blessing Nnamdi",
-    clientImage: "/images/testimonials/client7.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 5,
     text: "Ordered corporate uniforms for our entire staff of 15, and the consistency in quality was impressive. The tailor worked with our specific requirements and delivered exactly what we wanted within the promised timeframe.",
     date: "2024-11-28",
@@ -291,7 +291,7 @@ export const testimonials: Testimonials[] = [
   {
     id: "8",
     clientName: "Yusuf Lawal",
-    clientImage: "/images/testimonials/client8.jpg",
+    clientImage: "/assets/images/testimony.jpg",
     rating: 5,
     text: "My wedding outfit was nothing short of perfect. The tailor captured my vision exactly and added wonderful details I hadn't even thought of. The compliments were endless, and I felt amazing on my special day.",
     date: "2025-03-05",

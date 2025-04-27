@@ -146,7 +146,7 @@ export default function HomePage(){
             className="mt-6 text-xl md:text-2xl max-w-2xl text-gray-200"
             variants={itemVariants}
           >
-            Bespoke tailoring that celebrates your unique style. From traditional to contemporary, we craft garments that fit perfectly.
+            Tailoring that celebrates your unique style. From traditional to contemporary, we craft garments that fit perfectly.
           </motion.p>
           
           <motion.div 
@@ -282,7 +282,7 @@ export default function HomePage(){
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
-                className=" flex flex-col items-center p-8  dark:bg-gray-800 hover:bg-[#332f4f] hover:text-black rounded-xl shadow-sm"
+                className=" flex flex-col items-center p-8  dark:bg-gray-800 hover:scale-102 transition-all ease-in-out duration-130 rounded-xl shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -300,7 +300,7 @@ export default function HomePage(){
       </section>
       
       {/* Testimonials */}
-      <section className="py-24">
+      <section className="pt-24">
         <div className="container mx-auto px-4">
           <motion.div 
             className="text-center mb-16"
@@ -310,10 +310,24 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold">What Our Clients Say</h2>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-5">
               Don&apos;t take our word for it. Hear what our satisfied customers have to say.
             </p>
+
+            <motion.p
+            className="mt-16"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 2, duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
+               <Link href='/testimonials' className=" rounded-full bg-white text-black/80 p-2 px-8 font-semibold">
+              View Tesimonies
+            </Link>
+            </motion.p>
+           
           </motion.div>
+
+          
           
           {/* <TestimonialCarousel /> */}
         </div>

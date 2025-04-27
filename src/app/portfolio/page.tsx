@@ -14,7 +14,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Traditional Agbada Set',
     description: 'Hand-crafted traditional Agbada with intricate embroidery details, made from premium cotton fabric.',
     category: 'native',
-    imageUrl: '/api/placeholder/600/800',
+    imageUrl: '/assets/images/agbada.jpg',
     featured: true,
     // tags: ['Agbada', 'Traditional', 'Embroidery']
   },
@@ -23,7 +23,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Three-Piece Business Suit',
     description: 'Classic three-piece business suit made from fine wool blend, perfect for formal business settings.',
     category: 'corporate',
-    imageUrl: '/api/placeholder/601/800',
+    imageUrl: '/assets/images/suit.jpg',
     featured: true,
     tags: ['Suit', 'Business', 'Formal']
   },
@@ -32,7 +32,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Modern Senator Style',
     description: 'Contemporary take on the classic Senator style, featuring clean lines and minimalist design.',
     category: 'native',
-    imageUrl: '/api/placeholder/602/800',
+    imageUrl: '/assets/images/senator.jpg',
     featured: false,
     tags: ['Senator', 'Modern', 'Minimalist']
   },
@@ -41,7 +41,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Casual Weekend Shirt',
     description: 'Comfortable and stylish casual shirt made from breathable linen, perfect for weekend outings.',
     category: 'casual',
-    imageUrl: '/api/placeholder/603/800',
+    imageUrl: '/assets/images/casualweekend.jpg',
     featured: false,
     tags: ['Casual', 'Linen', 'Weekend']
   },
@@ -50,7 +50,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Formal Tuxedo',
     description: 'Elegant black tuxedo with satin lapels, designed for special events and formal gatherings.',
     category: 'corporate',
-    imageUrl: '/api/placeholder/604/800',
+    imageUrl: '/assets/images/tuxedo.jpg',
     featured: true,
     tags: ['Tuxedo', 'Formal', 'Event']
   },
@@ -59,7 +59,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Athletic Training Set',
     description: 'Custom-made athletic set featuring moisture-wicking fabric and ergonomic design for maximum comfort.',
     category: 'sportswear',
-    imageUrl: '/api/placeholder/605/800',
+    imageUrl: '/assets/images/traininSuit.jpg',
     featured: false,
     tags: ['Athletic', 'Training', 'Performance']
   },
@@ -68,7 +68,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Wedding Party Attire',
     description: 'Coordinated wedding party outfits designed to complement the wedding theme and color scheme.',
     category: 'custom',
-    imageUrl: '/api/placeholder/606/800',
+    imageUrl: '/assets/images/weddingattire.jpg',
     featured: true,
     tags: ['Wedding', 'Group', 'Celebration']
   },
@@ -77,7 +77,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Smart Casual Set',
     description: 'Versatile smart casual ensemble suitable for semi-formal office environments or social gatherings.',
     category: 'casual',
-    imageUrl: '/api/placeholder/607/800',
+    imageUrl: '/assets/images/smart.jpg',
     featured: false,
     tags: ['Smart Casual', 'Versatile', 'Office']
   },
@@ -86,7 +86,7 @@ const portfolioItems: PortfolioItem[] = [
     title: 'Tennis Performance Wear',
     description: 'Custom tennis outfit designed for performance, featuring lightweight, stretchy fabric for ease of movement.',
     category: 'sportswear',
-    imageUrl: '/api/placeholder/608/800',
+    imageUrl: '/assets/images/tennis.jpg',
     featured: false,
     tags: ['Tennis', 'Sport', 'Performance']
   }
@@ -210,7 +210,7 @@ export default function PortfolioPage() {
                 href="/contact" 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-block bg-white text-primary border border-primary font-medium px-6 py-3 rounded-md hover:bg-gray-50 transition-colors"
+                className="inline-block bg-white text-black/80 border border-primary font-medium px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 Contact Us
               </motion.a>

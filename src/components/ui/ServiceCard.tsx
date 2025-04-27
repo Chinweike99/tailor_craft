@@ -34,7 +34,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         
         <div className="absolute bottom-4 left-4 z-10 px-2  bg-gray-500 rounded-xl">
-          <span className="px-3 py-1 bg-primary text-white text-2xl font-semibold rounded-full">
+          <span className="px-3 py-1 bg-primary text-white text-sm md:text-xl font-semibold rounded-full">
             {service.category.charAt(0).toUpperCase() + service.category.slice(1)}
           </span>
         </div>

@@ -67,7 +67,7 @@ export const TestimonialCarousel = ({testimonials}: TestimonialCarouselProps) =>
           >
             <div className="flex flex-col items-center justify-center h-full">
               <div className="flex items-center mb-4 flex-col">
-                <div className="relative w-18 h-18 rounded-full overflow-hidden border-4 border-primary/20">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-primary/20">
                   {testimonial.clientImage ? (
                     <Image
                       src={testimonial.clientImage}
