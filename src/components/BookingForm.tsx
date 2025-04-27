@@ -6,6 +6,7 @@ import { Controller, useForm } from  'react-hook-form'
 import { motion } from "framer-motion"
 import { CalendarIcon, UploadIcon } from "lucide-react";
 import { Button } from "./ui/Button";
+import SuccessModal from "./ui/Successmodal";
 // import Image from "next/image";
 
 
@@ -21,6 +22,7 @@ const serviceCategories: {value: ServiceCategory; label: string}[] = [
 export const BookingForm = () => {
     const [isSubmitting, setSubmitting] = useState(false);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [isSuccess, setIsSuccess] = useState(false);
 
 
     const {
@@ -54,7 +56,8 @@ export const BookingForm = () => {
         setSubmitting(false);
 
         //Show success
-        alert("Booking submission was successfull")
+        // alert("Booking submission was successfull")
+        setIsSuccess(true)
     };
 
     const formAnimation = {
@@ -82,6 +85,14 @@ export const BookingForm = () => {
           animate="visible"
           variants={formAnimation}
         >
+
+<SuccessModal 
+        isOpen={isSuccess}
+        onClose={() => setIsSuccess(false)}
+        title="Booking Confirmed!"
+        message="Your appointment has been successfully scheduled."
+      />
+
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" variants={itemAnimation}>
               {/* Personal Information */}
@@ -349,6 +360,7 @@ export const BookingForm = () => {
                 Submit Booking Request
               </Button>
             </motion.div>
+            
           </form>
         </motion.div>
       );

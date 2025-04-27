@@ -140,28 +140,28 @@ export default function AboutPage() {
               role: "Founder & Master Tailor",
               bio: "With over 15 years of experience, James specializes in bespoke suits and formal wear.",
               delay: 0.1,
-              imag: "/assets/images/native.jpg" 
+              imag: "/assets/images/Team4.jpg" 
             },
             {
               name: "Sophia Rodriguez",
               role: "Head of Design",
               bio: "Sophia brings contemporary flair to traditional tailoring with her innovative designs.",
               delay: 0.2,
-              imag: "/assets/images/native.jpg" 
+              imag: "/assets/images/Team1.jpg" 
             },
             {
               name: "David Chen",
               role: "Senior Tailor",
               bio: "David's expertise in traditional techniques ensures impeccable quality in every stitch.",
               delay: 0.3,
-              imag: "/assets/images/native.jpg" 
+              imag: "/assets/images/Team3.jpg" 
             },
             {
               name: "Amara Johnson",
               role: "Fabric Specialist",
               bio: "Amara sources the finest materials from around the world to match each client's needs.",
               delay: 0.4,
-              imag: "/assets/images/native.jpg" 
+              imag: "/assets/images/Team2.jpg" 
             }
           ].map((member, index) => (
             <motion.div
