@@ -17,8 +17,12 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.0",
+<<<<<<< HEAD
     "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7"
+=======
+    "tailwind-merge": "^3.2.0"
+>>>>>>> 7ea4f7e (main (#16))
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

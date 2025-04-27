@@ -217,7 +217,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`container mx-auto px-4 max-w-6xl sticky top-0 w-full z-50 transition-all duration-300 items-center justify-center flex flex-col py-4  ${
+      className={`container mx-auto px-4 max-w-6xl sticky top-0 z-50 transition-all duration-300 items-center justify-center flex flex-col py-4  ${
         isScrolled ? 'bg-white/80 dark:bg-gray-900/10 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
       }`}
     >
@@ -319,7 +319,6 @@ const Navbar = () => {
       </AnimatePresence>
       </div>
     </nav>
-
   );
 };
 
