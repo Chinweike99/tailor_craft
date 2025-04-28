@@ -319,6 +319,7 @@ const Navbar = () => {
       </AnimatePresence>
       </div>
     </nav>
+
   );
 };
 
