@@ -224,7 +224,7 @@ export default function ContactPage() {
       {/* Floating WhatsApp Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <a
-          href="https://wa.me/1234567890" 
+          href="https://wa.me/09166330306" 
           target="_blank"
           rel="noopener noreferrer"
           className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"

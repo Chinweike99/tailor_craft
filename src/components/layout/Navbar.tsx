@@ -217,7 +217,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 w-full z-50 transition-all duration-300 items-center justify-center flex flex-col py-4  ${
+      className={`container mx-auto px-4 max-w-6xl sticky top-0 w-full z-50 transition-all duration-300 items-center justify-center flex flex-col py-4  ${
         isScrolled ? 'bg-white/80 dark:bg-gray-900/10 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
       }`}
     >
@@ -234,13 +234,13 @@ const Navbar = () => {
                             className={`${
                                 isScrolled || pathname !== '/'
                                 ? "text-blue-600 font-bold"
-                                : 'text-white'
+                                : 'text-amber-600'
                             }`}
                         />
                         <span className={`font-bold text-xl ${
                             isScrolled || pathname !== '/'
                             ? 'text-gray-900 dark:text-white'
-                            : "text-white"
+                            : "text-amber-600"
                         }`}>
                         TailorCraft
                         </span>
@@ -254,7 +254,7 @@ const Navbar = () => {
               href={item.path}
               className={`transition-all hover:text-primary text-sm ${
                 pathname === item.path 
-                  ? 'text-primary font-semibold underline font-medium' 
+                  ? 'text-primary font-semibold underline ' 
                   : 'text-gray-700 dark:text-gray-200'
               }`}
             >
@@ -319,6 +319,7 @@ const Navbar = () => {
       </AnimatePresence>
       </div>
     </nav>
+
   );
 };
 
