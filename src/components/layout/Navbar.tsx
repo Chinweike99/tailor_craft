@@ -254,7 +254,7 @@ const Navbar = () => {
               href={item.path}
               className={`transition-all hover:text-primary text-sm ${
                 pathname === item.path 
-                  ? 'text-primary font-semibold underline' 
+                  ? 'text-primary font-semibold underline ' 
                   : 'text-gray-700 dark:text-gray-200'
               }`}
             >
