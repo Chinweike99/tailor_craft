@@ -63,7 +63,7 @@ export default function ServicesPage() {
     : services;
 
   return (
-    <main className="pt-24 pb-12">
+    <main className="container mx-auto px-4 py-16 max-w-6xl">
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-16">
         <motion.div
