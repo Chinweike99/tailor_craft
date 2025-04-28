@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function AboutPage() {
   return (
-    <main className="pt-24 pb-12">
+    <main className="container mx-auto px-4 py-16 max-w-6xl">
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-16">
         <motion.div 
@@ -19,7 +19,7 @@ export default function AboutPage() {
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Story</h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-            Crafting excellence in fashion since 2010, delivering bespoke tailoring with passion and precision.
+            Crafting excellence in fashion since 2010, delivering tailor-craft tailoring with passion and precision.
           </p>
         </motion.div>
       </section>

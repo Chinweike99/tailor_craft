@@ -111,10 +111,10 @@ export default function HomePage(){
 
 
   return(
-<main className=" flex-col w-full outfit flex items-center justify-center">
+<main className=" container mx-auto px-4 max-w-6xl">
       {/* Hero Section */}
       <div className="max-w-[1440px]">
-      <section className="relative h-screen flex items-center justify-center overflow-hidden w-full">
+      <section className="relative md:min-h-[650px] flex items-center justify-center overflow-hidden w-full">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -135,7 +135,7 @@ export default function HomePage(){
           variants={containerVariants}
         >
           <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
+            className="text-3xl md:text-6xl lg:text-7xl font-bold leading-tight"
             variants={itemVariants}
           >
             Custom-Fit Fashion<br />
@@ -153,6 +153,7 @@ export default function HomePage(){
             className="mt-10 flex flex-wrap gap-4"
             variants={itemVariants}
           >
+            <div>
             <Link href="/booking">
               <Button 
                 size="lg" 
@@ -170,13 +171,10 @@ export default function HomePage(){
               View Collection
             </Button>
             </Link>
-            
-          </motion.div>
-        </motion.div>
-        
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+            </div>
+
+            <motion.div 
+          className=" ml-30"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3, duration: 3, repeat: Infinity, repeatType: "reverse" }}
@@ -186,6 +184,12 @@ export default function HomePage(){
             <div className="w-0.5 h-8 bg-white/50 rounded-full" />
           </div>
         </motion.div>
+            
+          </motion.div>
+        </motion.div>
+        
+        {/* Scroll indicator */}
+       
       </section>
       
       {/* Stats Section */}
