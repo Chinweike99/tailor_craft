@@ -114,7 +114,7 @@ export default function HomePage(){
 <main className=" container mx-auto px-4 max-w-6xl">
       {/* Hero Section */}
       <div className="max-w-[1440px]">
-      <section className="relative md:min-h-[650px] flex items-center justify-center overflow-hidden w-full">
+      <section className="relative h-screen md:h-[650px] flex items-center justify-center overflow-hidden w-full">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
