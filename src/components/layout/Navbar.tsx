@@ -166,7 +166,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Menu, X, Scissors } from 'lucide-react';
+import {  Menu, X, Scissors } from 'lucide-react';
+import ThemeToggle from '../ui/ThemeToggle';
+
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -181,8 +183,9 @@ const navItems = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const pathname = usePathname();
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -196,10 +199,10 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     
     // Check system preference for dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
+    // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    //   setIsDarkMode(true);
+    //   document.documentElement.classList.add('dark');
+    // }
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -210,18 +213,14 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
-  };
 
   return (
     <nav
-      className={`container mx-auto px-4 max-w-6xl sticky top-0 w-full z-50 transition-all duration-300 items-center justify-center flex flex-col py-4  ${
+      className={`${ `container  mx-auto px-4 max-w-6xl sticky top-0 w-full z-50 transition-all duration-300 items-center justify-center flex flex-col py-4`}  ${
         isScrolled ? 'bg-white/80 dark:bg-gray-900/10 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
       }`}
     >
-        <div className='max-w-[1440px] w-full'>
+        <div className='max-w-[1440px] w-full '>
       <div className="container mx-auto flex justify-between items-center">
         {/* <Link href="/" className="font-bold text-xl md:text-2xl">
           <span className="text-primary">Bespoke</span>
@@ -252,33 +251,23 @@ const Navbar = () => {
             <Link
               key={item.path}
               href={item.path}
-              className={`transition-all hover:text-primary text-sm ${
+              className={`transition-all  text-sm ${
                 pathname === item.path 
                   ? 'text-primary font-semibold underline' 
-                  : 'text-gray-700 dark:text-gray-200'
+                  : ''
               }`}
             >
               {item.name}
             </Link>
           ))}
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+
+
+          <ThemeToggle />
         </div>
 
         {/* Mobile Navigation Button */}
         <div className="md:hidden flex items-center space-x-4">
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+          <ThemeToggle />
           <button
             onClick={toggleMenu}
             className="p-2 text-gray-700 dark:text-gray-200"

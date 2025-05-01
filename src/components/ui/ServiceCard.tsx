@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Service } from '@/types/types';
 import { useState } from 'react';
+import { useTheme } from '@/hooks/useTheme';
 
 
 interface ServiceCardProps {
@@ -13,10 +14,11 @@ interface ServiceCardProps {
 
 export const ServiceCard = ({ service, index }: ServiceCardProps) => {
    const [isHovered, setIsHovered] = useState(false);
+   const {themeMode} = useTheme();
 
   return (
     <motion.div
-      className="group rounded-xl cursor-pointer overflow-hidden bg-white dark:bg-gray-800 shadow-md h-full flex flex-col"
+      className={`${themeMode === "dark" ? "bg-white/80 text-black/80" : "bg-gray-800 text-white"} group rounded-xl cursor-pointer overflow-hidden shadow-md h-full flex flex-col`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -34,7 +36,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         
         <div className="absolute bottom-4 left-4 z-10 px-2  bg-gray-500 rounded-xl">
-          <span className="px-3 py-1 bg-primary text-white text-sm md:text-xl font-semibold rounded-full">
+          <span className="px-3 py-1 text-sm md:text-xl font-semibold rounded-full">
             {service.category.charAt(0).toUpperCase() + service.category.slice(1)}
           </span>
         </div>
@@ -47,7 +49,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
         >
           {service.title}
         </motion.h3>
-        <motion.p className="text-gray-600 dark:text-gray-400 mb-4 flex-grow"
+        <motion.p className=" mb-4 flex-grow"
         initial={{y:20, opacity: 0}}
         animate={{y: isHovered ? 0 : 20, opacity: isHovered ? 0.4 : 1}}
         transition={{duration: 0.2, delay: 0.3}}
@@ -67,7 +69,7 @@ export const ServiceCard = ({ service, index }: ServiceCardProps) => {
       
       <Link 
         href={`/services#${service.category}`}
-        className="p-4 border-t border-gray-200 dark:border-gray-700 text-primary font-medium flex items-center justify-center group-hover:bg-primary/5 transition-colors"
+        className="p-4 border-t font-medium flex items-center justify-center group-hover:bg-primary/5 transition-colors"
       >
         View Details
         <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
