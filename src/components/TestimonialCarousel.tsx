@@ -85,7 +85,7 @@ export const TestimonialCarousel = ({testimonials}: TestimonialCarouselProps) =>
                 </div>
                 
                 <div className='flex flex-col items-center'>
-                  <h4 className="text-lg font-bold">{testimonial.clientName}</h4>
+                  <h4 className="text-lg font-bold text-white/80">{testimonial.clientName}</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {testimonial.serviceType.charAt(0).toUpperCase() + 
                      testimonial.serviceType.slice(1)}
