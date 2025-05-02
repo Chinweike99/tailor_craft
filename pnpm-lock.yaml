@@ -1834,11 +1834,26 @@ packages:
   tailwind-merge@3.2.0:
     resolution: {integrity: sha512-FQT/OVqCD+7edmmJpsgCsY820RTD5AkBryuG5IUqR5YQZSdj5xlH5nLgH7YPths7WsLPSpSBNneJdM8aS8aeFA==}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c9b9f51 (Clean merge branch (#20))
+>>>>>>> update-main-temp
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 7ea4f7e (main (#16))
+=======
+>>>>>>> c9b9f51 (Clean merge branch (#20))
+>>>>>>> update-main-temp
   tailwindcss@4.1.4:
     resolution: {integrity: sha512-1ZIUqtPITFbv/DxRmDr5/agPqJwF69d24m9qmM1939TJehgY539CtzeZRjbLt5G6fSy/7YqqYsfvoTEw9xUI2A==}
 
@@ -3846,10 +3861,25 @@ snapshots:
 
   tailwind-merge@3.2.0: {}
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c9b9f51 (Clean merge branch (#20))
+>>>>>>> update-main-temp
   tailwindcss-animate@1.0.7(tailwindcss@4.1.4):
     dependencies:
       tailwindcss: 4.1.4
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 7ea4f7e (main (#16))
+=======
+>>>>>>> c9b9f51 (Clean merge branch (#20))
+>>>>>>> update-main-temp
   tailwindcss@4.1.4: {}
 
   tapable@2.2.1: {}
