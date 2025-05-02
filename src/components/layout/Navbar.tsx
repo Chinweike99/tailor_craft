@@ -95,13 +95,8 @@ const Navbar = () => {
               href={item.path}
               className={`transition-all  text-sm ${
                 pathname === item.path 
-<<<<<<< HEAD
                   ? 'text-primary font-semibold underline ' 
                   : 'text-gray-700 dark:text-gray-200'
-=======
-                  ? 'text-primary font-semibold underline' 
-                  : ''
->>>>>>> feat/booking_form
               }`}
             >
               {item.name}

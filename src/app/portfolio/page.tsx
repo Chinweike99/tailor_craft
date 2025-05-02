@@ -104,19 +104,7 @@ export default function PortfolioPage() {
     : portfolioItems;
 
   return (
-<<<<<<< HEAD
     <main className="container mx-auto px-4 py-16 max-w-6xl">
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <main className="container mx-auto px-4 py-16 max-w-6xl">
-=======
-    <main className="pt-24 pb-12">
->>>>>>> 7ea4f7e (main (#16))
-=======
-    <main className="container mx-auto px-4 py-16 max-w-6xl">
->>>>>>> c9b9f51 (Clean merge branch (#20))
->>>>>>> update-main-temp
       {/* Hero Section */}
       <section className="mx-auto px-4 mb-16">
         <motion.div 
