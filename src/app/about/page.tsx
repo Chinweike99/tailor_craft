@@ -69,7 +69,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Process */}
-      <section className={"bg-gray-50 dark:bg-gray-900 py-16"}>
+      <section className={"bg-gray-50 dark:bg-gray-900/80 py-16 rounded-2xl"}>
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -173,7 +173,7 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: member.delay }}
-              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md"
+              className={`${themeMode === "dark" ? "bg-white/80 text-black/80" : "bg-gray-800 text-white"}  rounded-lg overflow-hidden shadow-md`}
             >
               <div className="relative h-64 odd:rotate-3 even:rotate-1">
                 <Image 
@@ -208,7 +208,7 @@ export default function AboutPage() {
             </p>
             <Link 
               href="/booking" 
-              className={`${themeMode === "dark" ? "bg-white text-black/80 " : "bg-black/80 text-white"} inline-block font-medium px-6 py-3 rounded-md hover:bg-gray-100 transition-colors`}
+              className={`${themeMode === "dark" ? "bg-white text-black/90 " : "bg-black/90 text-white"} inline-block font-medium px-6 py-3 rounded-md hover:bg-gray-100 transition-colors`}
             >
               Book an Appointment
             </Link>

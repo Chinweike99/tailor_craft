@@ -16,6 +16,7 @@ const categories: { value: ServiceCategory; label: string }[] = [
 
 export default function BookingPage() {
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null);
+ 
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -47,7 +48,7 @@ export default function BookingPage() {
         transition={{ duration: 0.6 }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Book Your Perfect Fit</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-lg max-w-2xl mx-auto">
           Start your journey to custom tailoring excellence. Let us create something that fits you perfectly.
         </p>
       </motion.div>
@@ -67,11 +68,11 @@ export default function BookingPage() {
               onClick={() => setSelectedCategory(category.value)}
             >
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-3">{category.label}</h3>
+                <h3 className="text-xl text-white/80 font-semibold mb-3">{category.label}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   Tailored to perfection for your specific needs.
                 </p>
-                <button className="text-primary-600 font-medium hover:underline">
+                <button className="text-gray-300 font-medium hover:underline">
                   Select this style →
                 </button>
               </div>

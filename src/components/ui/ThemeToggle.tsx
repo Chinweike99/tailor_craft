@@ -22,7 +22,7 @@ export default function ThemeToggle() {
       whileTap={{ scale: 0.9 }}
       whileHover={{ scale: 1.1 }}
       onClick={toggleThemeMode}
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 transition-colors duration-200"
       aria-label={`Switch to ${themeMode === 'light' ? 'dark' : 'light'} mode`}
     >
       {themeMode === 'light' ? (
@@ -43,7 +43,7 @@ export default function ThemeToggle() {
       ) : (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-white"
+          className="h-5 w-5 text-gray-800"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
