@@ -62,7 +62,7 @@ const Navbar = () => {
         isScrolled ? 'bg-white/80 dark:bg-gray-900/10 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
       }`}
     >
-        <div className='max-w-[1440px] w-full '>
+        <div className=' w-full '>
       <div className="container mx-auto flex justify-between items-center">
         {/* <Link href="/" className="font-bold text-xl md:text-2xl">
           <span className="text-primary">Bespoke</span>
