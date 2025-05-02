@@ -50,7 +50,7 @@ export default function ContactPage() {
         transition={{ duration: 0.6 }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-lg max-w-2xl mx-auto">
           Have a question or want to discuss your custom tailoring needs? We&apos;re here to help.
         </p>
       </motion.div>
@@ -61,7 +61,7 @@ export default function ContactPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-white/80">
             <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
             
             <div className="space-y-6">
@@ -129,7 +129,7 @@ export default function ContactPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-white/80">
             <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
             
             {isSuccess && (
