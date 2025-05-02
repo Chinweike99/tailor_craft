@@ -37,7 +37,7 @@ export default function TestimonialsPage() {
         transition={{ duration: 0.6 }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Client Testimonials</h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-lg max-w-2xl mx-auto">
           Don&apos;t just take our word for it. See what our clients have to say about their experience with our tailoring services.
         </p>
       </motion.div>
@@ -48,7 +48,7 @@ export default function TestimonialsPage() {
             <button
               key={category.value}
               onClick={() => setFilter(category.value)}
-              className={`px-4 py-2 rounded-md transition-all ${
+              className={`px-4 py-2 text-white/80 rounded-md transition-all ${
                 filter === category.value
                   ? 'bg-primary-600 text-white'
                   : 'bg-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -85,12 +85,12 @@ export default function TestimonialsPage() {
         className="text-center mt-16"
       >
         <h2 className="text-2xl font-bold mb-4">Share Your Experience</h2>
-        <p className="mb-6 text-gray-600 dark:text-gray-300">
+        <p className="mb-6">
           We value your feedback. If you&apos;ve enjoyed our services, we&apos;d love to hear from you.
         </p>
         <a
           href="/contact"
-          className="inline-block bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-8 rounded-lg transition-colors"
+          className="inline-block bg-primary-600 hover:bg-primary-700  font-medium py-3 px-8 rounded-lg transition-colors"
         >
           Leave a Review
         </a>

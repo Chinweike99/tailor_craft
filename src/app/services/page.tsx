@@ -14,12 +14,15 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { services } from "@/data/services";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showAnswer, setShowAnswer] = useState(new Set());
   const [toggleChevron, setToggleChevron] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<Record<string, number>>({});
+    const {themeMode} = useTheme();
+  
 
   useEffect(() => {
     const initialIndex: Record<string, number> = {};
@@ -73,7 +76,7 @@ export default function ServicesPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+          <p className="text-lg mb-8">
             TailorCraft tailoring services for every occasion, crafted with
             precision and style.
           </p>
@@ -85,10 +88,10 @@ export default function ServicesPage() {
         <div className="flex flex-wrap justify-center gap-4">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`px-4 py-2 rounded-full transition-colors ${
+            className={`px-4 py-1 rounded-full transition-colors ${
               selectedCategory === null
-                ? "bg-primary text-white"
-                : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                ? `${themeMode === "dark" ? "text-black/90 bg-white/80" : "text-white/90 bg-black/80"}`
+                : `${themeMode === "dark" ? "text-white/80 " : "text-black/80"}`
             }`}
           >
             All Services
@@ -99,10 +102,10 @@ export default function ServicesPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full capitalize transition-colors ${
+                className={`px-4 py-1 rounded-full capitalize transition-colors ${
                   selectedCategory === category
-                    ? "bg-primary text-white"
-                    : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                    ? `${themeMode === "dark" ? "text-black/90 bg-white/80" : "text-white/90 bg-black/80"}`
+                    :  `${themeMode === "dark" ? "text-white/80 " : "text-black/80"}`
                 }`}
               >
                 {category}
@@ -147,32 +150,32 @@ export default function ServicesPage() {
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <h3 className="text-2xl font-bold mb-2  text-white/80">{service.title}</h3>
+                <p className="text-gray-300 mb-4">
                   {service.description}
                 </p>
 
                 <div className="flex items-center mb-4">
-                  <Clock size={16} className="text-primary mr-2" />
+                  <Clock size={16} className="text-gray-300 mr-2" />
                   <span className="text-gray-600 dark:text-gray-300 text-sm">
                     Estimated Time: {service.estimatedDays} days
                   </span>
                 </div>
 
                 <div className="flex items-center mb-6">
-                  <DollarSign size={16} className="text-primary mr-2" />
-                  <span className="text-gray-600 dark:text-gray-300 text-sm">
+                  <DollarSign size={16} className="text-gray-300 mr-2" />
+                  <span className="text-gray-300 text-sm">
                     Price Range: {service.priceRange}
                   </span>
                 </div>
 
-                <h4 className="font-semibold mb-2">Features:</h4>
+                <h4 className="font-semibold mb-2 text-white/80">Features:</h4>
                 <ul className="mb-6">
                   {service.features?.map((feature, idx) => (
                     <li key={idx} className="flex items-start mb-1">
                       <Star
                         size={16}
-                        className="text-primary mr-2 mt-1 flex-shrink-0"
+                        className="text-gray-300 mr-2 mt-1 flex-shrink-0"
                       />
                       <span className="text-gray-600 dark:text-gray-300 text-sm">
                         {feature}
@@ -194,7 +197,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Section */}
-      <section className="bg-gray-50 dark:bg-gray-900 py-16">
+      <section className="bg-gray-50 dark:bg-gray-900 py-16 rounded-2xl">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -203,8 +206,8 @@ export default function ServicesPage() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-xl mx-auto mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4">Our Tailoring Process</h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <h2 className="text-3xl font-bold mb-4 text-white/80">Our Tailoring Process</h2>
+            <p className="text-gray-300">
               We follow a meticulous process to ensure your garments are
               perfectly crafted to your specifications.
             </p>
@@ -213,25 +216,25 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                icon: <Users size={32} className="text-primary" />,
+                icon: <Users size={32} className="text-gray-300" />,
                 title: "Consultation",
                 description:
                   "Meet with our expert tailors to discuss your style preferences and needs.",
               },
               {
-                icon: <Scissors size={32} className="text-primary" />,
+                icon: <Scissors size={32} className="text-gray-300" />,
                 title: "Measurement",
                 description:
                   "We take precise measurements to ensure the perfect fit for your custom garments.",
               },
               {
-                icon: <Bookmark size={32} className="text-primary" />,
+                icon: <Bookmark size={32} className="text-gray-300" />,
                 title: "Creation",
                 description:
                   "Our skilled tailors craft your garment with meticulous attention to detail.",
               },
               {
-                icon: <Star size={32} className="text-primary" />,
+                icon: <Star size={32} className="text-gray-300" />,
                 title: "Final Fitting",
                 description:
                   "Try on your finished garment for any final adjustments before delivery.",
@@ -246,8 +249,8 @@ export default function ServicesPage() {
                 className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center"
               >
                 <div className="flex justify-center mb-4">{step.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <h3 className="text-xl font-bold mb-2 text-gray-300">{step.title}</h3>
+                <p className="text-gray-300">
                   {step.description}
                 </p>
               </motion.div>
@@ -268,7 +271,7 @@ export default function ServicesPage() {
           <h2 className="text-3xl font-bold mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className={`${themeMode === "dark" ? "text-gray-300" : "text-black/70"}`}>
             Everything you need to know about our tailoring services.
           </p>
         </motion.div>
@@ -309,7 +312,7 @@ export default function ServicesPage() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="mb-6 bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md"
             >
-              <h3 className="text-xl font-bold mb-2 flex justify-between cursor-pointer">
+              <h3 className="text-xl font-bold mb-2 flex justify-between cursor-pointer text-gray-300">
                 {faq.question}
                 <ChevronDown
                   onClick={() => toggleAnswer(index)}
@@ -338,7 +341,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-primary text-white py-16">
+      <section className="bg-primary py-16">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

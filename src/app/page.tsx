@@ -2,6 +2,7 @@
 'use client';
 import { Button } from "@/components/ui/Button";
 import { ServiceCard } from "@/components/ui/ServiceCard";
+import { useTheme } from "@/hooks/useTheme";
 import { ServiceCategory } from "@/types/types";
 import { motion } from "framer-motion";
 import { ChevronRight, Scissors, Star, Users } from "lucide-react";
@@ -69,6 +70,7 @@ const features = [
 
 export default function HomePage(){
   const [isLoaded, setIsLoaded] = useState(false);
+  const {themeMode} = useTheme();
 
 
   useEffect(() => {
@@ -194,7 +196,7 @@ export default function HomePage(){
       
       {/* Stats Section */}
       <motion.section 
-        className="py-16 bg-gray-100 dark:bg-gray-900"
+        className="py-16 bg-gray-100 dark:bg-gray-700 rounded-bl-2xl rounded-br-2xl"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -218,7 +220,7 @@ export default function HomePage(){
 
       {/* Featured Services */}
       <section className="py-24">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -227,7 +229,7 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold">Our Signature Services</h2>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            <p className={`${themeMode === "dark" ? "text-white/50 " : "text-gray-800 "} mt-4 text-xl max-w-3xl mx-auto`}>
               Explore our range of custom tailoring services designed to meet your style needs.
             </p>
           </motion.div>
@@ -267,7 +269,7 @@ export default function HomePage(){
       </section>
       
       {/* Features Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900/50">
+      <section className="py-24 bg-gray-50 dark:bg-gray-900/80 rounded-2xl">
         <div className="container mx-auto px-4">
           <motion.div 
             className="text-center mb-16"
@@ -276,8 +278,8 @@ export default function HomePage(){
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold">Why Choose Us</h2>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">Why Choose Us</h2>
+            <p className={`text-white mt-4 text-xl max-w-3xl mx-auto`}>
               We pride ourselves on offering exceptional tailoring with attention to every detail.
             </p>
           </motion.div>
@@ -286,7 +288,7 @@ export default function HomePage(){
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
-                className=" flex flex-col items-center p-8  dark:bg-gray-800 hover:scale-102 transition-all ease-in-out duration-130 rounded-xl shadow-sm"
+                className={`${themeMode === "dark" ? "bg-white/70 text-black/80" : "bg-black/80 text-white/80"} flex flex-col items-center p-8  hover:scale-102 transition-all ease-in-out duration-130 rounded-xl shadow-sm`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -296,7 +298,7 @@ export default function HomePage(){
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-center">{feature.description}</p>
+                <p className=" text-center">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -314,7 +316,7 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold">What Our Clients Say</h2>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-5">
+            <p className={`${themeMode === "dark" ? "text-white/50 " : "text-gray-800 "}mt-4 text-xl  max-w-3xl mx-auto mb-5`}>
               Don&apos;t take our word for it. Hear what our satisfied customers have to say.
             </p>
 
@@ -324,7 +326,7 @@ export default function HomePage(){
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2, duration: 2, repeat: Infinity, repeatType: "reverse" }}
             >
-               <Link href='/testimonials' className=" rounded-full bg-white text-black/80 p-2 px-8 font-semibold">
+               <Link href='/testimonials' className={`${themeMode === "dark" ? "bg-white text-black/80" : "bg-black/80 text-white"} rounded-full  p-2 px-8 font-semibold`}>
               View Tesimonies
             </Link>
             </motion.p>
@@ -338,7 +340,7 @@ export default function HomePage(){
       </section>
       
       {/* CTA Section */}
-      <section className="py-24 bg-primary text-white">
+      <section className="py-24 ">
         <div className="container mx-auto px-4">
           <motion.div 
             className="max-w-4xl mx-auto text-center"
@@ -348,7 +350,7 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-5xl font-bold">Ready to Transform Your Style?</h2>
-            <p className="mt-6 text-xl text-white/80 max-w-2xl mx-auto">
+            <p className="mt-6 text-xl max-w-2xl mx-auto">
               Book an appointment today and experience the difference of custom-tailored fashion crafted just for you.
             </p>
             
