@@ -63,7 +63,7 @@ export const TestimonialCarousel = ({testimonials}: TestimonialCarouselProps) =>
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={cardVariant}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+            className=" bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
           >
             <div className="flex flex-col items-center justify-center h-full">
               <div className="flex items-center mb-4 flex-col">
@@ -76,8 +76,8 @@ export const TestimonialCarousel = ({testimonials}: TestimonialCarouselProps) =>
                       className="object-cover"
                     />
                   ) : (
-                    <div className="h-full w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <span className="text-xl font-bold text-gray-500 dark:text-gray-400">
+                    <div className="h-full w-full flex items-center justify-center">
+                      <span className="text-xl font-bold ">
                         {testimonial.clientName.charAt(0)}
                       </span>
                     </div>
@@ -108,7 +108,7 @@ export const TestimonialCarousel = ({testimonials}: TestimonialCarouselProps) =>
               </div>
               
               <div className="flex-grow">
-                <p className="text-gray-700 dark:text-gray-300 text-center italic">
+                <p className="text-gray-300 text-center italic">
                   &apos;{testimonial.text}&apos;
                 </p>
               </div>

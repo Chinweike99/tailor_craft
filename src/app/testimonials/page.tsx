@@ -43,7 +43,7 @@ export default function TestimonialsPage() {
       </motion.div>
 
       <div className="mb-8 flex justify-center">
-        <div className="inline-flex flex-wrap justify-center gap-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
+        <div className="inline-flex flex-wrap justify-center gap-2 bg-gray-700 p-2 rounded-lg">
           {categories.map((category) => (
             <button
               key={category.value}
