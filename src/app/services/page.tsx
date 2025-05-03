@@ -125,7 +125,7 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+              className=" bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
             >
               <div className="relative h-64">
                 {service.imageUrl.map((image, idx) => (
@@ -157,7 +157,7 @@ export default function ServicesPage() {
 
                 <div className="flex items-center mb-4">
                   <Clock size={16} className="text-gray-300 mr-2" />
-                  <span className="text-gray-600 dark:text-gray-300 text-sm">
+                  <span className="text-gray-300 dark:text-gray-300 text-sm">
                     Estimated Time: {service.estimatedDays} days
                   </span>
                 </div>
@@ -177,7 +177,7 @@ export default function ServicesPage() {
                         size={16}
                         className="text-gray-300 mr-2 mt-1 flex-shrink-0"
                       />
-                      <span className="text-gray-600 dark:text-gray-300 text-sm">
+                      <span className="text-gray-300 dark:text-gray-300 text-sm">
                         {feature}
                       </span>
                     </li>
@@ -197,7 +197,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Section */}
-      <section className="bg-gray-50 dark:bg-gray-900 py-16 rounded-2xl">
+      <section className="bg-gray-900 py-16 rounded-2xl">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -216,25 +216,25 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                icon: <Users size={32} className="text-gray-300" />,
+                icon: <Users size={32} className="text-gray-900" />,
                 title: "Consultation",
                 description:
                   "Meet with our expert tailors to discuss your style preferences and needs.",
               },
               {
-                icon: <Scissors size={32} className="text-gray-300" />,
+                icon: <Scissors size={32} className="text-gray-900" />,
                 title: "Measurement",
                 description:
                   "We take precise measurements to ensure the perfect fit for your custom garments.",
               },
               {
-                icon: <Bookmark size={32} className="text-gray-300" />,
+                icon: <Bookmark size={32} className="text-gray-900" />,
                 title: "Creation",
                 description:
                   "Our skilled tailors craft your garment with meticulous attention to detail.",
               },
               {
-                icon: <Star size={32} className="text-gray-300" />,
+                icon: <Star size={32} className="text-gray-900" />,
                 title: "Final Fitting",
                 description:
                   "Try on your finished garment for any final adjustments before delivery.",
@@ -249,8 +249,8 @@ export default function ServicesPage() {
                 className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center"
               >
                 <div className="flex justify-center mb-4">{step.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-gray-300">{step.title}</h3>
-                <p className="text-gray-300">
+                <h3 className="text-xl font-bold mb-2 text-gray-900">{step.title}</h3>
+                <p className="text-gray-900">
                   {step.description}
                 </p>
               </motion.div>
@@ -310,7 +310,7 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-6 bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md"
+              className="mb-6 bg-gray-800 rounded-lg p-6 shadow-md"
             >
               <h3 className="text-xl font-bold mb-2 flex justify-between cursor-pointer text-gray-300">
                 {faq.question}
@@ -331,7 +331,7 @@ export default function ServicesPage() {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <p className="text-gray-600 dark:text-gray-300 p-2">
+                <p className="text-gray-300 p-2">
                   {faq.answer}
                 </p>
               </motion.div>

@@ -61,13 +61,13 @@ export default function ContactPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-white/80">
+          <div className="bg-gray-900 rounded-lg shadow-lg p-8 text-white/80">
             <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
             
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold mb-2">Visit Our Shop</h3>
-                <address className="not-italic text-gray-600 dark:text-gray-300">
+                <address className="not-italic text-gray-300">
                   123 Fashion Avenue<br />
                   Fashion District<br />
                   Lagos, Nigeria
@@ -76,7 +76,7 @@ export default function ContactPage() {
               
               <div>
                 <h3 className="text-lg font-semibold mb-2">Opening Hours</h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-300">
                   Monday - Friday: 9:00 AM - 6:00 PM<br />
                   Saturday: 10:00 AM - 4:00 PM<br />
                   Sunday: Closed
@@ -85,7 +85,7 @@ export default function ContactPage() {
               
               <div>
                 <h3 className="text-lg font-semibold mb-2">Contact Details</h3>
-                <p className="text-gray-600 dark:text-gray-300">
+                <p className="text-gray-300">
                   Phone: +234 123 456 7890<br />
                   Email: info@tailoringplatform.com
                 </p>
@@ -129,7 +129,7 @@ export default function ContactPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 text-white/80">
+          <div className="bg-gray-800 rounded-lg shadow-lg p-8 text-white/80">
             <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
             
             {isSuccess && (
@@ -213,10 +213,10 @@ export default function ContactPage() {
         transition={{ duration: 0.6, delay: 0.4 }}
         className="mt-16"
       >
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 h-96">
+        <div className="bg-gray-900 rounded-lg shadow-lg p-6 h-96">
           {/* Here you would integrate with a map service like Google Maps or Mapbox */}
-          <div className="bg-gray-200 dark:bg-gray-700 h-full rounded-lg flex items-center justify-center">
-            <p className="text-gray-600 dark:text-gray-300">Map would be displayed here (Google Maps/Mapbox integration)</p>
+          <div className="bg-gray-700 dark:bg-gray-700 h-full rounded-lg flex items-center justify-center">
+            <p className="text-gray-300">Map would be displayed here (Google Maps/Mapbox integration)</p>
           </div>
         </div>
       </motion.div>
