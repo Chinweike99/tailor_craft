@@ -115,8 +115,8 @@ export default function HomePage(){
   return(
 <main className=" container mx-auto px-4 max-w-6xl">
       {/* Hero Section */}
-      <div className="max-w-[1440px]">
-      <section className="relative h-screen md:h-[650px] flex items-center justify-center overflow-hidden w-full">
+      <div className="">
+      <section className="relative md:min-h-[650px] flex items-center justify-center overflow-hidden w-full">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -196,7 +196,7 @@ export default function HomePage(){
       
       {/* Stats Section */}
       <motion.section 
-        className="py-16 bg-gray-100 dark:bg-gray-700 rounded-bl-2xl rounded-br-2xl"
+        className={` py-16  bg-gray-900`}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -210,8 +210,8 @@ export default function HomePage(){
                 className="text-center"
                 variants={statsItemVariant}
               >
-                <h3 className="text-4xl font-bold text-primary">{stat.value}</h3>
-                <p className="mt-2 text-gray-600 dark:text-gray-400">{stat.label}</p>
+                <h3 className="text-4xl font-bold text-white">{stat.value}</h3>
+                <p className="mt-2 text-gray-500">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -220,7 +220,7 @@ export default function HomePage(){
 
       {/* Featured Services */}
       <section className="py-24">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -229,7 +229,7 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold">Our Signature Services</h2>
-            <p className={`${themeMode === "dark" ? "text-white/50 " : "text-gray-800 "} mt-4 text-xl max-w-3xl mx-auto`}>
+            <p className="mt-4 text-xl text-gray-500 max-w-3xl mx-auto">
               Explore our range of custom tailoring services designed to meet your style needs.
             </p>
           </motion.div>
@@ -269,7 +269,7 @@ export default function HomePage(){
       </section>
       
       {/* Features Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-900/80 rounded-2xl">
+      <section className={`py-24 bg-gray-900 rounded-2xl text-white`}>
         <div className="container mx-auto px-4">
           <motion.div 
             className="text-center mb-16"
@@ -279,7 +279,7 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white">Why Choose Us</h2>
-            <p className={`text-white mt-4 text-xl max-w-3xl mx-auto`}>
+            <p className="mt-4 text-xl max-w-3xl mx-auto">
               We pride ourselves on offering exceptional tailoring with attention to every detail.
             </p>
           </motion.div>
@@ -288,7 +288,7 @@ export default function HomePage(){
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
-                className={`${themeMode === "dark" ? "bg-white/70 text-black/80" : "bg-black/80 text-white/80"} flex flex-col items-center p-8  hover:scale-102 transition-all ease-in-out duration-130 rounded-xl shadow-sm`}
+                className="border flex flex-col items-center p-8  dark:bg-gray-800 hover:scale-102 transition-all ease-in-out duration-130 rounded-xl shadow-sm"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -316,18 +316,18 @@ export default function HomePage(){
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold">What Our Clients Say</h2>
-            <p className={`${themeMode === "dark" ? "text-white/50 " : "text-gray-800 "}mt-4 text-xl  max-w-3xl mx-auto mb-5`}>
+            <p className="mt-4 text-xl  max-w-3xl mx-auto mb-5">
               Don&apos;t take our word for it. Hear what our satisfied customers have to say.
             </p>
 
             <motion.p
-            className="mt-16"
+            className={`${themeMode === "dark" ? "bg-white/900" : "bg-black/800" } mt-16 rounded-full`}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 2, duration: 2, repeat: Infinity, repeatType: "reverse" }}
             >
-               <Link href='/testimonials' className={`${themeMode === "dark" ? "bg-white text-black/80" : "bg-black/80 text-white"} rounded-full  p-2 px-8 font-semibold`}>
-              View Tesimonies
+               <Link href='/testimonials' className={`${themeMode === "dark" ? "bg-white/80 text-gray-900" : "bg-gray-900 text-white/80" }  rounded-full  p-2 px-8 font-semibold`}>
+              View Testimonies
             </Link>
             </motion.p>
            

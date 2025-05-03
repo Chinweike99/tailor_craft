@@ -106,7 +106,7 @@ export default function PortfolioPage() {
   return (
     <main className="container mx-auto px-4 py-16 max-w-6xl">
       {/* Hero Section */}
-      <section className="mx-auto px-4 mb-16">
+      <section className="container mx-auto px-4 mb-16">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function PortfolioPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Portfolio</h1>
-          <p className={`${themeMode === "dark" ? "text-gray-300" : "text-black/80"}text-lg  mb-8`}>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
             Explore our collection of handcrafted garments created for clients with diverse tastes and needs.
           </p>
         </motion.div>
@@ -124,10 +124,10 @@ export default function PortfolioPage() {
         <div className="flex flex-wrap justify-center gap-4">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`px-4 py-1 rounded-full transition-colors ${
+            className={`px-4 py-2 rounded-full transition-colors ${
               selectedCategory === null
-                ? `${themeMode === "dark" ? "text-black/90 bg-white/80" : "text-white/90 bg-black/80"}`
-                : `${themeMode === "dark" ? "text-white/80 " : "text-black/80"}`
+                ? `${themeMode === "dark" ? "text-gray-900 bg-white/80" : "bg-gray-900 text-white/80"} `
+                : ' dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
             All Works
@@ -136,11 +136,11 @@ export default function PortfolioPage() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-1 rounded-full capitalize transition-colors ${
+              className={`px-4 py-2 rounded-full capitalize transition-colors ${
                 selectedCategory === category
-                  ? `${themeMode === "dark" ? "text-black/90 bg-white/80" : "text-white/90 bg-black/80"}`
-                  : `${themeMode === "dark" ? "text-white/80 " : "text-black/80"}`
-            }`}
+                  ? `${themeMode === "dark" ? "text-gray-900 bg-white/80" : "bg-gray-900 text-white/80"} ` 
+                  : ' dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
+              }`}
             >
               {category}
             </button>
@@ -149,7 +149,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Portfolio Grid */}
-      <section className="container mx-auto  mb-16">
+      <section className="container mx-auto px-4 mb-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item, index) => (
             <motion.div
@@ -187,8 +187,8 @@ export default function PortfolioPage() {
       )} 
 
       {/* Call to Action */}
-      <section className="bg-gray-100 dark:bg-gray-900 py-16 px-4 rounded-2xl">
-        <div className="container mx-auto text-center">
+      <section className="bg-gray-900 py-16 rounded-2xl">
+        <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +196,7 @@ export default function PortfolioPage() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold mb-4 text-white/80">Impressed by Our Work?</h2>
-            <p className="max-w-xl mx-auto mb-8 text-gray-600 dark:text-gray-300">
+            <p className="max-w-xl mx-auto mb-8 text-gray-300">
               Let us create a custom piece tailored specifically for you. Schedule a consultation with our expert tailors today.
             </p>
             <div className="flex justify-center gap-4 flex-wrap">

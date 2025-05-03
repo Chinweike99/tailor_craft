@@ -39,13 +39,6 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    
-    // Check system preference for dark mode
-    // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    //   setIsDarkMode(true);
-    //   document.documentElement.classList.add('dark');
-    // }
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -59,15 +52,11 @@ const Navbar = () => {
   return (
     <nav
       className={`${ `container  mx-auto px-4 max-w-6xl sticky top-0 w-full z-50 transition-all duration-300 items-center justify-center flex flex-col py-4`}  ${
-        isScrolled ? 'bg-white/80 dark:bg-gray-900/10 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
+        isScrolled ? 'bg-white/10 dark:bg-gray-900/10 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
       }`}
     >
         <div className=' w-full '>
       <div className="container mx-auto flex justify-between items-center">
-        {/* <Link href="/" className="font-bold text-xl md:text-2xl">
-          <span className="text-primary">Bespoke</span>
-          <span className="dark:text-white">Tailor</span>
-        </Link> */}
 
 <Link href="/" className="flex items-center">
                         <Scissors 
