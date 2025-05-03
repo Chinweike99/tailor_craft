@@ -246,7 +246,7 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center"
+                className="bg-white p-6 rounded-lg shadow-md text-center"
               >
                 <div className="flex justify-center mb-4">{step.icon}</div>
                 <h3 className="text-xl font-bold mb-2 text-gray-900">{step.title}</h3>
