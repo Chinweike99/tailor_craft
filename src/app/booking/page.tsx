@@ -64,7 +64,7 @@ export default function BookingPage() {
             <motion.div
               key={category.value}
               variants={itemVariants}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105"
+              className="bg-gray-900 rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105"
               onClick={() => setSelectedCategory(category.value)}
             >
               <div className="p-6">
