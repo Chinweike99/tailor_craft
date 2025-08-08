@@ -86,7 +86,7 @@ export default function BookingPage() {
           transition={{ duration: 0.5 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="md:px-16 flex justify-between items-center mb-8">
+          <div className="md:px-16 flex  justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">
               {categories.find(cat => cat.value === selectedCategory)?.label}
             </h2>
