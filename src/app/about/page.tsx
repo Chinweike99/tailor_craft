@@ -11,7 +11,7 @@ export default function AboutPage() {
   const {themeMode} = useTheme();
 
   return (
-    <main className="container mx-auto px-4 py-16 max-w-6xl">
+    <main className="container mx-auto px-4 py-16">
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-16">
         <motion.div 
