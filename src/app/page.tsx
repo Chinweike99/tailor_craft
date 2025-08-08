@@ -113,6 +113,7 @@ export default function HomePage(){
 
 
   return(
+
 <main className=" mx-auto">
       {/* Hero Section */}
       <div className="">
