@@ -206,7 +206,7 @@ export default function HomePage(){
     whileTap={{ scale: 0.95 }}
     onClick={() => {
       const nextSection = document.querySelector('[data-section="stats"]') || 
-                         document.querySelector('section:nth-of-type(2)');
+      document.querySelector('section:nth-of-type(2)');
       nextSection?.scrollIntoView({ behavior: 'smooth' });
     }}
   >
