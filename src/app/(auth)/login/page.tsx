@@ -13,7 +13,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Button } from "@/components/ui/components/button";
 
 
-
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -40,11 +39,17 @@ export default function LoginPage() {
     setLoading(true);
     login(values, {
       onSuccess: (data) => {
-        setUser(data.user);
-        setToken(data.token);
-        router.push(
-          data.user.role === "ADMIN" ? "/admin/dashboard" : "/client/dashboard"
-        );
+        console.log("Login response:", data);
+
+    setUser(data.result.user);
+      setToken(data.result.tokens.accessToken);
+      
+      // Set the auth cookie that middleware expects
+      document.cookie = `auth=${data.result.tokens.accessToken}; path=/; secure; samesite=strict`;
+      
+      router.push(
+        data.result.user.role === "ADMIN" ? "/admin/dashboard" : "/client/dashboard"
+      );
       },
       onError: (error: AxiosError) => {
         const message = (error.response?.data as { message?: string })?.message;

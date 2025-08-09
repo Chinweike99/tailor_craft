@@ -22,7 +22,7 @@ export function Providers({ children }: { children: ReactNode }) {
   );
 
   return (
-    <SessionProvider>
+    // <SessionProvider>
       <StoreProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class" defaultTheme="light">
@@ -32,6 +32,6 @@ export function Providers({ children }: { children: ReactNode }) {
           </ThemeProvider>
         </QueryClientProvider>
       </StoreProvider>
-    </SessionProvider>
+    // </SessionProvider>
   );
 }

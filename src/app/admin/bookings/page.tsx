@@ -2,7 +2,7 @@
 
 import { BOOKING_STATUS } from "@/_utils/constants";
 import { useGet } from "@/_utils/useApi";
-import { columns } from "@/app/(client)/bookings/columns";
+import { columns } from "@/app/client/bookings/columns";
 import { DataTable } from "@/components/shared/data-table";
 // import { useGet } from "@/src/_hooks/useApi";
 // import { DataTable } from "@/src/_components/admin/data-table";

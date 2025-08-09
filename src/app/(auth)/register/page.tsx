@@ -8,7 +8,7 @@ import Link from "next/link";
 import { AxiosError } from "axios";
 import { usePost } from "@/_utils/useApi";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/_input";
 import { Button } from "@/components/ui/components/button";
 
 const formSchema = z.object({

@@ -13,6 +13,8 @@ export default function AdminDashboardPage() {
     "/client/stats"
   );
 
+  console.log("Data: ", stats)
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Dashboard Overview</h1>

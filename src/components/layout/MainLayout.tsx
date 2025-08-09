@@ -2,6 +2,7 @@
 
 import { useTheme } from "@/hooks/useTheme";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -11,8 +12,17 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({children}: MainLayoutProps) {
-  const {  colors } = useTheme();
+  const { colors } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
+  const pathname = usePathname();
+
+  // Define routes where navbar and footer should be hidden
+  const hiddenNavRoutes = ['/admin', '/client'];
+  
+  // Check if current path starts with any of the hidden routes
+  const shouldHideNavigation = hiddenNavRoutes.some(route => 
+    pathname.startsWith(route)
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -44,9 +54,11 @@ export default function MainLayout({children}: MainLayoutProps) {
         </motion.div>
       ) : (
         <>
-          <Navbar />
+          {/* Conditionally render Navbar */}
+          {!shouldHideNavigation && <Navbar />}
+          
           <main className="flex-grow">
-            <AnimatePresence mode="wait">
+            {/* <AnimatePresence mode="wait">
               <motion.div
                 key={typeof window !== 'undefined' ? window.location.pathname : 'initial'}
                 initial={{ opacity: 0, y: 20 }}
@@ -56,9 +68,22 @@ export default function MainLayout({children}: MainLayoutProps) {
               >
                 {children}
               </motion.div>
-            </AnimatePresence>
+            </AnimatePresence> */}
+            <AnimatePresence mode="wait">
+  <motion.div
+    key={pathname}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
+  >
+    {children}
+  </motion.div>
+</AnimatePresence>
           </main>
-          <Footer />
+          
+          {/* Conditionally render Footer */}
+          {!shouldHideNavigation && <Footer />}
         </>
       )}
     </div>

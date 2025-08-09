@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ToastProps } from "./toast";
+import { ToastProps, ToastActionElement } from "./toast"; // Add ToastActionElement import
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
@@ -88,8 +88,6 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action;
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {

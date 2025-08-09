@@ -19,6 +19,7 @@ const navItems = [
   { name: 'Booking', path: '/booking' },
   { name: 'Testimonials', path: '/testimonials' },
   { name: 'Contact', path: '/contact' },
+  { name: 'Login', path: '/login' },
 ];
 
 const Navbar = () => {
