@@ -33,12 +33,12 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const status = row.getValue("status") as keyof typeof BOOKING_STATUS;
       const statusMap = {
-        [BOOKING_STATUS.PENDING]: "bg-yellow-500",
-        [BOOKING_STATUS.APPROVED]: "bg-blue-500",
-        [BOOKING_STATUS.IN_PROGRESS]: "bg-purple-500",
-        [BOOKING_STATUS.COMPLETED]: "bg-green-500",
-        [BOOKING_STATUS.DECLINED]: "bg-red-500",
-        [BOOKING_STATUS.CANCELLED]: "bg-gray-500",
+        [BOOKING_STATUS.PENDING]: "bg-yellow-300 rounded-full text-gray-700",
+        [BOOKING_STATUS.APPROVED]: "bg-blue-300 rounded-full text-gray-700",
+        [BOOKING_STATUS.IN_PROGRESS]: "bg-purple-300 rounded-full text-gray-700",
+        [BOOKING_STATUS.COMPLETED]: "bg-green-300 rounded-full text-gray-700",
+        [BOOKING_STATUS.DECLINED]: "bg-red-300 rounded-full text-gray-700",
+        [BOOKING_STATUS.CANCELLED]: "bg-gray-300 rounded-full text-gray-700",
       };
       return (
         <Badge className={statusMap[status]}>
@@ -53,9 +53,9 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => {
       const paymentStatus = row.getValue("paymentStatus");
       const paymentMap = {
-        UNPAID: "bg-red-500",
-        PARTIAL: "bg-yellow-500",
-        SUCCESS: "bg-green-500",
+        UNPAID: "bg-red-300 rounded-full text-gray-700",
+        PARTIAL: "bg-yellow-300 rounded-full text-gray-700",
+        SUCCESS: "bg-green-300 rounded-full text-gray-700",
       };
       return (
         <Badge className={paymentMap[paymentStatus as keyof typeof paymentMap]}>
@@ -66,18 +66,19 @@ export const columns: ColumnDef<any>[] = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       const booking = row.original;
       return (
         <div className="flex space-x-2">
           <Link href={`/client/bookings/${booking.id}`}>
-            <Button variant="outline" size="sm">
-              <Eye className="h-4 w-4" />
+            <Button variant="outline" size="sm" className="bg-white cursor-pointer">
+              <Eye className="h-4 w-4 " />
             </Button>
           </Link>
           {booking.status === BOOKING_STATUS.PENDING && (
             <Link href={`/client/bookings/${booking.id}/edit`}>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="bg-white cursor-pointer">
                 <Pencil className="h-4 w-4" />
               </Button>
             </Link>

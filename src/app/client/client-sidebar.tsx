@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { LayoutDashboard, Scissors, User, BookOpen, Star, FileText } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
 import { cn } from "@/_utils/utils";
-import { Button } from "../ui/Button";
+import { Button } from "../../components/ui/Button";
 
 
 
@@ -17,7 +17,7 @@ const navItems = [
   },
   {
     name: "Bookings",
-    href: "/client/bookings",
+    href: "/client/bookings/booking",
     icon: Scissors,
   },
   {
@@ -58,12 +58,13 @@ export default function ClientSidebar() {
 
       {/* Sidebar */}
       <aside
-        className={cn(
-          "fixed inset-y-0 z-50 flex w-64 flex-col border-r bg-white transition-all duration-300 ease-in-out lg:left-0",
-          sidebarOpen ? "left-0" : "-left-64",
-          mobileSidebarOpen ? "left-0" : "-left-64"
-        )}
-      >
+  className={cn(
+    "lg:relative lg:flex lg:flex-shrink-0",
+    "fixed inset-y-0 z-50 flex w-64 flex-col border-r bg-white transition-transform duration-300 ease-in-out lg:translate-x-0",
+    mobileSidebarOpen ? "translate-x-0" : "-translate-x-full",
+    "lg:w-64"
+  )}
+>
         <div className="flex h-16 items-center border-b px-4">
           <Link href="/client/dashboard" className="flex items-center gap-2">
             <Scissors className="h-6 w-6 text-primary" />

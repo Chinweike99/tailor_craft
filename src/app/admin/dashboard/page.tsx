@@ -8,12 +8,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Users, Scissors, DollarSign, Package } from "lucide-react";
 
 export default function AdminDashboardPage() {
-  const { data: stats, isLoading } = useGet<any>(
+  const { data, isLoading } = useGet<any>(
     ["admin-stats"],
     "/client/stats"
   );
 
-  console.log("Data: ", stats)
+  console.log("Data: ", data)
+  const dashboardStats = data?.stats;
 
   return (
     <div className="space-y-6">
@@ -29,7 +30,8 @@ export default function AdminDashboardPage() {
             {isLoading ? (
               <Skeleton className="h-8 w-1/2" />
             ) : (
-              <div className="text-2xl font-bold">{stats?.totalClients || 0}</div>
+              // <div className="text-2xl font-bold">{stats?.totalClients || 0}</div>
+              <div className="text-2xl font-bold">{dashboardStats?.totalClients || 0}</div>
             )}
           </CardContent>
         </Card>
@@ -42,7 +44,7 @@ export default function AdminDashboardPage() {
             {isLoading ? (
               <Skeleton className="h-8 w-1/2" />
             ) : (
-              <div className="text-2xl font-bold">{stats?.totalBookings || 0}</div>
+              <div className="text-2xl font-bold"> {dashboardStats?.totalBookings || 0}</div>
             )}
           </CardContent>
         </Card>
@@ -56,7 +58,7 @@ export default function AdminDashboardPage() {
               <Skeleton className="h-8 w-1/2" />
             ) : (
               <div className="text-2xl font-bold">
-                ₦{(stats?.totalRevenue || 0).toLocaleString()}
+                 ₦{(dashboardStats?.totalRevenue?.amount || 0).toLocaleString()}
               </div>
             )}
           </CardContent>
@@ -71,7 +73,8 @@ export default function AdminDashboardPage() {
               <Skeleton className="h-8 w-1/2" />
             ) : (
               <div className="text-2xl font-bold">
-                {stats?.pendingBookings || 0}
+                {/* {stats?.pendingBookings || 0} */}
+                 {dashboardStats?.pendingBookings || 0}
               </div>
             )}
           </CardContent>
@@ -90,9 +93,9 @@ export default function AdminDashboardPage() {
                   <Skeleton key={i} className="h-16 w-full" />
                 ))}
               </div>
-            ) : stats?.recentBookings && stats.recentBookings.length > 0 ? (
+            ) : dashboardStats?.recentBookings && dashboardStats.recentBookings.length > 0 ? (
               <div className="space-y-4">
-                {stats.recentBookings.map((booking: any) => (
+                {dashboardStats.recentBookings.map((booking: any) => (
                   <div
                     key={booking.id}
                     className="flex items-center justify-between rounded-lg border p-4"
@@ -128,9 +131,9 @@ export default function AdminDashboardPage() {
                   <Skeleton key={i} className="h-16 w-full" />
                 ))}
               </div>
-            ) : stats?.recentClients && stats.recentClients.length > 0 ? (
+            ) : dashboardStats?.recentClients && dashboardStats.recentClients.length > 0 ? (
               <div className="space-y-4">
-                {stats.recentClients.map((client: any) => (
+                {dashboardStats.recentClients.map((client: any) => (
                   <div
                     key={client.id}
                     className="flex items-center justify-between rounded-lg border p-4"

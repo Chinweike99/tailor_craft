@@ -4,20 +4,19 @@ import { BOOKING_STATUS } from "@/_utils/constants";
 import { useGet } from "@/_utils/useApi";
 import { columns } from "@/app/client/bookings/columns";
 import { DataTable } from "@/components/shared/data-table";
-// import { useGet } from "@/src/_hooks/useApi";
-// import { DataTable } from "@/src/_components/admin/data-table";
-// import { columns } from "./columns";
-// import { BOOKING_STATUS } from "@/src/config/constants";
-// import { Tabs } from "@/components/ui/tabs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AdminBookingsPage() {
-  const { data: bookings, isLoading } = useGet<any[]>(
+  const { data: bookings, isLoading } = useGet<any>(
     ["admin-bookings"],
     "/booking/admin/all"
   );
+  console.log("Booking ", bookings)
 
-  const allBookings = bookings || [];
+  // const allBookings = bookings || [];
+  // const allBookings: any[] = Array.isArray(bookings) ? bookings : Array.isArray((bookings as any)?.bookings) ?(bookings as any).bookings : [];
+  const allBookings: any[] = bookings?.response?.data || [];
+
   const pendingBookings = allBookings.filter(
     (booking) => booking.status === BOOKING_STATUS.PENDING
   );
