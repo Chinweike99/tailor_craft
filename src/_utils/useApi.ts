@@ -50,12 +50,12 @@ export const usePatch = <T, U>(key: string[], url: string) => {
   });
 };
 
-export const useDelete = <T>(key: string[], url: string) => {
+export const useDelete = <T>(key: string[], baseUrl: string) => {
   const queryClient = useQueryClient();
-  return useMutation<T, AxiosError>({
+  return useMutation<T, AxiosError, string>({
     mutationKey: key,
-    mutationFn: async () => {
-      const response = await apiClient.delete(url);
+    mutationFn: async (id: string) => {
+      const response = await apiClient.delete(`${baseUrl}/${id}`);
       return response as T;
     },
     onSuccess: () => {
