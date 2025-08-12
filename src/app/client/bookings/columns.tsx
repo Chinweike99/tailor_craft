@@ -118,22 +118,35 @@ interface StatusEditModalProps {
 }
 
 const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModalProps) => {
+
+  const [selectedImage, setSelectedImage] = useState<{ src: string; index: number } | null>(null);
+
   const { data: bookingData, isLoading } = useGet<any>(
     ["booking-details", bookingId],
     `/booking/${bookingId}`,
     isOpen
   );
 
-  const { data: client } = useGet<{ response: ClientData }>(
-      ["client"],
-      `/client/`
-    );
-  
-    const clientData = client?.response;
-  
-
   console.log("Booking Data: ", bookingData);
   const booking = bookingData?.getbooking || bookingData?.response?.getbooking;
+  console.log("Booking Details:", booking);
+
+
+  
+const { data: client } = useGet<{ resonse: { data: ClientData[] } }>(
+  ["client"],
+  `/client/`
+);
+
+// Extract the clients array
+const clientsData = client?.resonse?.data;
+console.log("All Clients Data:", clientsData);
+
+
+const bookingClientId = booking?.clientId;
+
+// Then find the matching clien
+const bookingClient = clientsData?.find(client => client.id === bookingClientId);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -222,8 +235,8 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
           <div className="relative bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white p-6">
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">Booking Details</h2>
+              <div className="flex flex-col items-start">
+                <h2 className="text-2xl font-bold">Booking Details </h2>
                 <p className="text-indigo-100 text-sm mt-1">ID: {bookingId}</p>
               </div>
               <motion.button
@@ -305,7 +318,9 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                         <User className="h-4 w-4 text-gray-500" />
                         <div>
                           <span className="text-sm font-medium text-gray-600">User ID:</span>
-                          <p className="text-gray-800 font-mono text-xs break-all">{booking.userId || "N/A"}</p>
+                          {/* <p className="text-gray-800 font-mono text-xs break-all">{ clientsData?.name || "N/A"}</p> */}
+                          <p className="text-gray-800 font-mono text-xs break-all">{ bookingClient?.name || "N/A"}</p>
+
                         </div>
                       </div>
                       <div className="flex items-center p-3 bg-amber-50 rounded-lg border border-amber-200">
@@ -318,7 +333,7 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
 
                 {/* Booking Information */}
                 <motion.div variants={sectionVariants} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                  <div className="bg-gradient-to-r from-emerald-50 to-teal-50 px-6 py-4 border-b border-gray-100">
+                  <div className="bg-gradient-to-r from-purple-50 to-teal-50 px-6 py-4 border-b border-gray-100">
                     <h3 className="text-lg font-semibold text-gray-800 flex items-center">
                       <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center mr-3">
                         <Package className="h-4 w-4 text-emerald-600" />
@@ -328,25 +343,31 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                   </div>
                   <div className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-600">Design</span>
-                        <p className="text-gray-800 font-semibold">{booking.Design?.title || booking.customDesign?.title || "Custom Design"}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-600 flex items-center">
-                          <Calendar className="h-4 w-4 mr-1" />
-                          Delivery Date
+                      <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium text-gray-600 whitespace-nowrap">Design:</span>
+                          <p className="text-gray-800 font-semibold truncate">
+                            {booking.Design?.title || booking.customDesign?.title || "Custom Design"}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium text-gray-600 flex items-center whitespace-nowrap">
+                            <Calendar className="h-4 w-4 mr-1 flex-shrink-0" />
+                            Delivery Date:
+                          </span>
+                          <p className="text-gray-800 font-semibold">
+                            {format(new Date(booking.deliveryDate), "MMM dd, yyyy")}
+                          </p>
+                        </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-600 whitespace-nowrap">
+                          Total Amount:
                         </span>
-                        <p className="text-gray-800 font-semibold">{format(new Date(booking.deliveryDate), "MMM dd, yyyy")}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-600">Total Amount</span>
                         <p className="text-gray-800 font-semibold text-lg">
                           {booking.totalAmount ? `₦${booking.totalAmount.toLocaleString()}` : "Not set"}
                         </p>
                       </div>
-                      <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-600">Has Review</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-600 whitespace-nowrap">Has Review</span>
                         <div className="flex items-center space-x-2">
                           {booking.hasReview ? (
                             <>
@@ -361,19 +382,19 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                           )}
                         </div>
                       </div>
-                      <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-600">Updated</span>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-sm font-medium text-gray-600 whitespace-nowrap">Updated</span>
                         <p className="text-gray-800">{format(new Date(booking.updatedAt), "MMM dd, yyyy")}</p>
                       </div>
                     </div>
                     
                     {booking.notes && (
-                      <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <span className="text-sm font-medium text-blue-800 flex items-center mb-2">
+                      <div className="flex gap-3 mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <span className="text-sm font-medium text-blue-800 flex items-center mb-2 self-start">
                           <MessageCircle className="h-4 w-4 mr-2" />
                           Notes
                         </span>
-                        <p className="text-blue-700">{booking.notes}</p>
+                        <p className="text-blue-700 text-center">{booking.notes}</p>
                       </div>
                     )}
 
@@ -404,37 +425,30 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                       <div className="space-y-6">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                           <div className="space-y-4">
-                            <div>
-                              <span className="text-sm font-medium text-gray-600">Title</span>
-                              <p className="text-gray-800 font-semibold text-lg">{booking.Design.title}</p>
+                            <div className="flex items-center gap-2">
+                        
+                              <p className="text-gray-800 font-semibold ">Title: {booking.Design.title}</p>
                             </div>
-                            <div>
-                              <span className="text-sm font-medium text-gray-600">Description</span>
-                              <p className="text-gray-700 mt-1 leading-relaxed">{booking.Design.description}</p>
+                             <div className="flex items-center space-x-4">
+                              <p className="text-gray-800 font-semibold ">Category: {booking.Design.category}</p>
+                              
                             </div>
-                            <div className="flex items-center space-x-4">
-                              <Badge className="bg-indigo-100 text-indigo-800 border border-indigo-200 px-3 py-1 rounded-full font-medium">
-                                {booking.Design.category}
-                              </Badge>
+                            <div className="flex items-center gap-2">
+                              
+                              {/* <span className="text-sm font-medium text-gray-600"</span> */}
+                              <p className="text-gray-800 font-semibold ">Description: {booking.Design.description}</p>
                             </div>
+                           
                           </div>
-                          <div className="space-y-4">
-                            <div className="grid grid-cols-2 gap-4">
-                              <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                                <span className="text-sm font-medium text-green-800">Price Range</span>
-                                <p className="text-green-700 font-semibold">
-                                  ₦{booking.Design.priceRange.min.toLocaleString()} - ₦{booking.Design.priceRange.max.toLocaleString()}
-                                </p>
-                              </div>
-                              <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                <span className="text-sm font-medium text-blue-800">Delivery Time</span>
-                                <p className="text-blue-700 font-semibold">{booking.Design.minimumDeliveryTime} days</p>
-                              </div>
-                            </div>
+                          
+                        </div>
+
+                        <div className="space-y-4">
+                            
                             {booking.Design.requiredMaterials && booking.Design.requiredMaterials.length > 0 && (
-                              <div>
-                                <span className="text-sm font-medium text-gray-600 block mb-2">Required Materials</span>
-                                <div className="flex flex-wrap gap-2">
+                              <div className="flex items-center gap-3 text-gray-800 font-semibold">
+                                <span className="text-sm font-medium text-gray-600 ">Required Materials</span>
+                                <div className="flex gap-2">
                                   {booking.Design.requiredMaterials.map((material: string, index: number) => (
                                     <motion.div
                                       key={index}
@@ -451,30 +465,82 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                               </div>
                             )}
                           </div>
-                        </div>
-                        {booking.Design.images && booking.Design.images.length > 0 && (
-                          <div>
-                            <span className="text-sm font-medium text-gray-600 block mb-3">Design Images</span>
-                            <div className="flex space-x-3 overflow-x-auto pb-2">
-                              {booking.Design.images.map((image: string, index: number) => (
-                                <motion.div
-                                  key={index}
-                                  initial={{ opacity: 0, y: 20 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ delay: index * 0.1 }}
-                                  whileHover={{ scale: 1.05 }}
-                                  className="flex-shrink-0"
-                                >
-                                  <img
-                                    src={image}
-                                    alt={`Design ${index + 1}`}
-                                    className="w-28 h-28 object-cover rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                                  />
-                                </motion.div>
-                              ))}
+
+                        <div className="grid grid-cols-2 gap-4">
+                              <div className="p-3 rounded-lg border border-green-200">
+                                <span className="text-sm font-medium text-green-800">Price Range</span>
+                                <p className="text-green-700 font-semibold">
+                                  ₦{booking.Design.priceRange.min.toLocaleString()} - ₦{booking.Design.priceRange.max.toLocaleString()}
+                                </p>
+                              </div>
+                              <div className="p-3  rounded-lg border border-blue-200">
+                                <span className="text-sm font-medium text-blue-800">Delivery Time</span>
+                                <p className="text-blue-700 font-semibold">{booking.Design.minimumDeliveryTime} days</p>
+                              </div>
                             </div>
-                          </div>
-                        )}
+                        {booking.Design.images && booking.Design.images.length > 0 && (
+                            <div>
+                              <span className="text-sm font-medium text-gray-600 block mb-3">Design Images</span>
+                              <div className="flex space-x-3 overflow-x-auto pb-2">
+                                {booking.Design.images.map((image: string, index: number) => (
+                                  <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    whileHover={{ scale: 1.05 }}
+                                    className="flex-shrink-0"
+                                  >
+                                    <img
+                                      src={image}
+                                      alt={`Design ${index + 1}`}
+                                      className="w-28 h-28 object-cover rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                                      onClick={() => setSelectedImage({ src: image, index })}
+                                    />
+                                  </motion.div>
+                                ))}
+                              </div>
+
+                              {/* Image Viewer Modal */}
+                              {selectedImage && (
+                                <div className="fixed inset-0 bg-black/10 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
+                                  <div className="relative max-w-4xl w-full max-h-[90vh]">
+                                    <button 
+                                      className="absolute top-4 right-4 p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors z-10"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedImage(null);
+                                      }}
+                                    >
+                                      <X className="h-6 w-6 text-white" />
+                                    </button>
+                                    
+                                    <motion.img
+                                      key={selectedImage.index}
+                                      initial={{ opacity: 0, scale: 0.9 }}
+                                      animate={{ opacity: 1, scale: 1 }}
+                                      src={selectedImage.src}
+                                      alt={`Design ${selectedImage.index + 1}`}
+                                      className="w-full h-full object-contain rounded-lg"
+                                    />
+                                    
+                                    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                                      {booking.Design.images.map((img: string, idx: number) => (
+                                        <button
+                                          key={idx}
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            setSelectedImage({ src: img, index: idx });
+                                          }}
+                                          className={`w-3 h-3 rounded-full transition-colors ${selectedImage.index === idx ? 'bg-white' : 'bg-white/50'}`}
+                                        />
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )}
                       </div>
                     </div>
                   </motion.div>
@@ -539,9 +605,9 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: index * 0.1 }}
-                            className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200"
+                            className=" flex flex-col items-center p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200"
                           >
-                            <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center justify-between gap-5 mb-3">
                               <div className="flex items-center space-x-2">
                                 <div className="flex">
                                   {[...Array(5)].map((_, i) => (
@@ -559,11 +625,11 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                                     </motion.div>
                                   ))}
                                 </div>
-                                <span className="text-sm font-semibold text-gray-700">{review.rating}/5</span>
+                                <span className="text-sm font-semibold text-gray-700 self-end">{review.rating}/5</span>
                               </div>
-                              <span className="text-xs text-gray-500">
+                              {/* <span className="text-xs text-gray-500">
                                 {format(new Date(review.createdAt), "MMM dd, yyyy")}
-                              </span>
+                              </span> */}
                             </div>
                             <p className="text-gray-700 leading-relaxed">{review.comment}</p>
                           </motion.div>
@@ -815,7 +881,7 @@ export const columns: ColumnDef<any>[] = [
 
       return (
         <>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center justify-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 variant="outline" 
