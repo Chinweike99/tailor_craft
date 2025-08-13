@@ -66,7 +66,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit, Trash2, X, Clock, DollarSign, Package, Calendar, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Clock, DollarSign, Package, Calendar, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { useToast } from "@/components/ui/components/use-toast";
 import Link from "next/link";
 import { useDelete, useGet, usePatch } from "@/_utils/useApi";
@@ -110,6 +110,7 @@ interface DesignCardProps {
   onView: (design: Design) => void;
   onDelete: (id: string) => void;
   onToggleActive: (id: string, isActive: boolean) => void;
+  index: number;
 }
 
 interface DesignModalProps {
@@ -119,7 +120,9 @@ interface DesignModalProps {
   onUpdate: (design: Design) => void;
 }
 
-const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onToggleActive }) => {
+const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onToggleActive, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const formatPrice = (price: number): string => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -136,37 +139,39 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onTog
     });
   };
 
-
   return (
     <motion.div
-      layout
+      className="bg-gray-600 text-white group rounded-xl cursor-pointer overflow-hidden shadow-md h-full flex flex-col"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      whileHover={{ y: -4, boxShadow: "0 8px 25px rgba(0,0,0,0.08)" }}
-      className="bg-white rounded-lg border border-gray-200 overflow-hidden cursor-pointer group hover:border-gray-300 transition-all duration-200"
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => onView(design)}
     >
-      <div className="relative h-56 bg-gray-50 overflow-hidden">
+      <div className="relative h-60 overflow-hidden">
         {design.images && design.images.length > 0 ? (
           <motion.img
             src={design.images[0]}
             alt={design.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-50">
-            <Package className="w-16 h-16 text-gray-300" />
+          <div className="w-full h-full flex items-center justify-center bg-gray-700">
+            <Package className="w-16 h-16 text-gray-400" />
           </div>
         )}
         
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 text-xs font-medium bg-white/90 backdrop-blur-sm text-gray-700 rounded-md shadow-sm">
-            {design.category}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        
+        <div className="absolute bottom-4 left-4 z-10 px-2 bg-gray-500 rounded-xl">
+          <span className="px-3 py-1 text-sm md:text-xl font-semibold rounded-full">
+            {design.category.charAt(0).toUpperCase() + design.category.slice(1)}
           </span>
         </div>
 
-        <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -198,59 +203,87 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onTog
         </div>
 
         {!design.isActive && (
-          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
             <span className="px-3 py-1 bg-black/60 text-white text-sm rounded-md">Inactive</span>
           </div>
         )}
       </div>
 
-      <div className="p-5">
-        <div className="mb-4">
-          <h3 className="font-semibold text-gray-900 text-lg mb-1 line-clamp-1">{design.title}</h3>
-          <p className="text-gray-600 text-sm line-clamp-2">{design.description}</p>
-        </div>
+      <div className="p-6 flex flex-col flex-grow">
+        <motion.h3 
+          className="text-xl mb-2"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0.8 }}
+        >
+          {design.title}
+        </motion.h3>
         
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1 text-gray-700">
-              <DollarSign className="w-4 h-4 text-gray-400" />
-              <span className="text-sm font-medium">
-                {formatPrice(design.priceRange.min)} - {formatPrice(design.priceRange.max)}
-              </span>
-            </div>
-            <div className="flex items-center space-x-1 text-gray-600">
-              <Clock className="w-4 h-4 text-gray-400" />
-              <span className="text-sm">{design.minimumDeliveryTime} days</span>
-            </div>
-          </div>
+        <motion.p 
+          className="mb-4 flex-grow text-gray-300"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 0.6 : 1 }}
+          transition={{ duration: 0.2, delay: 0.3 }}
+        >
+          {design.description}
+        </motion.p>
+        
+        <motion.div 
+          className="md:text-xl flex justify-between items-center mt-auto pt-4 border-t border-gray-700"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.2, delay: 0.3 }}
+        >
+          <span className="font-medium">
+            {formatPrice(design.priceRange.min)} - {formatPrice(design.priceRange.max)}
+          </span>
+          <span className="font-medium">{design.minimumDeliveryTime} days</span>
+        </motion.div>
 
-          <div className="flex flex-wrap gap-1.5">
-            {design.requiredMaterials.slice(0, 3).map((material: string, index: number) => (
-              <span
-                key={index}
-                className="px-2.5 py-1 bg-gray-100 text-gray-700 text-xs rounded-md font-medium"
-              >
-                {material}
-              </span>
-            ))}
-            {design.requiredMaterials.length > 3 && (
-              <span className="px-2.5 py-1 bg-gray-50 text-gray-500 text-xs rounded-md">
-                +{design.requiredMaterials.length - 3} more
-              </span>
-            )}
-          </div>
+        <motion.div 
+          className="flex flex-wrap gap-1.5 mt-4"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 0.8 : 0 }}
+          transition={{ duration: 0.2, delay: 0.4 }}
+        >
+          {design.requiredMaterials.slice(0, 3).map((material: string, index: number) => (
+            <span
+              key={index}
+              className="px-2.5 py-1 bg-gray-700 text-gray-300 text-xs rounded-md font-medium"
+            >
+              {material}
+            </span>
+          ))}
+          {design.requiredMaterials.length > 3 && (
+            <span className="px-2.5 py-1 bg-gray-600 text-gray-400 text-xs rounded-md">
+              +{design.requiredMaterials.length - 3} more
+            </span>
+          )}
+        </motion.div>
 
-          <div className="pt-2 border-t border-gray-100">
-            <div className="text-xs text-gray-500">
-              Created {formatDate(design.createdAt)}
-            </div>
+        <motion.div 
+          className="pt-2 mt-2"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 0.6 : 0 }}
+          transition={{ duration: 0.2, delay: 0.5 }}
+        >
+          <div className="text-xs text-gray-400">
+            Created {formatDate(design.createdAt)}
           </div>
-        </div>
+        </motion.div>
+      </div>
+      
+      <div
+        className="p-4 border-t border-gray-700 font-medium flex items-center justify-center group-hover:bg-primary/5 transition-colors"
+      >
+        View Details
+        <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
       </div>
     </motion.div>
   );
-
 };
+
+
+
 
 const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUpdate }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -288,7 +321,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/10 backdrop-blur-lg bg-opacity-50 z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >
           <motion.div
@@ -676,8 +709,7 @@ const AdminDesignsPage: React.FC = () => {
                 design={design}
                 onView={handleViewDesign}
                 onDelete={handleDelete}
-                onToggleActive={handleToggleActive}
-              />
+                onToggleActive={handleToggleActive} index={0}              />
             </motion.div>
           ))}
         </AnimatePresence>
