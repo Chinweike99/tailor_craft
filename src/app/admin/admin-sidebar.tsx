@@ -170,7 +170,7 @@ export default function AdminSidebar() {
       {/* Mobile sidebar backdrop */}
       {mobileSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/10 backdrop-blur bg-opacity-50 lg:hidden"
           onClick={toggleMobileSidebar}
         />
       )}

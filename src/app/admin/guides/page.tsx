@@ -42,7 +42,7 @@ export default function AdminGuidesPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Measurement Guides</h1>
         <Link href="/admin/guides/new">
-          <Button>
+          <Button className="w-fit cursor-pointer text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700cursor-pointer">
             <Plus className="mr-2 h-4 w-4" />
             New Guide
           </Button>

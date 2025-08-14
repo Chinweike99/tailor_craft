@@ -27,7 +27,7 @@ export default function AdminHeader() {
 
   return (
     <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-      <Button
+      {/* <Button
         variant="outline"
         // size="icon"
         className="shrink-0 md:hidden"
@@ -35,13 +35,14 @@ export default function AdminHeader() {
       >
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle navigation menu</span>
-      </Button>
+      </Button> */}
 
       <Button
         variant="outline"
         // size="icon"
-        className="hidden shrink-0 md:flex"
-        onClick={toggleSidebar}
+        // className=""
+        onClick={toggleMobileSidebar}
+        className="sm:flex md:hidden shrink-0  bg-white hover:bg-gray-100 "
       >
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle navigation menu</span>

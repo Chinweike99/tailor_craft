@@ -45,7 +45,7 @@ export const columns = (onDelete: (id: string) => void): ColumnDef<any>[] => [
       }, [showModal]);
 
       return (
-        <div className="flex items-center space-x-2 relative">
+        <div className="flex items-center justify-center space-x-2 relative">
           {showModal && (
             <div
               ref={modalRef}
@@ -54,9 +54,9 @@ export const columns = (onDelete: (id: string) => void): ColumnDef<any>[] => [
               <Link href={`/admin/guides/${guide.id}`}>
                 <p className="cursor-pointer hover:underline">View</p>
               </Link>
-              <Link href={`/admin/guides/${guide.id}/edit`}>
+              {/* <Link href={`/admin/guides/${guide.id}/edit`}>
                 <p className="cursor-pointer hover:underline">Edit</p>
-              </Link>
+              </Link> */}
               <Button
                 size="sm"
                 onClick={() => {
@@ -70,7 +70,7 @@ export const columns = (onDelete: (id: string) => void): ColumnDef<any>[] => [
             </div>
           )}
           <MoreVertical
-            className="h-4 w-4 cursor-pointer"
+            className="h-4 w-4 cursor-pointer self-center"
             onClick={() => setShowModal(!showModal)}
           />
         </div>

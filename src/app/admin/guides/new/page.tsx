@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/src/_components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
@@ -11,20 +11,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/src/_components/ui/form";
-import { Input } from "@/src/_components/ui/input";
+} from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { usePost } from "@/src/_hooks/useApi";
-import { Textarea } from "@/src/_components/ui/textarea";
+import { Textarea } from "@/components/ui/_textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/_components/ui/select";
-import { useToast } from "@/src/_components/ui/use-toast";
+} from "@/components/ui/_select";
 import { AxiosError } from "axios";
+import { useToast } from "@/components/ui/components/use-toast";
+import { Input } from "@/components/ui/components/input";
+import { usePost } from "@/_utils/useApi";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
@@ -61,10 +61,10 @@ export default function NewGuidePage() {
         });
         router.push("/admin/guides");
       },
-      onError: (error: AxiosError<{ message: string }>) => {
-        toast({
+      onError: (error: AxiosError) => {
+        return toast({
           title: "Error",
-          description: error.response?.data?.message || "Guide creation failed",
+          description: "Guide creation failed",
           variant: "destructive",
         });
       },
