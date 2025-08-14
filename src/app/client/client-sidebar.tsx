@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, Scissors, User, BookOpen, Star, FileText } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
 import { cn } from "@/_utils/utils";
 import { Button } from "../../components/ui/Button";
+import { useAuthStore } from "@/store/authstore";
 
 
 
@@ -45,6 +46,13 @@ const navItems = [
 export default function ClientSidebar() {
   const pathname = usePathname();
   const { sidebarOpen, mobileSidebarOpen, toggleMobileSidebar } = useUIStore();
+    const { logout } = useAuthStore();
+      const router = useRouter();
+    
+      const handleLogout = () => {
+        logout();
+        router.push("/login");
+      };
 
   return (
     <>
@@ -100,7 +108,7 @@ export default function ClientSidebar() {
         </div>
 
         <div className="border-t p-4">
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full" onClick={handleLogout}>
             Logout
           </Button>
         </div>

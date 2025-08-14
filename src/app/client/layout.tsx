@@ -1,6 +1,7 @@
+"use client";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-// import "./globals.css";
 import { Providers } from "../_providers/providers";
 import ClientSidebar from "@/app/client/client-sidebar";
 import ClientHeader from "./client-header";
@@ -10,11 +11,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "TailorCraft - Client Dashboard",
-  description: "TailorCraft Client Dashboard",
-};
 
 export default function ClientLayout({
   children,
@@ -27,12 +23,12 @@ export default function ClientLayout({
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      router.push("/login");
+      router.replace("/login");
     }
   }, [isAuthenticated, loading, router]);
 
-  if (loading) {
-    return <div>Loading...</div>; // or a spinner
+  if (!isAuthenticated) {
+    return null; // Or a loader while redirecting
   }
 
   return (
