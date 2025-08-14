@@ -5,6 +5,9 @@ import { Providers } from "../_providers/providers";
 import AdminSidebar from "./admin-sidebar";
 import AdminHeader from "./admin-header";
 import { Toaster } from "@/components/ui/components/toaster";
+import { useAuthStore } from "@/store/authstore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +21,19 @@ export default function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+   const { isAuthenticated, loading } = useAuthStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, loading, router]);
+
+  if (loading) {
+    return <div>Loading...</div>; // or a spinner
+  }
   return (
     <div className={inter.className}>
       <Providers>
