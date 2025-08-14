@@ -14,8 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/_input";
 import { useRouter } from "next/navigation";
-// import { usePost } from "@/src/_hooks/useApi";
-// import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -23,10 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/_select";
-// import { DESIGN_CATEGORIES } from "@/src/config/constants";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
-// import { useToast } from "@/src/_components/ui/use-toast";
 import { AxiosError } from "axios";
 import { useToast } from "@/components/ui/components/use-toast";
 import { usePost } from "@/_utils/useApi";
@@ -42,7 +38,7 @@ const formSchema = z.object({
     max: z.number().min(0, "Maximum price must be at least 0"),
   }),
   minimumDeliveryTime: z.number().min(1, "Delivery time must be at least 1 day"),
-  requiredMaterials: z.array(z.string()).min(1, "At least one material is required"),
+  requiredMaterials: z.array(z.string()).optional(), // Made optional
   isActive: z.boolean(),
 });
 
@@ -75,35 +71,85 @@ export default function NewDesignPage() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const payload = {
-      ...values,
-      images,
-      requiredMaterials: materials,
-    };
+  // Validate required fields
+  if (images.length === 0) {
+    toast({
+      title: "Images Required",
+      description: "Please upload at least one image for the design",
+      variant: "destructive",
+    });
+    return;
+  }
 
+  if (materials.length === 0) {
+    toast({
+      title: "Materials Required", 
+      description: "Please add at least one required material",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  // Create JSON payload that matches your backend schema exactly
+  const payload = {
+    title: values.title,
+    description: values.description,
+    priceRange: {
+      min: values.priceRange.min,
+      max: values.priceRange.max
+    },
+    category: values.category,
+    minimumDeliveryTime: values.minimumDeliveryTime,
+    requiredMaterials: materials,
+    isActive: values.isActive,
+    images: images 
+  };
+
+  if (!createDesign) {
+    toast({
+      title: "Error",
+      description: "API function not available",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  console.log("🔄 Calling createDesign...");
+  
+  try {
     createDesign(payload, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        console.log(" Success:", data);
         toast({
           title: "Design created",
           description: "The design has been created successfully",
         });
         router.push("/admin/designs");
       },
-      // onError: (error: AxiosError) => {
-      //         const message = (error.response?.data as { message?: string })?.message;
-      //         form.setError("root", {
-      //           message: message || "Login failed",
-      //         });
-      //       },
       onError: (error: AxiosError) => {
+        const errorData = error.response?.data as any;
+        let errorMessage = "Design creation failed";
+        
+        if (errorData?.errors) {
+          const validationErrors = Object.entries(errorData.errors)
+            .map(([field, messages]) => `${field}: ${(messages as string[]).join(', ')}`)
+            .join('; ');
+          errorMessage = `Validation failed: ${validationErrors}`;
+        } else if (errorData?.message) {
+          errorMessage = errorData.message;
+        }
+        
         toast({
           title: "Error",
-          description:  "Design creation failed",
+          description: errorMessage,
           variant: "destructive",
         });
       },
     });
-  };
+  } catch (err) {
+    console.error("❌ Caught error:", err);
+  }
+};
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -112,6 +158,11 @@ export default function NewDesignPage() {
     try {
       const formData = new FormData();
       formData.append("file", file);
+
+      console.log(
+        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+      );
 
       const response = await fetch(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload?upload_preset=${process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}`,
@@ -135,8 +186,13 @@ export default function NewDesignPage() {
   };
 
   const addMaterial = () => {
+    console.log("🧵 Adding material:", newMaterial);
     if (newMaterial.trim() && !materials.includes(newMaterial.trim())) {
-      setMaterials((prev) => [...prev, newMaterial.trim()]);
+      setMaterials((prev) => {
+        const updated = [...prev, newMaterial.trim()];
+        console.log("🧵 Updated materials:", updated);
+        return updated;
+      });
       setNewMaterial("");
     }
   };
@@ -149,11 +205,23 @@ export default function NewDesignPage() {
     setImages((prev) => prev.filter((i) => i !== image));
   };
 
+  // DEBUG: Add button click handler
+  const handleSubmitClick = (e: React.MouseEvent) => {
+    // console.log("🖱️ Submit button clicked!");
+    // console.log("🔍 Button disabled?", isPending);
+    // console.log("📋 Current form state:", form.formState);
+    
+    // Don't prevent default - let the form handle it
+    // Just log for debugging
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">New Design</h1>
       </div>
+
+      
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -230,7 +298,7 @@ export default function NewDesignPage() {
                           placeholder="Min price"
                           {...field}
                           onChange={(e) =>
-                            field.onChange(parseInt(e.target.value))
+                            field.onChange(parseInt(e.target.value) || 0)
                           }
                         />
                       </FormControl>
@@ -249,7 +317,7 @@ export default function NewDesignPage() {
                           placeholder="Max price"
                           {...field}
                           onChange={(e) =>
-                            field.onChange(parseInt(e.target.value))
+                            field.onChange(parseInt(e.target.value) || 0)
                           }
                         />
                       </FormControl>
@@ -272,7 +340,7 @@ export default function NewDesignPage() {
                       placeholder="Delivery time"
                       {...field}
                       onChange={(e) =>
-                        field.onChange(parseInt(e.target.value))
+                        field.onChange(parseInt(e.target.value) || 1)
                       }
                     />
                   </FormControl>
@@ -294,8 +362,6 @@ export default function NewDesignPage() {
                   />
                   <Button
                     type="button"
-                    // variants="destructive"
-                    // size="icon"
                     className="absolute -right-2 -top-2 h-6 w-6 rounded-full"
                     onClick={() => removeImage(image)}
                   >
@@ -347,14 +413,19 @@ export default function NewDesignPage() {
                   }
                 }}
               />
-              <Button type="button" variant="outline" onClick={addMaterial}>
+              <Button type="button" variant="outline" onClick={addMaterial} className="bg-white  cursor-pointer">
                 Add
               </Button>
             </div>
           </div>
 
           <div className="flex justify-end">
-            <Button type="submit" disabled={isPending}>
+            <Button 
+              type="submit" 
+              disabled={isPending}
+              onClick={handleSubmitClick}
+              className = "cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
               {isPending ? "Creating..." : "Create Design"}
             </Button>
           </div>

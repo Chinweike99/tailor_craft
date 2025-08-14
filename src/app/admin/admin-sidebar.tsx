@@ -225,8 +225,9 @@ export default function AdminSidebar() {
         <div className="border-t p-4">
           <Button 
             variant="outline" 
-            className="w-full"
+            // className="w-full"
             onClick={logout}
+            className="w-full cursor-pointer text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700cursor-pointer"
           >
             Logout
           </Button>

@@ -50,6 +50,25 @@ export const usePatch = <T, U>(key: string[], url: string) => {
   });
 };
 
+export const usePatchDesign = () => {
+  const queryClient = useQueryClient();
+  return useMutation<any, AxiosError, { id: string; [key: string]: any }>({
+    mutationKey: ["update-design"],
+    mutationFn: async (data) => {
+      const { id, ...updateData } = data;
+      const response = await apiClient.patch(`/design/${id}`, updateData);
+      return response;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["designs"] });
+      toast.success("Design updated successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message || "An error occurred");
+    },
+  });
+};
+
 export const useDelete = <T>(key: string[], baseUrl: string) => {
   const queryClient = useQueryClient();
   return useMutation<T, AxiosError, string>({

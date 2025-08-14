@@ -1,67 +1,3 @@
-// "use client";
-
-// import { useToast } from "@/components/ui/components/use-toast";
-// // import { useGet, useDelete } from "@/src/_hooks/useApi";
-// // import { DataTable } from "@/src/_components/admin/data-table";
-// import { columns } from "./columns";
-// // import { Button } from "@/src/_components/ui/button";
-// import { Plus } from "lucide-react";
-// import Link from "next/link";
-// import { useDelete, useGet } from "@/_utils/useApi";
-// import { DataTable } from "@/components/shared/data-table";
-// import { Button } from "@/components/ui/Button";
-// // import { useToast } from "@/src/_components/ui/use-toast";
-
-// export default function AdminDesignsPage() {
-//   const { toast } = useToast();
-//   const { data: designs, isLoading, refetch } = useGet<any[]>(
-//     ["designs"],
-//     "/design"
-//   );
-
-//   console.log("Designs details:", designs);
-//   const designData = designs?.response?.data || []
-
-
-
-//   const { mutate: deleteDesign } = useDelete(["designs"], "/design");
-
-//   const handleDelete = (id: any) => {
-//     deleteDesign(id, {
-//       onSuccess: () => {
-//         toast({
-//           title: "Design deleted",
-//           description: "The design has been deleted successfully",
-//         });
-//         refetch();
-//       },
-//     });
-//   };
-
-//   return (
-//     <div className="space-y-6">
-//       <div className="flex items-center justify-between">
-//         <h1 className="text-2xl font-bold">Designs</h1>
-//         <Link href="/admin/designs/new">
-//           <Button>
-//             <Plus className="mr-2 h-4 w-4" />
-//             New Design
-//           </Button>
-//         </Link>
-//       </div>
-
-//       <DataTable
-//         columns={columns(handleDelete)}
-//         data={designs || []}
-//         isLoading={isLoading}
-//       />
-//     </div>
-//   );
-// }
-
-
-
-
 "use client";
 
 import React, { useState } from 'react';
@@ -69,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Trash2, X, Clock, DollarSign, Package, Calendar, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { useToast } from "@/components/ui/components/use-toast";
 import Link from "next/link";
-import { useDelete, useGet, usePatch } from "@/_utils/useApi";
+import { useDelete, useGet, usePatch, usePatchDesign } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
 
 // TypeScript interfaces
@@ -172,7 +108,7 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onTog
         </div>
 
         <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <motion.button
+          {/* <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={(e: React.MouseEvent) => {
@@ -186,7 +122,7 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onTog
               <Eye className="w-4 h-4 text-gray-600" /> : 
               <EyeOff className="w-4 h-4 text-gray-400" />
             }
-          </motion.button>
+          </motion.button> */}
           
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -340,6 +276,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                   variant="outline"
                   size="sm"
                   onClick={() => setEditMode(!editMode)}
+                  className = "bg-white cursor-pointer"
                 >
                   <Edit className="w-4 h-4 mr-2" />
                   {editMode ? 'Cancel' : 'Edit'}
@@ -478,10 +415,10 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                       </div>
 
                       <div className="flex justify-end space-x-3">
-                        <Button variant="outline" onClick={() => setEditMode(false)}>
+                        <Button variant="outline" onClick={() => setEditMode(false)} className="bg-red-500 cursor-pointer">
                           Cancel
                         </Button>
-                        <Button onClick={handleSave} className="bg-gray-900 hover:bg-gray-800 text-white">
+                        <Button onClick={handleSave} className="bg-green-600 hover:bg-green-500 cursor-pointer">
                           Save Changes
                         </Button>
                       </div>
@@ -531,7 +468,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                         <h4 className="text-sm font-semibold text-gray-900 mb-2">Status</h4>
                         <span className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium ${
                           design.isActive 
-                            ? 'bg-gray-900 text-white' 
+                            ? 'bg-green-600 text-white' 
                             : 'bg-gray-100 text-gray-600'
                         }`}>
                           <div className={`w-2 h-2 rounded-full mr-2 ${
@@ -589,7 +526,7 @@ const AdminDesignsPage: React.FC = () => {
   const { data: designsResponse, isLoading, refetch } = useGet<DesignResponse>(["designs"], "/design");
   const designs = designsResponse?.response?.data || [];
   const { mutate: deleteDesign } = useDelete(["designs"], "/design");
-  const { mutate: updateDesign } = usePatch(["designs"], "/design");
+  const { mutate: updateDesign } = usePatchDesign();
 
   const handleViewDesign = (design: Design): void => {
     setSelectedDesign(design);
@@ -613,30 +550,33 @@ const AdminDesignsPage: React.FC = () => {
     });
   };
 
+
+
   const handleToggleActive = (id: string, isActive: boolean): void => {
-    updateDesign({ id, isActive }, {
-      onSuccess: () => {
-        toast({
-          title: "Status updated",
-          description: `Design ${isActive ? 'activated' : 'deactivated'} successfully`,
-        });
-        refetch();
-      },
-    });
-  };
+  updateDesign({ id, isActive }, {
+    onSuccess: () => {
+      toast({
+        title: "Status updated", 
+        description: `Design ${isActive ? 'activated' : 'deactivated'} successfully`,
+      });
+      refetch();
+    },
+  });
+};
 
   const handleUpdateDesign = (updatedDesign: Design): void => {
-    updateDesign(updatedDesign, {
-      onSuccess: () => {
-        toast({
-          title: "Design updated",
-          description: "The design has been updated successfully",
-        });
-        refetch();
-        setSelectedDesign(updatedDesign);
-      },
-    });
-  };
+  updateDesign(updatedDesign, {
+    onSuccess: () => {
+      toast({
+        title: "Design updated",
+        description: "The design has been updated successfully",
+      });
+      refetch();
+      setSelectedDesign(updatedDesign);
+    },
+  });
+};
+
 
   if (isLoading) {
     return (
