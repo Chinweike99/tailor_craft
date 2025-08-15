@@ -1,17 +1,13 @@
 "use client";
 
-// import { useGet } from "@/src/_hooks/useApi";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-// import { columns } from "../columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGet } from "@/_utils/useApi";
 import { BOOKING_STATUS } from "@/_utils/constants";
 import { DataTable } from "@/components/shared/data-table";
 import { columns } from "../test-columns";
-// import { columns } from "@/app/admin/bookings/test-column";
-// import { columns } from "@/app/admin/clients/columns";
 
 export default function BookingsPage() {
   const { data: bookings, isLoading } = useGet<any>(
