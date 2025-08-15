@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Eye, Calendar, X, Clock, DollarSign, Package, ArrowRight } from 'lucide-react';
+import { Plus, Eye, Calendar, X, Clock, DollarSign, Package, ArrowRight, User, Ruler, MessageSquare, CheckCircle } from 'lucide-react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useGet } from "@/_utils/useApi";
+import { useGet, usePost } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
 
 // Use your existing interfaces
@@ -41,10 +41,24 @@ interface DesignResponse {
   };
 }
 
+interface Measurements {
+  chest: number;
+  waist: number;
+  hips: number;
+  length: number;
+}
+
+interface BookingRequest {
+  designId: string;
+  measurements: Measurements;
+  deliveryDate: string;
+  notes?: string;
+}
+
 interface DesignCardProps {
   design: Design;
   onView: (design: Design) => void;
-  onBook: (designId: string) => void;
+  onBook: (design: Design) => void;
   index: number;
 }
 
@@ -54,7 +68,345 @@ interface DesignModalProps {
   onClose: () => void;
 }
 
-// Your existing DesignCard component with client modifications
+interface BookingModalProps {
+  design: Design | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (bookingData: BookingRequest) => void;
+  isLoading: boolean;
+}
+
+interface SuccessModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  design: Design | null;
+}
+
+// Success Modal Component
+const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, design }) => {
+  React.useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            className="bg-white rounded-2xl max-w-md w-full p-8 text-center"
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Booking Successful!</h3>
+            <p className="text-gray-600 mb-4">
+              Your booking for "{design?.title}" has been submitted successfully.
+            </p>
+            <p className="text-sm text-gray-500">
+              Redirecting to bookings page...
+            </p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// Booking Modal Component
+const BookingModal: React.FC<BookingModalProps> = ({ design, isOpen, onClose, onSubmit, isLoading }) => {
+  const [measurements, setMeasurements] = useState<Measurements>({
+    chest: 0,
+    waist: 0,
+    hips: 0,
+    length: 0
+  });
+  const [deliveryDate, setDeliveryDate] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Reset form when modal opens
+  React.useEffect(() => {
+    if (isOpen) {
+      setMeasurements({ chest: 0, waist: 0, hips: 0, length: 0 });
+      setDeliveryDate('');
+      setNotes('');
+      setErrors({});
+    }
+  }, [isOpen]);
+
+  // Set minimum delivery date based on design's minimum delivery time
+  React.useEffect(() => {
+    if (design && isOpen) {
+      const minDate = new Date();
+      minDate.setDate(minDate.getDate() + design.minimumDeliveryTime);
+      setDeliveryDate(minDate.toISOString().split('T')[0]);
+    }
+  }, [design, isOpen]);
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!measurements.chest || measurements.chest <= 0) newErrors.chest = 'Chest measurement is required';
+    if (!measurements.waist || measurements.waist <= 0) newErrors.waist = 'Waist measurement is required';
+    if (!measurements.hips || measurements.hips <= 0) newErrors.hips = 'Hips measurement is required';
+    if (!measurements.length || measurements.length <= 0) newErrors.length = 'Length measurement is required';
+    if (!deliveryDate) newErrors.deliveryDate = 'Delivery date is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!design || !validateForm()) return;
+
+    const bookingData: BookingRequest = {
+      designId: design.id,
+      measurements,
+      deliveryDate: new Date(deliveryDate).toISOString(),
+      notes: notes.trim() || undefined
+    };
+
+    onSubmit(bookingData);
+  };
+
+  const handleMeasurementChange = (field: keyof Measurements, value: string) => {
+    const numValue = parseFloat(value) || 0;
+    setMeasurements(prev => ({ ...prev, [field]: numValue }));
+    if (errors[field]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  };
+
+  if (!design) return null;
+
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + design.minimumDeliveryTime);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden"
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-6 border-b">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">Book Design</h2>
+                <p className="text-gray-600 text-sm mt-1">{design.title}</p>
+              </div>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                disabled={isLoading}
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="overflow-y-auto max-h-[calc(90vh-140px)]">
+              <div className="p-6 space-y-6">
+                {/* Measurements Section */}
+                <div>
+                  <div className="flex items-center mb-4">
+                    <Ruler className="w-5 h-5 text-gray-400 mr-2" />
+                    <h3 className="text-lg font-semibold text-gray-900">Measurements (inches)</h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Chest *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.5"
+                        value={measurements.chest || ''}
+                        onChange={(e) => handleMeasurementChange('chest', e.target.value)}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          errors.chest ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., 40"
+                        disabled={isLoading}
+                      />
+                      {errors.chest && <p className="text-red-500 text-xs mt-1">{errors.chest}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Waist *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.5"
+                        value={measurements.waist || ''}
+                        onChange={(e) => handleMeasurementChange('waist', e.target.value)}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          errors.waist ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., 32"
+                        disabled={isLoading}
+                      />
+                      {errors.waist && <p className="text-red-500 text-xs mt-1">{errors.waist}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Hips *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.5"
+                        value={measurements.hips || ''}
+                        onChange={(e) => handleMeasurementChange('hips', e.target.value)}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          errors.hips ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., 38"
+                        disabled={isLoading}
+                      />
+                      {errors.hips && <p className="text-red-500 text-xs mt-1">{errors.hips}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Length *
+                      </label>
+                      <input
+                        type="number"
+                        min="1"
+                        step="0.5"
+                        value={measurements.length || ''}
+                        onChange={(e) => handleMeasurementChange('length', e.target.value)}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                          errors.length ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="e.g., 30"
+                        disabled={isLoading}
+                      />
+                      {errors.length && <p className="text-red-500 text-xs mt-1">{errors.length}</p>}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Delivery Date Section */}
+                <div>
+                  <div className="flex items-center mb-4">
+                    <Calendar className="w-5 h-5 text-gray-400 mr-2" />
+                    <h3 className="text-lg font-semibold text-gray-900">Delivery Date</h3>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Preferred Delivery Date *
+                    </label>
+                    <input
+                      type="date"
+                      value={deliveryDate}
+                      min={minDate.toISOString().split('T')[0]}
+                      onChange={(e) => {
+                        setDeliveryDate(e.target.value);
+                        if (errors.deliveryDate) {
+                          setErrors(prev => {
+                            const newErrors = { ...prev };
+                            delete newErrors.deliveryDate;
+                            return newErrors;
+                          });
+                        }
+                      }}
+                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                        errors.deliveryDate ? 'border-red-500' : 'border-gray-300'
+                      }`}
+                      disabled={isLoading}
+                    />
+                    {errors.deliveryDate && <p className="text-red-500 text-xs mt-1">{errors.deliveryDate}</p>}
+                    <p className="text-xs text-gray-500 mt-1">
+                      Minimum delivery time: {design.minimumDeliveryTime} days
+                    </p>
+                  </div>
+                </div>
+
+                {/* Notes Section */}
+                <div>
+                  <div className="flex items-center mb-4">
+                    <MessageSquare className="w-5 h-5 text-gray-400 mr-2" />
+                    <h3 className="text-lg font-semibold text-gray-900">Additional Notes</h3>
+                  </div>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    placeholder="Any special instructions or preferences..."
+                    disabled={isLoading}
+                  />
+                </div>
+              </div>
+
+              {/* Form Actions */}
+              <div className="flex justify-end space-x-3 p-6 border-t bg-gray-50">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  disabled={isLoading}
+                  className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center"
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Calendar className="w-4 h-4 mr-2" />
+                      Submit Booking
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// Updated DesignCard component
 const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onBook, index }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -179,8 +531,8 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onBook, index }
           View
         </button>
         <button
-          onClick={() => onBook(design.id)}
-          className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
+          onClick={() => onBook(design)}
+          className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
         >
           <Calendar size={16} className="mr-2" />
           Book
@@ -359,26 +711,53 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose }) =>
 // Main client designs page
 const ClientDesignsPage: React.FC = () => {
   const [selectedDesign, setSelectedDesign] = useState<Design | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState<boolean>(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
+  const [bookingDesign, setBookingDesign] = useState<Design | null>(null);
   const router = useRouter();
   
-  // Use your existing API call
+  // Use your existing API calls
   const { data: designsResponse, isLoading } = useGet<DesignResponse>(["designs"], "/design");
+  const { mutate: createBooking, isPending: isCreatingBooking } = usePost(["/booking"], "/booking");
+  
   const designs = designsResponse?.response?.data?.filter((design: Design) => design.isActive) || [];
 
   const handleViewDesign = (design: Design): void => {
     setSelectedDesign(design);
-    setIsModalOpen(true);
+    setIsViewModalOpen(true);
   };
 
-  const handleCloseModal = (): void => {
-    setIsModalOpen(false);
+  const handleCloseViewModal = (): void => {
+    setIsViewModalOpen(false);
     setSelectedDesign(null);
   };
 
-  const handleBookDesign = (designId: string): void => {
-    // Navigate to your existing booking form with the design ID
-    router.push(`/client/booking/new?designId=${designId}`);
+  const handleBookDesign = (design: Design): void => {
+    setBookingDesign(design);
+    setIsBookingModalOpen(true);
+  };
+
+  const handleCloseBookingModal = (): void => {
+    setIsBookingModalOpen(false);
+    setBookingDesign(null);
+  };
+
+  const handleBookingSubmit = async (bookingData: BookingRequest): Promise<void> => {
+    try {
+      await createBooking(bookingData);
+      setIsBookingModalOpen(false);
+      setIsSuccessModalOpen(true);
+    } catch (error) {
+      console.error('Booking failed:', error);
+      // You can add error handling here (e.g., show error toast)
+    }
+  };
+
+  const handleSuccessModalClose = (): void => {
+    setIsSuccessModalOpen(false);
+    setBookingDesign(null);
+    router.push('/client/bookings/booking');
   };
 
   if (isLoading) {
@@ -421,14 +800,6 @@ const ClientDesignsPage: React.FC = () => {
             {designs?.length || 0} design{designs?.length !== 1 ? 's' : ''} available
           </p>
         </div>
-        <Link href="/client/booking/new">
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-              <Plus className="mr-2 h-4 w-4" />
-              Custom Design
-            </Button>
-          </motion.div>
-        </Link>
       </motion.div>
 
       <motion.div
@@ -475,10 +846,27 @@ const ClientDesignsPage: React.FC = () => {
         </motion.div>
       )}
 
+      {/* View Design Modal */}
       <DesignModal
         design={selectedDesign}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        isOpen={isViewModalOpen}
+        onClose={handleCloseViewModal}
+      />
+
+      {/* Booking Modal */}
+      <BookingModal
+        design={bookingDesign}
+        isOpen={isBookingModalOpen}
+        onClose={handleCloseBookingModal}
+        onSubmit={handleBookingSubmit}
+        isLoading={isCreatingBooking}
+      />
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={handleSuccessModalClose}
+        design={bookingDesign}
       />
     </div>
   );

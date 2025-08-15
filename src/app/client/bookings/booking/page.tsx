@@ -4,11 +4,14 @@
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { columns } from "../columns";
+// import { columns } from "../columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGet } from "@/_utils/useApi";
 import { BOOKING_STATUS } from "@/_utils/constants";
 import { DataTable } from "@/components/shared/data-table";
+import { columns } from "../test-columns";
+// import { columns } from "@/app/admin/bookings/test-column";
+// import { columns } from "@/app/admin/clients/columns";
 
 export default function BookingsPage() {
   const { data: bookings, isLoading } = useGet<any>(
@@ -16,10 +19,7 @@ export default function BookingsPage() {
     "/booking"
   );
 
-   console.log("Bookings: ", bookings);
   const allBookings: any[] = bookings?.result?.data || [];
-
-  console.log("All Bookings: ", allBookings);
 
   const pendingBookings = allBookings.filter(
     (booking) => booking.status === BOOKING_STATUS.PENDING

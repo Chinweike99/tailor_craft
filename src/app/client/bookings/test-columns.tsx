@@ -687,6 +687,7 @@ const StatusEditModal = ({ bookingId, currentStatus, isOpen, onClose, onStatusUp
 };
 
 export const columns: ColumnDef<any>[] = [
+  
   {
     accessorKey: "Design.title",
     header: "Design",
@@ -695,6 +696,18 @@ export const columns: ColumnDef<any>[] = [
       return (
         <div className="font-medium text-gray-900">
           {design ? design.title : "Custom Design"}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "User.name",
+    header: "Client",
+    cell: ({ row }) => {
+      const design = row.original.User;
+      return (
+        <div className="font-medium text-gray-900">
+          {design ? design.name : "Custom Design"}
         </div>
       );
     },

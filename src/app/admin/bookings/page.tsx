@@ -2,7 +2,7 @@
 
 import { BOOKING_STATUS } from "@/_utils/constants";
 import { useGet } from "@/_utils/useApi";
-import { columns } from "@/app/client/bookings/columns";
+import { columns } from "@/app/client/bookings/test-columns";
 import { DataTable } from "@/components/shared/data-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -13,8 +13,6 @@ export default function AdminBookingsPage() {
   );
   console.log("Booking ", bookings)
 
-  // const allBookings = bookings || [];
-  // const allBookings: any[] = Array.isArray(bookings) ? bookings : Array.isArray((bookings as any)?.bookings) ?(bookings as any).bookings : [];
   const allBookings: any[] = bookings?.response?.data || [];
 
   const pendingBookings = allBookings.filter(
