@@ -204,7 +204,7 @@ export default function AdminSidebar() {
                 className={cn(
                   "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
                   pathname === item.href
-                    ? "bg-primary text-white"
+                    ? " bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white"
                     : "text-gray-600 hover:bg-gray-100"
                 )}
               >
@@ -227,7 +227,7 @@ export default function AdminSidebar() {
             variant="outline" 
             // className="w-full"
             onClick={logout}
-            className="w-full cursor-pointer text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700cursor-pointer"
+            className="w-full text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer"
           >
             Logout
           </Button>

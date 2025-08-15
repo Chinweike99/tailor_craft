@@ -146,7 +146,9 @@ export default function ClientDetailsPage() {
             </Button>
             <h1 className="text-2xl font-bold">{clientData.name}</h1>
           </div>
-          <Button onClick={() => setIsBookingsModalOpen(true)}>
+          <Button onClick={() => setIsBookingsModalOpen(true)} 
+            className="text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer"
+            >
             <Eye className="h-4 w-4 mr-2" />
             View Bookings ({clientData.Booking?.length || 0})
           </Button>
@@ -257,7 +259,7 @@ export default function ClientDetailsPage() {
 
       {/* Bookings Modal */}
       {isBookingsModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/10 backdrop-blur bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-6xl max-h-[90vh] overflow-hidden">
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="text-xl font-semibold">

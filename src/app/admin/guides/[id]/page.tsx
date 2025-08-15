@@ -397,7 +397,7 @@ export default function GuideDetailsPage() {
             {/* Description */}
             <div className="mb-6">
               <h3 className="text-gray-700 mb-2 font-semibold underline text-md">Description</h3>
-              <p className="text-gray-600 leading-relaxed">{guide.description}</p>
+              <p className="text-gray-700 leading-relaxed p-3 bg-gray-50 rounded-lg shadow-xl border">{guide.description}</p>
             </div>
 
             {/* Resource URL */}
