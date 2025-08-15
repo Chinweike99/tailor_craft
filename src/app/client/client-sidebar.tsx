@@ -89,7 +89,7 @@ export default function ClientSidebar() {
                 className={cn(
                   "group flex items-center rounded-md px-2 py-2 text-sm font-medium",
                   pathname === item.href
-                    ? "bg-primary text-white"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white"
                     : "text-gray-600 hover:bg-gray-100"
                 )}
               >
@@ -108,7 +108,7 @@ export default function ClientSidebar() {
         </div>
 
         <div className="border-t p-4">
-          <Button variant="outline" className="w-full" onClick={handleLogout}>
+          <Button variant="outline" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white" onClick={handleLogout}>
             Logout
           </Button>
         </div>

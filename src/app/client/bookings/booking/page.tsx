@@ -11,12 +11,16 @@ import { BOOKING_STATUS } from "@/_utils/constants";
 import { DataTable } from "@/components/shared/data-table";
 
 export default function BookingsPage() {
-  const { data: bookings, isLoading } = useGet<any[]>(
+  const { data: bookings, isLoading } = useGet<any>(
     ["bookings"],
     "/booking"
   );
 
-  const allBookings = bookings || [];
+   console.log("Bookings: ", bookings);
+  const allBookings: any[] = bookings?.result?.data || [];
+
+  console.log("All Bookings: ", allBookings);
+
   const pendingBookings = allBookings.filter(
     (booking) => booking.status === BOOKING_STATUS.PENDING
   );
@@ -35,7 +39,7 @@ export default function BookingsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">My Bookings</h1>
         <Link href="/client/bookings/new">
-          <Button>
+          <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white">
             <Plus className="mr-2 h-4 w-4" />
             New Booking
           </Button>
