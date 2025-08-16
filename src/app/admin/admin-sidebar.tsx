@@ -181,14 +181,14 @@ export default function AdminSidebar() {
           // Changed from fixed to relative/absolute positioning approach
           "lg:relative lg:flex lg:flex-shrink-0",
           // Mobile: fixed positioning with transform
-          "fixed inset-y-0 z-50 flex w-64 flex-col border-r bg-white transition-transform duration-300 ease-in-out lg:translate-x-0",
+          "fixed inset-y-0 z-50 flex w-64 flex-col shadow-lg bg-white transition-transform duration-300 ease-in-out lg:translate-x-0",
           // Mobile states
           mobileSidebarOpen ? "translate-x-0" : "-translate-x-full",
           // Desktop: always visible, no transform needed
           "lg:w-64"
         )}
       >
-        <div className="flex h-16 items-center border-b px-4">
+        <div className="flex h-24 items-center border-b px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white">
           <Link href="/admin/dashboard" className="flex items-center gap-2">
             <Scissors className="h-6 w-6 text-primary" />
             <span className="text-lg font-semibold">TailorCraft Admin</span>

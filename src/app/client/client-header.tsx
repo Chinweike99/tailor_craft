@@ -25,8 +25,8 @@ export default function ClientHeader() {
 
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-      <Button
+    <header className="sticky top-0 z-40 flex h-24 items-center gap-4 border-b bg-background px-4 md:px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white">
+      {/* <Button
         variant="outline"
         // size="icon"
         className="shrink-0 md:hidden"
@@ -34,13 +34,14 @@ export default function ClientHeader() {
       >
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle navigation menu</span>
-      </Button>
+      </Button> */}
 
       <Button
         variant="outline"
         // size="icon"
-        className="hidden shrink-0 md:flex"
-        onClick={toggleSidebar}
+        className="lg:hidden shrink-0 md:flex bg-white text-black"
+        onClick={toggleMobileSidebar}
+        // onClick={toggleSidebar}
       >
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle navigation menu</span>
@@ -49,18 +50,23 @@ export default function ClientHeader() {
       <div className="flex w-full items-center justify-end gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar className="h-8 w-8">
+             <Button className="relative bg-white cursor-pointer hover:bg-gray-100 h-18 rounded-full mr-8 border-2 border-gray-300 hover:border-blue-400 p-1 transition-colors duration-200 flex items-center gap-3 pr-4 w-auto min-w-16">
+              <Avatar className="h-16 w-16 flex-shrink-0">
                 <AvatarImage src={user?.profileImage} alt={user?.name} />
-                <AvatarFallback>
+                <AvatarFallback className="text-sm font-semibold">
                   {user?.name
                     ?.split(" ")
                     .map((n) => n[0])
                     .join("")}
                 </AvatarFallback>
               </Avatar>
+              <span className="text-md  text-gray-700 font-bold truncate max-w-32">
+                {user?.name || "User"}
+              </span>
             </Button>
+              
           </DropdownMenuTrigger>
+
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuItem onClick={handleLogout}>
               Logout

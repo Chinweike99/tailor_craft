@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import apiClient from "./api";
+import { useAuthStore } from "@/store/authstore";
 
 export const useGet = <T>(key: string[], url: string, enabled = true) => {
   return useQuery<T, AxiosError>({
@@ -83,6 +84,33 @@ export const useDelete = <T>(key: string[], baseUrl: string) => {
     },
     onError: (error) => {
       toast.error(error.message || "An error occurred");
+    },
+  });
+};
+
+
+export const useUploadFile = <T>(key: string[], url: string) => {
+  const queryClient = useQueryClient();
+  return useMutation<T, AxiosError, FormData>({
+    mutationKey: key,
+    mutationFn: async (formData: FormData) => {
+      // Create a custom axios config for file upload
+      const { token } = useAuthStore.getState();
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+      };
+      
+      const response = await apiClient.post(url, formData, config);
+      return response as T;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [key[0]] });
+    },
+    onError: (error) => {
+      console.error('Upload error:', error);
     },
   });
 };
