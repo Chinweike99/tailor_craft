@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Scissors, User, BookOpen, Star, FileText } from "lucide-react";
+import { LayoutDashboard, CircleDollarSignIcon, Scissors, User, BookOpen, Star, FileText, Locate } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
 import { cn } from "@/_utils/utils";
 import { Button } from "../../components/ui/Button";
@@ -29,7 +29,12 @@ const navItems = [
   {
     name: "Guides",
     href: "/client/guides",
-    icon: BookOpen,
+    icon: Locate,
+  },
+  {
+    name: "Transactions",
+    href: "/client/payments",
+    icon: CircleDollarSignIcon,
   },
   {
     name: "Materials",

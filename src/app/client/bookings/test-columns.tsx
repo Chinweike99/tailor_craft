@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useGet, usePatch } from "@/_utils/useApi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store/authstore";
+import { useRouter } from "next/navigation";
 
 interface BookingDetailsModalProps {
   bookingId: string;
@@ -686,6 +687,159 @@ const StatusEditModal = ({ bookingId, currentStatus, isOpen, onClose, onStatusUp
   );
 };
 
+// export const columns: ColumnDef<any>[] = [
+  
+//   {
+//     accessorKey: "Design.title",
+//     header: "Design",
+//     cell: ({ row }) => {
+//       const design = row.original.Design;
+//       return (
+//         <div className="font-medium text-gray-900">
+//           {design ? design.title : "Custom Design"}
+//         </div>
+//       );
+//     },
+//   },
+//   {
+//     accessorKey: "User.name",
+//     header: "Client",
+//     cell: ({ row }) => {
+//       const design = row.original.User;
+//       return (
+//         <div className="font-medium text-gray-900">
+//           {design ? design.name : "Custom Design"}
+//         </div>
+//       );
+//     },
+//   },
+//   {
+//     accessorKey: "deliveryDate",
+//     header: "Delivery Date",
+//     cell: ({ row }) => {
+//       const date = row.getValue("deliveryDate");
+//       return (
+//         <div className="text-gray-700">
+//           {format(new Date(date as string), "MMM dd, yyyy")}
+//         </div>
+//       );
+//     },
+//   },
+//   {
+//     accessorKey: "status",
+//     header: "Status",
+//     cell: ({ row }) => {
+//       const status = row.getValue("status") as keyof typeof BOOKING_STATUS;
+//       const statusMap = {
+//         [BOOKING_STATUS.PENDING]: "bg-amber-100 text-amber-800 border-amber-200",
+//         [BOOKING_STATUS.APPROVED]: "bg-blue-100 text-blue-800 border-blue-200",
+//         [BOOKING_STATUS.IN_PROGRESS]: "bg-purple-100 text-purple-800 border-purple-200",
+//         [BOOKING_STATUS.COMPLETED]: "bg-emerald-100 text-emerald-800 border-emerald-200",
+//         [BOOKING_STATUS.DECLINED]: "bg-red-100 text-red-800 border-red-200",
+//         [BOOKING_STATUS.CANCELLED]: "bg-gray-100 text-gray-800 border-gray-200",
+//       };
+//       return (
+//         <Badge className={`${statusMap[status]} border rounded-full px-3 py-1 font-medium`}>
+//           {status.replace("_", " ")}
+//         </Badge>
+//       );
+//     },
+//   },
+//   {
+//     accessorKey: "paymentStatus",
+//     header: "Payment",
+//     cell: ({ row }) => {
+//       const paymentStatus = row.getValue("paymentStatus");
+//       const paymentMap = {
+//         UNPAID: "bg-red-100 text-red-800 border-red-200",
+//         PARTIAL: "bg-amber-100 text-amber-800 border-amber-200",
+//         SUCCESS: "bg-emerald-100 text-emerald-800 border-emerald-200",
+//       };
+//       return (
+//         <Badge className={`${paymentMap[paymentStatus as keyof typeof paymentMap]} border rounded-full px-3 py-1 font-medium`}>
+//           {PAYMENT_STATUS[paymentStatus as keyof typeof PAYMENT_STATUS]}
+//         </Badge>
+//       );
+//     },
+//   },
+//   {
+//     id: "actions",
+//     header: "Actions",
+//     cell: ({ row }) => {
+//       const booking = row.original;
+//       const [showDetailsModal, setShowDetailsModal] = useState(false);
+//       const [showStatusModal, setShowStatusModal] = useState(false);
+//       const [refreshKey, setRefreshKey] = useState(0);
+
+//       const handleViewDetails = (e: React.MouseEvent) => {
+//         e.preventDefault();
+//         e.stopPropagation();
+//         setShowDetailsModal(true);
+//       };
+
+//       const handleEditStatus = (e: React.MouseEvent) => {
+//         e.preventDefault();
+//         e.stopPropagation();
+//         setShowStatusModal(true);
+//       };
+
+//       const handleStatusUpdate = () => {
+//         setRefreshKey(prev => prev + 1);
+//         window.location.reload();
+//       };
+
+//        const { user } = useAuthStore();
+//     const isAdmin = user?.role === 'ADMIN';
+
+//       return (
+//         <>
+//           <div className="flex space-x-2 items-center justify-center">
+//             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+//               <Button 
+//                 variant="outline" 
+//                 size="sm" 
+//                 className="bg-white hover:bg-indigo-50 hover:border-indigo-300 border-gray-200 shadow-sm transition-all"
+//                 onClick={handleViewDetails}
+//               >
+//                 <Eye className="h-4 w-4 text-indigo-600" />
+//               </Button>
+//             </motion.div>
+            
+//             {isAdmin && (
+//             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+//               <Button 
+//                 variant="outline" 
+//                 size="sm" 
+//                 className="bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200 shadow-sm transition-all"
+//                 onClick={handleEditStatus}
+//               >
+//                 <Pencil className="h-4 w-4 text-emerald-600" />
+//               </Button>
+//             </motion.div>
+//           )}
+//           </div>
+
+//           <BookingDetailsModal
+//             bookingId={booking.id}
+//             isOpen={showDetailsModal}
+//             onClose={() => setShowDetailsModal(false)}
+//           />
+
+//           <StatusEditModal
+//             bookingId={booking.id}
+//             currentStatus={booking.status}
+//             isOpen={showStatusModal}
+//             onClose={() => setShowStatusModal(false)}
+//             onStatusUpdate={handleStatusUpdate}
+//           />
+//         </>
+//       );
+//     },
+//   },
+// ];
+
+
+
 export const columns: ColumnDef<any>[] = [
   
   {
@@ -729,6 +883,12 @@ export const columns: ColumnDef<any>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.getValue("status") as keyof typeof BOOKING_STATUS;
+      const booking = row.original;
+      const { user } = useAuthStore();
+      const router = useRouter();
+      const isClient = user?.role === 'CLIENT';
+      const isApproved = status === BOOKING_STATUS.APPROVED;
+      
       const statusMap = {
         [BOOKING_STATUS.PENDING]: "bg-amber-100 text-amber-800 border-amber-200",
         [BOOKING_STATUS.APPROVED]: "bg-blue-100 text-blue-800 border-blue-200",
@@ -737,10 +897,30 @@ export const columns: ColumnDef<any>[] = [
         [BOOKING_STATUS.DECLINED]: "bg-red-100 text-red-800 border-red-200",
         [BOOKING_STATUS.CANCELLED]: "bg-gray-100 text-gray-800 border-gray-200",
       };
+
+      const handlePaymentClick = () => {
+        router.push(`/client/bookings/booking/${booking.id}/payment`);
+      };
+
       return (
-        <Badge className={`${statusMap[status]} border rounded-full px-3 py-1 font-medium`}>
-          {status.replace("_", " ")}
-        </Badge>
+        <div className="flex items-center justify-center gap-2">
+          <Badge className={`${statusMap[status]} border rounded-full px-3 py-1 font-medium`}>
+            {status.replace("_", " ")}
+          </Badge>
+          
+          {isClient && isApproved && (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                size="sm" 
+                className="bg-white border rounded-full cursor-pointer hover:bg-gray-100 text-black shadow-lg px-3 transition-all"
+                onClick={handlePaymentClick}
+              >
+                <CreditCard className="h-3 w-3 mr-1" />
+                Pay Now
+              </Button>
+            </motion.div>
+          )}
+        </div>
       );
     },
   },

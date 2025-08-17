@@ -144,7 +144,7 @@ export default function HomePage(){
         variants={itemVariants}
       >
         <span className="block">Custom-Fit Fashion</span>
-        <span className="block text-primary bg-gradient-to-r from-primary to-primary/80 bg-clip-text">
+        <span className="block  bg-gradient-to-r from-primary to-primary/80 bg-clip-text">
           For Every Occasion
         </span>
       </motion.h1>

@@ -42,16 +42,19 @@ export default function AdminHeader() {
       <div className="flex w-full items-center justify-end gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar className="h-8 w-8">
+            <Button className="relative bg-white cursor-pointer hover:bg-gray-100 h-18 rounded-full mr-8 border-2 border-gray-300 hover:border-blue-400 p-1 transition-colors duration-200 flex items-center gap-3 pr-4 w-auto min-w-16">
+              <Avatar className="h-16 w-16 flex-shrink-0">
                 <AvatarImage src={user?.profileImage} alt={user?.name} />
-                <AvatarFallback>
+                <AvatarFallback className="text-xl font-bold bg-gray-100 text-black ">
                   {user?.name
                     ?.split(" ")
                     .map((n) => n[0])
                     .join("")}
                 </AvatarFallback>
               </Avatar>
+              <span className="text-md  text-gray-700 font-bold truncate max-w-32">
+                {user?.name || "User"}
+              </span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>

@@ -1,8 +1,6 @@
 "use client";
 
 import { useGet } from "@/_utils/useApi";
-// import { useGet } from "@/src/_hooks/useApi";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/src/_components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import MaterialCard from "./materials-card";
 // import MaterialCard from "@/src/_components/client/material-card";
