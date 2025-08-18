@@ -113,3 +113,32 @@ export type ThemeMode = 'light' | 'dark';
 
 
 
+interface Address {
+  city: string;
+  state: string;
+  street: string;
+  country: string;
+}
+
+export interface CustomDesign {
+  title: string;
+  images: string[];
+  description: string;
+}
+
+export interface ClientData {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  bio: string;
+  address: Address;
+  preferredPickupAddress: Address;
+  profileImage: string;
+  createdAt: string;
+  updatedAt: string;
+  Booking: Booking[];
+}
+
+
+

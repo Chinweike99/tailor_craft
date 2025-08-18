@@ -1,4 +1,3 @@
-// app/about/page.tsx
 'use client';
 
 import { motion } from 'framer-motion';
@@ -207,7 +206,7 @@ export default function AboutPage() {
               We&apos;re dedicated to crafting the perfect garment for your needs. Book a consultation with our expert tailors today.
             </p>
             <Link 
-              href="/booking" 
+              href="/login" 
               className={`${themeMode === "dark" ? "bg-white text-black/90 " : "bg-black/90 text-white"} inline-block font-medium px-6 py-3 rounded-md hover:bg-gray-100 transition-colors`}
             >
               Book an Appointment

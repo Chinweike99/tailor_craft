@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {  Menu, X, Scissors } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
 import { useTheme } from '@/hooks/useTheme';
+import { useAuthStore } from '@/store/authstore';
 
 
 const navItems = [
@@ -19,6 +20,7 @@ const navItems = [
   { name: 'Booking', path: '/booking' },
   { name: 'Testimonials', path: '/testimonials' },
   { name: 'Contact', path: '/contact' },
+  { name: 'Login', path: '/login' },
 ];
 
 const Navbar = () => {
@@ -27,7 +29,10 @@ const Navbar = () => {
   const pathname = usePathname();
   const {themeMode} = useTheme();
 
+  // Add this to your Navbar component to debug
+const { isAuthenticated, loading, user } = useAuthStore();
 
+console.log("Auth State:", { isAuthenticated, loading, user });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,7 +83,7 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          {navItems.map((item) => (
+          {/* {navItems.map((item) => (
             <Link
               key={item.path}
               href={item.path}
@@ -90,7 +95,27 @@ const Navbar = () => {
             >
               {item.name}
             </Link>
-          ))}
+          ))} */}
+
+          {navItems.map((item) => (
+  <Link
+    key={item.path}
+    href={item.path}
+    onClick={() => {
+      console.log('Navigating to:', item.path); // Debug log
+      if (item.path === '/login') {
+        console.log('Login clicked - should go to /login');
+      }
+    }}
+    className={`transition-all text-sm ${
+      pathname === item.path 
+        ? 'text-primary font-semibold underline' 
+        : ''
+    }`}
+  >
+    {item.name}
+  </Link>
+))}
 
 
           <ThemeToggle />

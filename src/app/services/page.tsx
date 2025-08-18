@@ -341,7 +341,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-primary py-16">
+      <section className=" py-16">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

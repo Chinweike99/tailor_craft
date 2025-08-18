@@ -1,10 +1,10 @@
-// src/app/booking/page.tsx
 'use client';
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ServiceCategory } from '@/types/types';
 import { BookingForm } from '@/components/BookingForm';
+import { useRouter } from 'next/navigation';
 
 const categories: { value: ServiceCategory; label: string }[] = [
   { value: 'native', label: 'Native (Agbada, Senator)' },
@@ -16,7 +16,7 @@ const categories: { value: ServiceCategory; label: string }[] = [
 
 export default function BookingPage() {
   const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null);
- 
+  const router = useRouter();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -72,7 +72,9 @@ export default function BookingPage() {
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
                   Tailored to perfection for your specific needs.
                 </p>
-                <button className="text-gray-300 font-medium hover:underline">
+                <button 
+                onClick={() => router.push('/login')}
+                className="text-gray-300 font-medium hover:underline">
                   Select this style →
                 </button>
               </div>

@@ -204,7 +204,7 @@ export default function PortfolioPage() {
                 href="/booking" 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-block bg-primary text-white font-medium px-6 py-3 rounded-md hover:bg-primary-dark transition-colors"
+                className="inline-block bg-white text-black/80 font-medium px-6 py-3 rounded-md hover:bg-primary-dark transition-colors"
               >
                 Book an Appointment
               </motion.a>
