@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { useGet, usePost } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
 
-// Use your existing interfaces
 interface PriceRange {
   min: number;
   max: number;
@@ -82,7 +81,6 @@ interface SuccessModalProps {
   design: Design | null;
 }
 
-// Success Modal Component
 const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, design }) => {
   React.useEffect(() => {
     if (isOpen) {
@@ -149,7 +147,6 @@ const BookingModal: React.FC<BookingModalProps> = ({ design, isOpen, onClose, on
     }
   }, [isOpen]);
 
-  // Set minimum delivery date based on design's minimum delivery time
   React.useEffect(() => {
     if (design && isOpen) {
       const minDate = new Date();

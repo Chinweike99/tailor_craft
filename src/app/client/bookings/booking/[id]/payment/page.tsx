@@ -212,10 +212,7 @@ export default function PaymentPage() {
               </div>
             </div>
           </div>
-
-          {/* Payment Section */}
           <div className="space-y-6">
-            {/* Payment Amount */}
             <div className="bg-white rounded-lg shadow-sm border">
               <div className="p-6 border-b border-gray-100">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
@@ -295,7 +292,6 @@ export default function PaymentPage() {
                   </div>
                 </div>
 
-                {/* Payment Button */}
                 <Button
                   className="w-full mt-6 h-12 text-base font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white"
                   onClick={handlePayment}

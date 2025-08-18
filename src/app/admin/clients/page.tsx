@@ -3,7 +3,6 @@
 import { columns } from "./columns";
 import { Button } from "@/components/ui/Button";
 import { Plus } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/_utils/useApi";
 import { DataTable } from "@/components/shared/data-table";

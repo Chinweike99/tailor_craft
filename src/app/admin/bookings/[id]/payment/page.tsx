@@ -1,15 +1,12 @@
 "use client";
 
-
 import { useRouter, useParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
-// import { useToast } from "@/src/_components/ui/use-toast";
 import { useState } from "react";
 import { usePaystackPayment } from "react-paystack";
 import { useToast } from "@/components/ui/components/use-toast";
 import { useGet, usePost } from "@/_utils/useApi";
 import { PAYSTACK_PUBLIC_KEY } from "@/_utils/constants";
-// import { Button } from "@/components/ui/button";
 import { Button } from "@/components/ui/components/button";
 
 export default function PaymentPage() {

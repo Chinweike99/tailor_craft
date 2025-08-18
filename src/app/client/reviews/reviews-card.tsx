@@ -2,7 +2,6 @@
 
 import { formatDate } from "@/_utils/utils";
 import { Star } from "lucide-react";
-// import { formatDate } from "@/src/_utils/utils";
 
 export default function ReviewCard({ review }: { review: any }) {
   return (

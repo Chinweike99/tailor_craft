@@ -1,4 +1,3 @@
-// src/app/contact/page.tsx
 'use client';
 
 import { useState } from 'react';
@@ -8,10 +7,7 @@ import { ContactFormData } from '@/types/types';
 import Input from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import TextArea from '@/components/ui/TextArea';
-// import { ContactFormData } from '@/types';
-// import Input from '@/components/ui/Input';
-// // import Textarea from '@/components/ui/Textarea';
-// import Button from '@/components/ui/Button';
+
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,14 +26,12 @@ export default function ContactPage() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // In a real app, you would send this data to your backend
     console.log('Contact form data:', data);
     
     setIsSubmitting(false);
     setIsSuccess(true);
     reset();
     
-    // Reset success message after 5 seconds
     setTimeout(() => setIsSuccess(false), 5000);
   };
 

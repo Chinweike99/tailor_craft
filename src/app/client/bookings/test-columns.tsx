@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Eye, Pencil, X, User, Mail, Phone, MapPin, Calendar, Ruler, Star, Package, CreditCard, MessageCircle, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import { Eye, Pencil, X, User, Calendar, Ruler, Star, Package, CreditCard, MessageCircle, CheckCircle, Clock, AlertCircle } from "lucide-react";
 import { BOOKING_STATUS, PAYMENT_STATUS } from "@/_utils/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
@@ -524,9 +524,7 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                                 </div>
                                 <span className="text-sm font-semibold text-gray-700 self-end">{review.rating}/5</span>
                               </div>
-                              {/* <span className="text-xs text-gray-500">
-                                {format(new Date(review.createdAt), "MMM dd, yyyy")}
-                              </span> */}
+                              
                             </div>
                             <p className="text-gray-700 leading-relaxed">{review.comment}</p>
                           </motion.div>
@@ -686,157 +684,6 @@ const StatusEditModal = ({ bookingId, currentStatus, isOpen, onClose, onStatusUp
     </AnimatePresence>
   );
 };
-
-// export const columns: ColumnDef<any>[] = [
-  
-//   {
-//     accessorKey: "Design.title",
-//     header: "Design",
-//     cell: ({ row }) => {
-//       const design = row.original.Design;
-//       return (
-//         <div className="font-medium text-gray-900">
-//           {design ? design.title : "Custom Design"}
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "User.name",
-//     header: "Client",
-//     cell: ({ row }) => {
-//       const design = row.original.User;
-//       return (
-//         <div className="font-medium text-gray-900">
-//           {design ? design.name : "Custom Design"}
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "deliveryDate",
-//     header: "Delivery Date",
-//     cell: ({ row }) => {
-//       const date = row.getValue("deliveryDate");
-//       return (
-//         <div className="text-gray-700">
-//           {format(new Date(date as string), "MMM dd, yyyy")}
-//         </div>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "status",
-//     header: "Status",
-//     cell: ({ row }) => {
-//       const status = row.getValue("status") as keyof typeof BOOKING_STATUS;
-//       const statusMap = {
-//         [BOOKING_STATUS.PENDING]: "bg-amber-100 text-amber-800 border-amber-200",
-//         [BOOKING_STATUS.APPROVED]: "bg-blue-100 text-blue-800 border-blue-200",
-//         [BOOKING_STATUS.IN_PROGRESS]: "bg-purple-100 text-purple-800 border-purple-200",
-//         [BOOKING_STATUS.COMPLETED]: "bg-emerald-100 text-emerald-800 border-emerald-200",
-//         [BOOKING_STATUS.DECLINED]: "bg-red-100 text-red-800 border-red-200",
-//         [BOOKING_STATUS.CANCELLED]: "bg-gray-100 text-gray-800 border-gray-200",
-//       };
-//       return (
-//         <Badge className={`${statusMap[status]} border rounded-full px-3 py-1 font-medium`}>
-//           {status.replace("_", " ")}
-//         </Badge>
-//       );
-//     },
-//   },
-//   {
-//     accessorKey: "paymentStatus",
-//     header: "Payment",
-//     cell: ({ row }) => {
-//       const paymentStatus = row.getValue("paymentStatus");
-//       const paymentMap = {
-//         UNPAID: "bg-red-100 text-red-800 border-red-200",
-//         PARTIAL: "bg-amber-100 text-amber-800 border-amber-200",
-//         SUCCESS: "bg-emerald-100 text-emerald-800 border-emerald-200",
-//       };
-//       return (
-//         <Badge className={`${paymentMap[paymentStatus as keyof typeof paymentMap]} border rounded-full px-3 py-1 font-medium`}>
-//           {PAYMENT_STATUS[paymentStatus as keyof typeof PAYMENT_STATUS]}
-//         </Badge>
-//       );
-//     },
-//   },
-//   {
-//     id: "actions",
-//     header: "Actions",
-//     cell: ({ row }) => {
-//       const booking = row.original;
-//       const [showDetailsModal, setShowDetailsModal] = useState(false);
-//       const [showStatusModal, setShowStatusModal] = useState(false);
-//       const [refreshKey, setRefreshKey] = useState(0);
-
-//       const handleViewDetails = (e: React.MouseEvent) => {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         setShowDetailsModal(true);
-//       };
-
-//       const handleEditStatus = (e: React.MouseEvent) => {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         setShowStatusModal(true);
-//       };
-
-//       const handleStatusUpdate = () => {
-//         setRefreshKey(prev => prev + 1);
-//         window.location.reload();
-//       };
-
-//        const { user } = useAuthStore();
-//     const isAdmin = user?.role === 'ADMIN';
-
-//       return (
-//         <>
-//           <div className="flex space-x-2 items-center justify-center">
-//             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-//               <Button 
-//                 variant="outline" 
-//                 size="sm" 
-//                 className="bg-white hover:bg-indigo-50 hover:border-indigo-300 border-gray-200 shadow-sm transition-all"
-//                 onClick={handleViewDetails}
-//               >
-//                 <Eye className="h-4 w-4 text-indigo-600" />
-//               </Button>
-//             </motion.div>
-            
-//             {isAdmin && (
-//             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-//               <Button 
-//                 variant="outline" 
-//                 size="sm" 
-//                 className="bg-white hover:bg-emerald-50 hover:border-emerald-300 border-gray-200 shadow-sm transition-all"
-//                 onClick={handleEditStatus}
-//               >
-//                 <Pencil className="h-4 w-4 text-emerald-600" />
-//               </Button>
-//             </motion.div>
-//           )}
-//           </div>
-
-//           <BookingDetailsModal
-//             bookingId={booking.id}
-//             isOpen={showDetailsModal}
-//             onClose={() => setShowDetailsModal(false)}
-//           />
-
-//           <StatusEditModal
-//             bookingId={booking.id}
-//             currentStatus={booking.status}
-//             isOpen={showStatusModal}
-//             onClose={() => setShowStatusModal(false)}
-//             onStatusUpdate={handleStatusUpdate}
-//           />
-//         </>
-//       );
-//     },
-//   },
-// ];
 
 
 

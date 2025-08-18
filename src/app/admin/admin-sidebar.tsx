@@ -71,13 +71,9 @@ export default function AdminSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          // Changed from fixed to relative/absolute positioning approach
           "lg:relative lg:flex lg:flex-shrink-0",
-          // Mobile: fixed positioning with transform
           "fixed inset-y-0 z-50 flex w-64 flex-col shadow-lg bg-white transition-transform duration-300 ease-in-out lg:translate-x-0",
-          // Mobile states
           mobileSidebarOpen ? "translate-x-0" : "-translate-x-full",
-          // Desktop: always visible, no transform needed
           "lg:w-64"
         )}
       >
@@ -118,7 +114,6 @@ export default function AdminSidebar() {
         <div className="border-t p-4">
           <Button 
             variant="outline" 
-            // className="w-full"
             onClick={logout}
             className="w-full text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer"
           >

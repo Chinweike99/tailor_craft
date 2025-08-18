@@ -26,15 +26,6 @@ export default function ClientHeader() {
 
   return (
     <header className="sticky top-0 z-40 flex h-24 items-center gap-4 border-b bg-background px-4 md:px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer text-white">
-      {/* <Button
-        variant="outline"
-        // size="icon"
-        className="shrink-0 md:hidden"
-        onClick={toggleMobileSidebar}
-      >
-        <Menu className="h-5 w-5" />
-        <span className="sr-only">Toggle navigation menu</span>
-      </Button> */}
 
       <Button
         variant="outline"

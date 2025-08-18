@@ -1,10 +1,8 @@
 "use client";
 
 import { useGet } from "@/_utils/useApi";
-// import { useGet } from "@/src/_hooks/useApi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/_card";
 import { Skeleton } from "@/components/ui/skeleton";
-// import { BookingStatus } from "@/src/config/constants";
 import { Users, Scissors, DollarSign, Package } from "lucide-react";
 
 export default function AdminDashboardPage() {

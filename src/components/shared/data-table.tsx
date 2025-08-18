@@ -62,7 +62,6 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    // Remove getPaginationRowModel for server-side pagination
     manualPagination: true,
     pageCount: pagination?.totalPages ?? -1,
     state: {

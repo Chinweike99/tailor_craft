@@ -4,8 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate } from "@/_utils/utils";
 import { PAYMENT_STATUS } from "@/_utils/constants";
-// import { formatCurrency, formatDate } from "@/src/_utils/utils";
-// import { PaymentStatus } from "@/src/config/constants";
+
 
 export const columns: ColumnDef<any>[] = [
   {

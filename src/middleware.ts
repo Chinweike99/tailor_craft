@@ -8,10 +8,8 @@ const protectedRoutes = [
 const authRoutes = ["/login", "/register"];
 const publicRoutes = ["/"];
 
-// Helper function to decode JWT and get user role
 function getUserRoleFromToken(token: string): string | null {
   try {
-    // Simple JWT decode (you might want to use a proper JWT library)
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.role || payload.user?.role || null;
   } catch (error) {
@@ -22,8 +20,6 @@ function getUserRoleFromToken(token: string): string | null {
 
 export function middleware(request: NextRequest) {
   const currentUser = request.cookies.get("auth")?.value;
-
-  // Handle protected routes - redirect to login if no auth
   if (
     protectedRoutes.some((route) =>
       request.nextUrl.pathname.startsWith(route)
@@ -36,12 +32,8 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  // Handle auth routes when user is already authenticated
   if (authRoutes.includes(request.nextUrl.pathname) && currentUser) {
-    // Get user role from token
     const userRole = getUserRoleFromToken(currentUser);
-    
-    // Redirect based on actual user role
     const dashboardPath = userRole === "ADMIN" ? "/admin/dashboard" : "/client/dashboard";
     
     console.log(`Middleware: Redirecting authenticated ${userRole} from ${request.nextUrl.pathname} to ${dashboardPath}`);
@@ -58,7 +50,6 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/client/dashboard", request.url));
     }
     
-    // Prevent admins from accessing client routes (optional)
     if (userRole === "ADMIN" && pathname.startsWith("/client")) {
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     }

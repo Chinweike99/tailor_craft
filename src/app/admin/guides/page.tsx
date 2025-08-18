@@ -4,14 +4,9 @@ import { useDelete, useGet } from "@/_utils/useApi";
 import { DataTable } from "@/components/shared/data-table";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/components/use-toast";
-// import { useGet, useDelete } from "@/src/_hooks/useApi";
-// import { DataTable } from "@/src/_components/admin/data-table";
-// import { columns } from "./columns";
-// import { Button } from "@/src/_components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { columns } from "./columns";
-// import { useToast } from "@/src/_components/ui/use-toast";
 
 export default function AdminGuidesPage() {
   const { toast } = useToast();

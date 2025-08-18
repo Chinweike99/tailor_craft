@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit, Trash2, X, Clock, DollarSign, Package, Calendar, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Clock, DollarSign, Package, ArrowRight } from 'lucide-react';
 import { useToast } from "@/components/ui/components/use-toast";
 import Link from "next/link";
-import { useDelete, useGet, usePatch, usePatchDesign } from "@/_utils/useApi";
+import { useDelete, useGet,  usePatchDesign } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
 
 // TypeScript interfaces

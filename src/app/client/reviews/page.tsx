@@ -1,11 +1,9 @@
 "use client";
 
 import { useGet } from "@/_utils/useApi";
-// import { useGet } from "@/src/_hooks/useApi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/_card";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReviewCard from "./reviews-card";
-// import ReviewCard from "@/src/_components/client/review-card";
 
 export default function ClientReviewsPage() {
   const { data: reviews, isLoading } = useGet<any[]>(

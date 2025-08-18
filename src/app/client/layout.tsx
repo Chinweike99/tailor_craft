@@ -1,7 +1,7 @@
 "use client";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Afacad } from "next/font/google";
 import { Providers } from "../_providers/providers";
 import ClientSidebar from "@/app/client/client-sidebar";
 import ClientHeader from "./client-header";
@@ -10,7 +10,7 @@ import { useAuthStore } from "@/store/authstore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const afacad = Afacad({ subsets: ["latin"] });
 
 export default function ClientLayout({
   children,
@@ -28,17 +28,14 @@ export default function ClientLayout({
   }, [isAuthenticated, loading, router]);
 
   if (!isAuthenticated) {
-    return null; // Or a loader while redirecting
+    return null;
   }
 
   return (
-    <div className={inter.className}>
+    <div className={afacad.className}>
       <Providers>
         <div className="flex h-screen overflow-hidden bg-gray-50">
-          {/* Client Sidebar - will take up its natural width on desktop */}
           <ClientSidebar />
-          
-          {/* Main content area - will flex to fill remaining space */}
           <div className="flex flex-col flex-1 overflow-hidden min-w-0">
             <ClientHeader />
             <main className="flex-1 overflow-y-auto p-4 md:p-6">

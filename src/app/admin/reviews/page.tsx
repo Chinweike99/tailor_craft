@@ -3,8 +3,6 @@
 
 import { useGet } from "@/_utils/useApi";
 import { columns } from "./columns";
-import { Star } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import { DataTable } from "@/components/shared/data-table";
 
 export default function AdminReviewsPage() {

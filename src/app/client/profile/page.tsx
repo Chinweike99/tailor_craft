@@ -657,17 +657,14 @@ export default function ProfilePage() {
     );
   }
 
-  // Merge user and profile data, prioritizing the most recent/complete data
   const displayProfile = {
     ...user,
     ...profile,
-    // Ensure profileImage comes from the most recent source
     profileImage: profile?.profileImage || user?.profileImage,
   };
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-6xl">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Profile</h1>

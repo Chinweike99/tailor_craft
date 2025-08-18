@@ -22,7 +22,7 @@ export default function AdminHeader() {
 
   const handleLogout = () => {
     logout();
-    router.push("/login"); // Redirect to login
+    router.push("/login");
   };
 
   return (
@@ -30,8 +30,6 @@ export default function AdminHeader() {
 
       <Button
         variant="outline"
-        // size="icon"
-        // className=""
         onClick={toggleMobileSidebar}
         className="sm:flex md:hidden shrink-0  bg-white hover:bg-gray-100 "
       >
