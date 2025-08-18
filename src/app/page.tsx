@@ -185,10 +185,10 @@ export default function HomePage(){
   </motion.div>
 
 
-  <motion.div 
+  {/* <motion.div 
   className="absolute left-1/2 transform -translate-x-1/2 z-20
     bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-16 
-    px-4" // Added padding for very small screens
+    px-4"
   initial={{ opacity: 0, y: 30 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 2.5, duration: 1.2, ease: "easeOut" }}
@@ -210,7 +210,6 @@ export default function HomePage(){
       nextSection?.scrollIntoView({ behavior: 'smooth' });
     }}
   >
-    {/* Text Label */}
     <motion.span 
       className="text-white/80 font-medium mb-3 group-hover:text-white transition-all duration-300
         text-xs sm:text-sm lg:text-base
@@ -222,7 +221,6 @@ export default function HomePage(){
       Discover More
     </motion.span>
     
-    {/* Enhanced Mouse Indicator */}
     <div className="relative ">
       <div className="border-2 border-white/40 rounded-full flex justify-center group-hover:border-white/70 transition-all duration-500
         w-5 h-8 sm:w-6 sm:h-10 md:w-7 md:h-12
@@ -246,11 +244,10 @@ export default function HomePage(){
         />
       </div>
       
-      {/* Subtle glow effect */}
       <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
     </div>
   </motion.button>
-</motion.div>
+</motion.div> */}
 
   <div className="absolute top-20 right-10 w-32 h-32 border border-white/10 rounded-full hidden lg:block" />
   <div className="absolute bottom-20 left-10 w-24 h-24 border border-white/10 rounded-full hidden lg:block" />

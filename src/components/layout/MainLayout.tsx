@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> feat/integrating-backend
 'use client';
 
 import { useTheme } from "@/hooks/useTheme";
