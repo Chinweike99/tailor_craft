@@ -144,7 +144,7 @@ export default function HomePage(){
         variants={itemVariants}
       >
         <span className="block">Custom-Fit Fashion</span>
-        <span className="block text-primary bg-gradient-to-r from-primary to-primary/80 bg-clip-text">
+        <span className="block  bg-gradient-to-r from-primary to-primary/80 bg-clip-text">
           For Every Occasion
         </span>
       </motion.h1>
@@ -206,7 +206,7 @@ export default function HomePage(){
     whileTap={{ scale: 0.95 }}
     onClick={() => {
       const nextSection = document.querySelector('[data-section="stats"]') || 
-                         document.querySelector('section:nth-of-type(2)');
+      document.querySelector('section:nth-of-type(2)');
       nextSection?.scrollIntoView({ behavior: 'smooth' });
     }}
   >
@@ -360,7 +360,7 @@ export default function HomePage(){
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-6">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-6">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>

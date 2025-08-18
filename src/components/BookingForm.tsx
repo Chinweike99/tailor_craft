@@ -7,7 +7,6 @@ import { motion } from "framer-motion"
 import { CalendarIcon, UploadIcon } from "lucide-react";
 import { Button } from "./ui/Button";
 import SuccessModal from "./ui/Successmodal";
-// import Image from "next/image";
 
 
 const serviceCategories: {value: ServiceCategory; label: string}[] = [

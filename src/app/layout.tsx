@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 import './globals.css';
 import MainLayout from '@/components/layout/MainLayout';
+import { Providers } from './_providers/providers';
 
 
 export const metadata: Metadata = {
@@ -23,7 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body  className={`${outfit.variable}  antialiased `}>
+        <Providers>
         <MainLayout>{children}</MainLayout>
+        
+        </Providers>
       </body>
     </html>
   );
