@@ -120,7 +120,7 @@ interface Address {
   country: string;
 }
 
-interface CustomDesign {
+export interface CustomDesign {
   title: string;
   images: string[];
   description: string;

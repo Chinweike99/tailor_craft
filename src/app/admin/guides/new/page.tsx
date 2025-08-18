@@ -21,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/_select";
-import { AxiosError } from "axios";
 import { useToast } from "@/components/ui/components/use-toast";
 import { Input } from "@/components/ui/components/input";
 import { usePost } from "@/_utils/useApi";
@@ -61,7 +60,7 @@ export default function NewGuidePage() {
         });
         router.push("/admin/guides");
       },
-      onError: (error: AxiosError) => {
+      onError: () => {
         return toast({
           title: "Error",
           description: "Guide creation failed",

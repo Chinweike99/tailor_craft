@@ -29,7 +29,6 @@ export const columns = (onDelete: (id: string) => void): ColumnDef<any>[] => [
       const modalRef = useRef<HTMLDivElement | null>(null);
       const guide = row.original;
 
-      // Close modal when clicking outside
       useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
           if (modalRef.current && !modalRef.current.contains(event.target as Node)) {

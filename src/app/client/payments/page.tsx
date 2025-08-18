@@ -1,7 +1,7 @@
 "use client";
 import { useGet } from "@/_utils/useApi";
 import { columns } from "./columns";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { DollarSign } from "lucide-react";
 import { formatCurrency } from "@/_utils/utils";
 import { DataTable } from "@/components/shared/data-table";

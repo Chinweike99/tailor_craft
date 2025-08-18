@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/components/use-toast";
 import { formatDate } from "@/_utils/utils";
 import { ArrowLeft, Edit, ExternalLink, FileText, Video, Calendar, Clock, X } from "lucide-react";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -128,7 +127,7 @@ export default function GuideDetailsPage() {
         </div>
         <div className="text-center py-12">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Guide Not Found</h2>
-          <p className="text-gray-600">The guide you're looking for doesn't exist or has been removed.</p>
+          <p className="text-gray-600">The guide you&apos;re looking for doesn&apos;t exist or has been removed.</p>
         </div>
       </div>
     );

@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 
 export default function AdminHeader() {
-  const { toggleMobileSidebar, toggleSidebar } = useUIStore();
+  const { toggleMobileSidebar } = useUIStore();
   const { user, logout } = useAuthStore();
 
   const router = useRouter();

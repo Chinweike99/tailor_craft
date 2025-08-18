@@ -7,7 +7,7 @@ import { usePaystackPayment } from "react-paystack";
 import { useToast } from "@/components/ui/components/use-toast";
 import { useGet, usePost } from "@/_utils/useApi";
 import { PAYSTACK_PUBLIC_KEY } from "@/_utils/constants";
-import { Button } from "@/components/ui/components/button";
+import { Button } from "@/components/ui/Button";
 
 export default function PaymentPage() {
   const { id }: any = useParams();
@@ -63,7 +63,8 @@ export default function PaymentPage() {
         isInstallment: paymentMethod === "installment",
       },
       {
-        onSuccess: (data: any) => {
+        // onSuccess: (data: any) => {
+        onSuccess: () => {
           initializePaystackPayment({onSuccess, onClose});
         },
         onError: (error: { message: any; }) => {

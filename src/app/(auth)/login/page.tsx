@@ -10,7 +10,7 @@ import { usePost } from "@/_utils/useApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/components/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Button } from "@/components/ui/components/button";
+import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 
 const formSchema = z.object({
@@ -389,7 +389,7 @@ export default function LoginPage() {
           className="text-center text-sm text-gray-600"
           variants={itemVariants}
         >
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <motion.div
             className="inline-block"
             whileHover={{ scale: 1.05 }}

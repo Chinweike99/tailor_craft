@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, CircleDollarSignIcon, Scissors, User, BookOpen, Star, FileText, Locate } from "lucide-react";
+import { LayoutDashboard, CircleDollarSignIcon, Scissors, User, Star, FileText, Locate } from "lucide-react";
 import { useUIStore } from "@/store/uiStore";
 import { cn } from "@/_utils/utils";
 import { Button } from "../../components/ui/Button";
@@ -50,7 +50,7 @@ const navItems = [
 
 export default function ClientSidebar() {
   const pathname = usePathname();
-  const { sidebarOpen, mobileSidebarOpen, toggleMobileSidebar } = useUIStore();
+  const {  mobileSidebarOpen, toggleMobileSidebar } = useUIStore();
     const { logout } = useAuthStore();
       const router = useRouter();
     

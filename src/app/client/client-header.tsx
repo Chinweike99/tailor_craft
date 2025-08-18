@@ -14,7 +14,7 @@ import { useAuthStore } from "@/store/authstore";
 import { useRouter } from "next/navigation";
 
 export default function ClientHeader() {
-  const { toggleMobileSidebar, toggleSidebar } = useUIStore();
+  const { toggleMobileSidebar } = useUIStore();
   const { user, logout } = useAuthStore();
   const router = useRouter();
 

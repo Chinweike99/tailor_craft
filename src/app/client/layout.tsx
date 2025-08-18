@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { Afacad } from "next/font/google";
 import { Providers } from "../_providers/providers";
 import ClientSidebar from "@/app/client/client-sidebar";

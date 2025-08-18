@@ -78,7 +78,8 @@ export default function PaymentPage() {
         isInstallment: paymentMethod === "installment",
       },
       {
-        onSuccess: (data) => {
+        // onSuccess: (data) => {
+        onSuccess: () => {
           initializePaystackPayment({
             onSuccess,
             onClose,
@@ -317,7 +318,7 @@ export default function PaymentPage() {
                     <div>
                       <p className="text-xs text-gray-600">
                         Your payment is secured with industry-standard encryption. 
-                        We don't store your payment information.
+                        We don&apos;t store your payment information.
                       </p>
                     </div>
                   </div>

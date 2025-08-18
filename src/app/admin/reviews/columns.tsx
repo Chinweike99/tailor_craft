@@ -144,7 +144,7 @@ export const columns: ColumnDef<any>[] = [
                 <div className="bg-white border rounded-lg p-4">
                   {review.comment ? (
                     <blockquote className="text-gray-700 leading-relaxed italic">
-                      "{review.comment}"
+                      &quot;{review.comment}&quot;
                     </blockquote>
                   ) : (
                     <p className="text-gray-500 italic">No additional comments provided</p>

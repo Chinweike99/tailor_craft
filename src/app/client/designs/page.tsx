@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Eye, Calendar, X, Clock, DollarSign, Package, ArrowRight, User, Ruler, MessageSquare, CheckCircle } from 'lucide-react';
+import { Plus, Eye, Calendar, X, Clock, DollarSign, Package,  Ruler, MessageSquare, CheckCircle } from 'lucide-react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useGet, usePost } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
+import Image from 'next/image';
 
 interface PriceRange {
   min: number;
@@ -113,7 +114,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, design }) 
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">Booking Successful!</h3>
             <p className="text-gray-600 mb-4">
-              Your booking for "{design?.title}" has been submitted successfully.
+              Your booking for &quot;{design?.title}&quot; has been submitted successfully.
             </p>
             <p className="text-sm text-gray-500">
               Redirecting to bookings page...
@@ -593,7 +594,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose }) =>
                   {design.images && design.images.length > 0 ? (
                     <div className="space-y-3">
                       <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <img
+                        <Image
                           src={design.images[currentImageIndex]}
                           alt={design.title}
                           className="w-full h-full object-cover"
@@ -611,7 +612,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose }) =>
                                   : 'border-transparent'
                               }`}
                             >
-                              <img
+                              <Image
                                 src={image}
                                 alt={`${design.title} ${index + 1}`}
                                 className="w-full h-full object-cover"

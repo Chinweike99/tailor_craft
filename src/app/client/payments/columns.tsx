@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDate } from "@/_utils/utils";;
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 import { PAYMENT_STATUS } from "@/_utils/constants";

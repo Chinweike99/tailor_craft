@@ -1,7 +1,7 @@
 "use client";
 
 import { useGet } from "@/_utils/useApi";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/_card";
+import { Card, CardContent } from "@/components/ui/_card";
 import { Skeleton } from "@/components/ui/skeleton";
 import ReviewCard from "./reviews-card";
 
@@ -31,7 +31,7 @@ export default function ClientReviewsPage() {
         <Card>
           <CardContent className="p-6 text-center">
             <p className="text-muted-foreground">
-              You haven't left any reviews yet
+              You haven&aos;t left any reviews yet
             </p>
           </CardContent>
         </Card>

@@ -28,6 +28,7 @@ import { useToast } from "@/components/ui/components/use-toast";
 import { usePost } from "@/_utils/useApi";
 import { Textarea } from "@/components/ui/_textarea";
 import { DESIGN_CATEGORIES } from "@/_utils/constants";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
@@ -38,7 +39,7 @@ const formSchema = z.object({
     max: z.number().min(0, "Maximum price must be at least 0"),
   }),
   minimumDeliveryTime: z.number().min(1, "Delivery time must be at least 1 day"),
-  requiredMaterials: z.array(z.string()).optional(), // Made optional
+  requiredMaterials: z.array(z.string()).optional(),
   isActive: z.boolean(),
 });
 
@@ -176,7 +177,7 @@ export default function NewDesignPage() {
       if (data.secure_url) {
         setImages((prev) => [...prev, data.secure_url]);
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to upload image",
@@ -355,7 +356,7 @@ export default function NewDesignPage() {
             <div className="flex flex-wrap gap-4">
               {images.map((image) => (
                 <div key={image} className="relative">
-                  <img
+                  <Image
                     src={image}
                     alt="Design"
                     className="h-32 w-32 rounded-md object-cover"

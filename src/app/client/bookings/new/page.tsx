@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,13 +13,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/_select";
 
 import {
   Popover,
@@ -38,6 +32,7 @@ import { cn } from "@/_utils/utils";
 import { Calendar } from "@/components/ui/_calendar";
 import { toast } from "react-toastify";
 import TextArea from "@/components/ui/TextArea";
+import Image from "next/image";
 // import TextArea from "@/components/ui/TextArea";
 
 const formSchema = z.object({
@@ -104,7 +99,7 @@ export default function NewBookingPage() {
     };
   }, []);
 
-  const { data: designResponse, isLoading: isLoadingDesigns, error: designError } = useGet<{
+  const { data: designResponse } = useGet<{
     status: string;
     response: {
       data: Design[];
@@ -195,7 +190,8 @@ export default function NewBookingPage() {
     }
 
     createBooking(payload, {
-      onSuccess: (data) => {
+      // onSuccess: (data) => {
+      onSuccess: () => {
         setShowSuccessModal(true);
         redirectTimerRef.current = setTimeout(() => {
           setShowSuccessModal(false);
@@ -324,7 +320,7 @@ export default function NewBookingPage() {
                     <div className="mt-4 p-4 bg-gray-50 rounded-lg border">
                       <div className="flex items-start space-x-4">
                         {selectedDesignDetails.images && selectedDesignDetails.images.length > 0 ? (
-                          <img
+                          <Image
                             src={selectedDesignDetails.images[0]}
                             alt={selectedDesignDetails.title}
                             className="w-20 h-20 object-cover rounded-lg"
@@ -411,7 +407,7 @@ export default function NewBookingPage() {
                       <div className="grid grid-cols-2 gap-2 mt-2">
                         {uploadedImages.map((image, index) => (
                           <div key={index} className="relative">
-                            <img
+                            <Image
                               src={image}
                               alt={`Upload ${index + 1}`}
                               className="w-full h-20 object-cover rounded"

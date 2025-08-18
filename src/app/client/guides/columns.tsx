@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -5,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { formatDate } from "@/_utils/utils";
 import { useState, useEffect, useRef } from "react";
 import { Eye, X, Play, FileText, Image as ImageIcon, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 function getYouTubeId(url: string) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -88,7 +90,7 @@ function GuideDetailsModal({ guide, isOpen, onClose }: { guide: any; isOpen: boo
                     <Play className="h-16 w-16 text-white" fill="white" />
                   </div>
                   {getYouTubeId(guide.resourceUrl) ? (
-                    <img
+                    <Image
                       src={`https://img.youtube.com/vi/${getYouTubeId(guide.resourceUrl)}/hqdefault.jpg`}
                       alt={guide.title}
                       className="absolute inset-0 w-full h-full object-cover"
@@ -110,7 +112,7 @@ function GuideDetailsModal({ guide, isOpen, onClose }: { guide: any; isOpen: boo
                   </div>
                 </div>
               ) : isImage ? (
-                <img
+                <Image
                   src={guide.resourceUrl}
                   alt={guide.title}
                   className="absolute inset-0 w-full h-full object-cover"

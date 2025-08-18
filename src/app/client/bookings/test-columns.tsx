@@ -10,6 +10,7 @@ import { useGet, usePatch } from "@/_utils/useApi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from "@/store/authstore";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface BookingDetailsModalProps {
   bookingId: string;
@@ -388,7 +389,7 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                                     whileHover={{ scale: 1.05 }}
                                     className="flex-shrink-0"
                                   >
-                                    <img
+                                    <Image
                                       src={image}
                                       alt={`Design ${index + 1}`}
                                       className="w-28 h-28 object-cover rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
@@ -472,7 +473,7 @@ const BookingDetailsModal = ({ bookingId, isOpen, onClose }: BookingDetailsModal
                             <div className={`absolute inset-0 bg-gradient-to-br ${measurement.color} opacity-5 rounded-xl group-hover:opacity-10 transition-opacity`}></div>
                             <div className="relative">
                               <div className={`text-3xl font-bold bg-gradient-to-r ${measurement.color} bg-clip-text text-transparent`}>
-                                {measurement.value}"
+                                {measurement.value}&quot;
                               </div>
                               <div className="text-sm font-medium text-gray-600 mt-1">{measurement.label}</div>
                             </div>

@@ -3,8 +3,9 @@
 import { useParams, useRouter } from "next/navigation";
 import { ChevronLeft, Mail, Phone, MapPin, Calendar, Eye, X } from "lucide-react";
 import { useGet } from "@/_utils/useApi";
-import { Button } from "@/components/ui/components/button";
+import { Button } from "@/components/ui/Button";
 import { useState } from "react";
+import Image from "next/image";
 
 interface Address {
   city: string;
@@ -162,7 +163,7 @@ export default function ClientDetailsPage() {
               <div className="text-center">
                 <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
                   {clientData.profileImage ? (
-                    <img
+                    <Image
                       src={clientData.profileImage}
                       alt={clientData.name}
                       className="w-full h-full object-cover"
@@ -263,7 +264,7 @@ export default function ClientDetailsPage() {
           <div className="bg-white rounded-lg shadow-lg w-full max-w-6xl max-h-[90vh] overflow-hidden">
             <div className="flex items-center justify-between p-6 border-b">
               <h2 className="text-xl font-semibold">
-                {clientData.name}'s Bookings ({clientData.Booking?.length || 0})
+                {clientData.name}&apos;s Bookings ({clientData.Booking?.length || 0})
               </h2>
               <Button
                 variant="outline"
@@ -314,10 +315,10 @@ export default function ClientDetailsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="text-sm text-gray-900">
-                            <div>Chest: {booking.measurements?.chest}"</div>
-                            <div>Waist: {booking.measurements?.waist}"</div>
-                            <div>Hips: {booking.measurements?.hips}"</div>
-                            <div>Length: {booking.measurements?.length}"</div>
+                            <div>Chest: {booking.measurements?.chest}&quot;</div>
+                            <div>Waist: {booking.measurements?.waist}&quot;</div>
+                            <div>Hips: {booking.measurements?.hips}&quot;</div>
+                            <div>Length: {booking.measurements?.length}&quot;</div>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">

@@ -6,7 +6,7 @@ const protectedRoutes = [
   "/admin",
 ];
 const authRoutes = ["/login", "/register"];
-const publicRoutes = ["/"];
+// const publicRoutes = ["/"];
 
 function getUserRoleFromToken(token: string): string | null {
   try {

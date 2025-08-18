@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import Image from "next/image";
 import { Play, FileText } from "lucide-react";
 
@@ -46,7 +46,7 @@ export default function GuideCard({ guide }: { guide: any }) {
           <Button
             size="sm"
             className="w-full"
-            asChild
+            // asChild
           >
             <a
               href={guide.resourceUrl}

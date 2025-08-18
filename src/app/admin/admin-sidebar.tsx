@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { LayoutDashboard, Star, Users, Scissors, BookOpen, FileText, Settings, Locate, CircleDollarSignIcon } from "lucide-react";
+import { LayoutDashboard, Star, Users, Scissors, FileText, Settings, Locate, CircleDollarSignIcon } from "lucide-react";
 import { useAuthStore } from "@/store/authstore";
 import { cn } from "@/_utils/utils";
 import { useUIStore } from "@/store/uiStore";
@@ -55,7 +55,7 @@ const navItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
-  const { sidebarOpen, mobileSidebarOpen, toggleMobileSidebar } = useUIStore();
+  const { mobileSidebarOpen, toggleMobileSidebar } = useUIStore();
   const { logout } = useAuthStore();
 
   return (

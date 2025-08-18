@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/components/use-toast";
 import Link from "next/link";
 import { useDelete, useGet,  usePatchDesign } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
+import Image from 'next/image';
 
 // TypeScript interfaces
 interface PriceRange {
@@ -56,7 +57,7 @@ interface DesignModalProps {
   onUpdate: (design: Design) => void;
 }
 
-const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, onToggleActive, index }) => {
+const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  index }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const formatPrice = (price: number): string => {
@@ -297,7 +298,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                   {design.images && design.images.length > 0 ? (
                     <div className="space-y-3">
                       <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <img
+                        <Image
                           src={design.images[currentImageIndex]}
                           alt={design.title}
                           className="w-full h-full object-cover"
@@ -315,7 +316,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                                   : 'border-transparent'
                               }`}
                             >
-                              <img
+                              <Image
                                 src={image}
                                 alt={`${design.title} ${index + 1}`}
                                 className="w-full h-full object-cover"
