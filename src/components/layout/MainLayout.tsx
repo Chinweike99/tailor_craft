@@ -14,7 +14,7 @@ interface MainLayoutProps {
 export default function MainLayout({children}: MainLayoutProps) {
   const { colors } = useTheme();
   const pathname = usePathname();
-  const hiddenNavRoutes = ['/admin', '/client'];
+  const hiddenNavRoutes = ['/admin', '/client', '/login', '/register', '/forgot-password', '/reset-password', '/verify-otp'];
   
   const shouldHideNavigation = hiddenNavRoutes.some(route => 
     pathname.startsWith(route)

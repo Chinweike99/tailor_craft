@@ -1,22 +1,36 @@
-// components/ui/ThemeToggle.tsx
+
 "use client";
 
 import { useState, useEffect } from 'react';
-// import { useThemeStore } from '@/store/themeStore';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/hooks/useTheme';
 
 export default function ThemeToggle() {
   const { themeMode, toggleThemeMode } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
-  // Avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  // Define excluded paths
+  const excludedPaths = [
+    '/login',
+    '/register', 
+    '/forgot-password',
+    '/reset-password',
+    '/admin',
+    '/client'
+  ];
+  
+  // Check if current path should hide the toggle
+  const shouldHide = excludedPaths.some(path => pathname.startsWith(path));
 
+  if (!mounted || shouldHide) return null;
+
+  // Rest of your existing ThemeToggle code...
   return (
     <motion.button
       whileTap={{ scale: 0.9 }}

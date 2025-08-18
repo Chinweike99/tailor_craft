@@ -274,7 +274,7 @@ export default function RegisterPage() {
                               type="email"
                               autoComplete="email"
                               placeholder="your@email.com"
-                              className="transition-all duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
+                              className="transition-all bg-white text-black  duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
                               {...field}
                             />
                           </motion.div>
@@ -301,7 +301,7 @@ export default function RegisterPage() {
                               type="tel"
                               autoComplete="tel"
                               placeholder="+1 (555) 123-4567"
-                              className="transition-all duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
+                              className="transition-all bg-white text-black  duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
                               {...field}
                             />
                           </motion.div>
@@ -328,7 +328,7 @@ export default function RegisterPage() {
                               type="password"
                               autoComplete="new-password"
                               placeholder="••••••••"
-                              className="transition-all duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
+                              className="transition-all bg-white text-black  duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
                               {...field}
                             />
                           </motion.div>

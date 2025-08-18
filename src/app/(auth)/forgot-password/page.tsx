@@ -1,21 +1,25 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/_input";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { AxiosError } from "axios";
-import { useAuthStore } from "@/store/authstore";
 import { usePost } from "@/_utils/useApi";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/components/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 // Fashion-related SVG icons
@@ -50,6 +54,68 @@ const FashionIcon = () => (
   </motion.svg>
 );
 
+// Forgot password icon
+const ForgotPasswordIcon = () => (
+  <motion.div
+    className="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full mx-auto mb-4"
+    animate={{
+      scale: [1, 1.05, 1],
+      rotate: [0, 5, -5, 0],
+    }}
+    transition={{
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <motion.svg
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="text-purple-600"
+      animate={{
+        y: [0, -2, 0],
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 0.5,
+      }}
+    >
+      <path
+        d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M22 6L12 13L2 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <motion.path
+        d="M12 13L12 16"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        animate={{
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+    </motion.svg>
+  </motion.div>
+);
+
 const FloatingElement = ({ delay = 0, children }: { delay?: number; children: React.ReactNode }) => (
   <motion.div
     animate={{
@@ -68,47 +134,31 @@ const FloatingElement = ({ delay = 0, children }: { delay?: number; children: Re
   </motion.div>
 );
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   const router = useRouter();
-  const { setUser, setToken, setLoading } = useAuthStore();
 
-  const { mutate: login, isPending } = usePost<any, { email: string; password: string }>(
-    ["auth"],
-    "/auth/login"
-  );
+  const { mutate: forgotPassword, isPending } = usePost<
+    { message: string; response: any },
+    { email: string }
+  >(["auth"], "/auth/forgot-password");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setLoading(true);
-    login(values, {
-      onSuccess: (data) => {
-        console.log("Login response:", data);
-
-        setUser(data.result.user);
-        setToken(data.result.tokens.accessToken);
-        
-        // Set the auth cookie that middleware expects
-        document.cookie = `auth=${data.result.tokens.accessToken}; path=/; secure; samesite=strict`;
-        
-        router.push(
-          data.result.user.role === "ADMIN" ? "/admin/dashboard" : "/client/dashboard"
-        );
+    forgotPassword(values, {
+      onSuccess: () => {
+        router.push(`/reset-password?email=${encodeURIComponent(values.email)}`);
       },
       onError: (error: AxiosError) => {
         const message = (error.response?.data as { message?: string })?.message;
         form.setError("root", {
-          message: message || "Login failed",
+          message: message || "Failed to send reset email",
         });
-      },
-      onSettled: () => {
-        setLoading(false);
       },
     });
   };
@@ -202,14 +252,15 @@ export default function LoginPage() {
           <FashionIcon />
         </motion.div>
 
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="text-center">
+          <ForgotPasswordIcon />
           <motion.h2
             className="mt-6 text-center text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Sign in to your account
+            Forgot your password?
           </motion.h2>
           <motion.p
             className="mt-2 text-center text-sm text-gray-600"
@@ -217,7 +268,7 @@ export default function LoginPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Welcome back to Tailor Craft
+            No worries! Enter your email address and we&apos;ll send you a code to reset your password
           </motion.p>
         </motion.div>
 
@@ -244,98 +295,30 @@ export default function LoginPage() {
                 </motion.div>
               )}
 
-              <div className="space-y-4">
-                <motion.div variants={itemVariants}>
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-700 font-medium">Email address</FormLabel>
-                        <FormControl>
-                          <motion.div
-                            whileFocus={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          >
-                            <Input
-                              type="email"
-                              autoComplete="email"
-                              placeholder="your@email.com"
-                              className="transition-all duration-300 bg-white text-black  focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
-                              {...field}
-                            />
-                          </motion.div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-700 font-medium">Password</FormLabel>
-                        <FormControl>
-                          <motion.div
-                            whileFocus={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          >
-                            <Input
-                              type="password"
-                              autoComplete="current-password"
-                              placeholder="••••••••"
-                              className="transition-all bg-white text-black duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
-                              {...field}
-                            />
-                          </motion.div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </motion.div>
-              </div>
-
-              <motion.div
-                className="flex items-center justify-between"
-                variants={itemVariants}
-              >
-                <motion.div
-                  className="flex items-center"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded transition-all duration-200"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-700 cursor-pointer"
-                  >
-                    Remember me
-                  </label>
-                </motion.div>
-
-                <div className="text-sm">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <Link
-                      href="/forgot-password"
-                      className="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200"
-                    >
-                      Forgot your password?
-                    </Link>
-                  </motion.div>
-                </div>
+              <motion.div variants={itemVariants}>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700 font-medium">Email address</FormLabel>
+                      <FormControl>
+                        <motion.div
+                          whileFocus={{ scale: 1.02 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <Input
+                            type="email"
+                            placeholder="Enter your email address"
+                            className="transition-all bg-white text-black  duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl"
+                            {...field}
+                          />
+                        </motion.div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </motion.div>
 
               <motion.div variants={itemVariants}>
@@ -373,10 +356,10 @@ export default function LoginPage() {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           ></path>
                         </motion.svg>
-                        Signing in...
+                        Sending Reset Code...
                       </span>
                     ) : (
-                      "Sign in"
+                      "Send Reset Code"
                     )}
                   </Button>
                 </motion.div>
@@ -389,26 +372,16 @@ export default function LoginPage() {
           className="text-center text-sm text-gray-600"
           variants={itemVariants}
         >
-          Don&apos;t have an account?{" "}
-          <motion.div
-            className="inline-block"
+          Remember your password?{" "}
+          <motion.button
+            onClick={() => router.push("/login")}
+            className="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200"
             whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            <Link
-              href="/register"
-              className="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200"
-            >
-              Sign up
-            </Link>
-            <Link
-              href="/"
-              className="font-medium ml-5 underline text-purple-600 hover:text-purple-500 transition-colors duration-200"
-            >
-              back to home page
-            </Link>
-
-          </motion.div>
+            Back to Login
+          </motion.button>
         </motion.div>
       </motion.div>
     </div>

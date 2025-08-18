@@ -17,11 +17,16 @@ import { AxiosError } from "axios";
 import { usePost } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   otp: z.string().min(6, "OTP must be 6 characters").max(6, "OTP must be 6 characters"),
+  newPassword: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string().min(8, "Password must be at least 8 characters"),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
 // Fashion-related SVG icons
@@ -56,8 +61,8 @@ const FashionIcon = () => (
   </motion.svg>
 );
 
-// Email verification icon
-const EmailVerificationIcon = () => (
+// Password reset icon
+const PasswordResetIcon = () => (
   <motion.div
     className="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full mx-auto mb-4"
     animate={{
@@ -86,20 +91,9 @@ const EmailVerificationIcon = () => (
         delay: 0.5,
       }}
     >
-      <path
-        d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M22 6L12 13L2 6"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="12" cy="16" r="1" fill="currentColor"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </motion.svg>
   </motion.div>
 );
@@ -123,33 +117,38 @@ const FloatingElement = ({ delay = 0, children }: { delay?: number; children: Re
 );
 
 // Separate component that uses useSearchParams
-const VerifyOtpForm = () => {
+const ResetPasswordForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { mutate: verifyOtp, isPending } = usePost<
-    { message: string; token: string; user: any },
-    { email: string; otp: string }
-  >(["auth"], "/auth/verify-otp");
+  const { mutate: resetPassword, isPending } = usePost<
+    { message: string; verifyResetPassword: any },
+    { email: string; otp: string; newPassword: string }
+  >(["auth"], "/auth/reset-password");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: email,
       otp: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    verifyOtp(values, {
+    const { confirmPassword, ...submitData } = values;
+    resetPassword(submitData, {
       onSuccess: () => {
-        router.push("/login");
+        router.push("/login?message=Password reset successfully. Please login with your new password.");
       },
       onError: (error: AxiosError) => {
         const message = (error.response?.data as { message?: string })?.message;
         form.setError("root", {
-          message: message || "Verification failed",
+          message: message || "Password reset failed",
         });
       },
     });
@@ -209,14 +208,14 @@ const VerifyOtpForm = () => {
       </motion.div>
 
       <motion.div variants={itemVariants} className="text-center">
-        <EmailVerificationIcon />
+        <PasswordResetIcon />
         <motion.h2
           className="mt-6 text-center text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Verify your email
+          Reset your password
         </motion.h2>
         <motion.p
           className="mt-2 text-center text-sm text-gray-600"
@@ -224,8 +223,8 @@ const VerifyOtpForm = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
         >
-          We&apos;ve sent a 6-digit code to{" "}
-          <span className="font-medium text-purple-600">{email}</span>. Check inbox or spam folder
+          Enter the 6-digit code sent to{" "}
+          <span className="font-medium text-purple-600">{email}</span> and your new password
         </motion.p>
       </motion.div>
 
@@ -289,10 +288,96 @@ const VerifyOtpForm = () => {
                           <Input
                             type="text"
                             placeholder="Enter 6-digit code"
-                            className="transition-all bg-white text-black  duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl text-center text-lg font-mono tracking-widest"
+                            className="transition-all duration-300 bg-white text-black  focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl text-center text-lg font-mono tracking-widest"
                             maxLength={6}
                             {...field}
                           />
+                        </motion.div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <FormField
+                  control={form.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700  font-medium">New Password</FormLabel>
+                      <FormControl>
+                        <motion.div
+                          whileFocus={{ scale: 1.02 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                          className="relative"
+                        >
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Enter new password"
+                            className="transition-all duration-300 text- black text-primary focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl pr-12"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                          >
+                            {showPassword ? (
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                              </svg>
+                            ) : (
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            )}
+                          </button>
+                        </motion.div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700 font-medium">Confirm Password</FormLabel>
+                      <FormControl>
+                        <motion.div
+                          whileFocus={{ scale: 1.02 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                          className="relative"
+                        >
+                          <Input
+                            type={showConfirmPassword ? "text" : "password"}
+                            placeholder="Confirm new password"
+                            className="transition-all bg-white text-black  duration-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent rounded-xl pr-12"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                          >
+                            {showConfirmPassword ? (
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                              </svg>
+                            ) : (
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            )}
+                          </button>
                         </motion.div>
                       </FormControl>
                       <FormMessage />
@@ -337,10 +422,10 @@ const VerifyOtpForm = () => {
                           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                         ></path>
                       </motion.svg>
-                      Verifying...
+                      Resetting Password...
                     </span>
                   ) : (
-                    "Verify OTP"
+                    "Reset Password"
                   )}
                 </Button>
               </motion.div>
@@ -353,17 +438,15 @@ const VerifyOtpForm = () => {
         className="text-center text-sm text-gray-600"
         variants={itemVariants}
       >
-        Didn&apos;t receive the code?{" "}
+        Remember your password?{" "}
         <motion.button
-          onClick={() => {
-            // TODO: Implement resend OTP
-          }}
+          onClick={() => router.push("/login")}
           className="font-medium text-purple-600 hover:text-purple-500 transition-colors duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
-          Resend OTP
+          Back to Login
         </motion.button>
       </motion.div>
     </motion.div>
@@ -388,6 +471,10 @@ const LoadingFallback = () => (
           <div className="h-12 bg-gray-200 rounded-xl animate-pulse" />
           <div className="h-4 bg-gray-200 rounded animate-pulse" />
           <div className="h-12 bg-gray-200 rounded-xl animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded animate-pulse" />
+          <div className="h-12 bg-gray-200 rounded-xl animate-pulse" />
+          <div className="h-4 bg-gray-200 rounded animate-pulse" />
+          <div className="h-12 bg-gray-200 rounded-xl animate-pulse" />
         </div>
         <div className="h-12 bg-purple-200 rounded-xl animate-pulse" />
       </div>
@@ -395,7 +482,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-export default function VerifyOtpPage() {
+export default function ResetPasswordPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background floating elements */}
@@ -435,7 +522,7 @@ export default function VerifyOtpPage() {
 
       {/* Wrap the component that uses useSearchParams in Suspense */}
       <Suspense fallback={<LoadingFallback />}>
-        <VerifyOtpForm />
+        <ResetPasswordForm />
       </Suspense>
     </div>
   );
