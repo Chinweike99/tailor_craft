@@ -356,7 +356,7 @@ export default function NewDesignPage() {
             <div className="flex flex-wrap gap-4">
               {images.map((image) => (
                 <div key={image} className="relative">
-                  <Image
+                  <img
                     src={image}
                     alt="Design"
                     className="h-32 w-32 rounded-md object-cover"
