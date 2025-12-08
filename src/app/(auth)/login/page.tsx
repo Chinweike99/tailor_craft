@@ -89,17 +89,22 @@ export default function LoginPage() {
     setLoading(true);
     login(values, {
       onSuccess: (data) => {
-        console.log("Login response:", data);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("🔐 Login response:", data);
+          console.log("🔐 User role from response:", data.result.user.role);
+        }
 
-        setUser(data.result.user);
+        // Clear any existing auth data first to prevent stale data issues
+        localStorage.removeItem('auth-storage');
+        
+        // Set token first (this sets the cookie)
         setToken(data.result.tokens.accessToken);
+        // Then set user
+        setUser(data.result.user);
         
-        // Set the auth cookie that middleware expects
-        document.cookie = `auth=${data.result.tokens.accessToken}; path=/; secure; samesite=strict`;
-        
-        router.push(
-          data.result.user.role === "ADMIN" ? "/admin/dashboard" : "/client/dashboard"
-        );
+        // Navigate to appropriate dashboard
+        const dashboardPath = data.result.user.role === "ADMIN" ? "/admin/dashboard" : "/client/dashboard";
+        router.push(dashboardPath);
       },
       onError: (error: AxiosError) => {
         const message = (error.response?.data as { message?: string })?.message;
