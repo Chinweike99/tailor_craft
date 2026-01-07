@@ -72,85 +72,85 @@ export default function NewDesignPage() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-  // Validate required fields
-  if (images.length === 0) {
-    toast({
-      title: "Images Required",
-      description: "Please upload at least one image for the design",
-      variant: "destructive",
-    });
-    return;
-  }
+    // Validate required fields
+    if (images.length === 0) {
+      toast({
+        title: "Images Required",
+        description: "Please upload at least one image for the design",
+        variant: "destructive",
+      });
+      return;
+    }
 
-  if (materials.length === 0) {
-    toast({
-      title: "Materials Required", 
-      description: "Please add at least one required material",
-      variant: "destructive",
-    });
-    return;
-  }
+    if (materials.length === 0) {
+      toast({
+        title: "Materials Required",
+        description: "Please add at least one required material",
+        variant: "destructive",
+      });
+      return;
+    }
 
-  // Create JSON payload that matches your backend schema exactly
-  const payload = {
-    title: values.title,
-    description: values.description,
-    priceRange: {
-      min: values.priceRange.min,
-      max: values.priceRange.max
-    },
-    category: values.category,
-    minimumDeliveryTime: values.minimumDeliveryTime,
-    requiredMaterials: materials,
-    isActive: values.isActive,
-    images: images 
+    // Create JSON payload that matches your backend schema exactly
+    const payload = {
+      title: values.title,
+      description: values.description,
+      priceRange: {
+        min: values.priceRange.min,
+        max: values.priceRange.max
+      },
+      category: values.category,
+      minimumDeliveryTime: values.minimumDeliveryTime,
+      requiredMaterials: materials,
+      isActive: values.isActive,
+      images: images
+    };
+
+    if (!createDesign) {
+      toast({
+        title: "Error",
+        description: "API function not available",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    console.log("🔄 Calling createDesign...");
+
+    try {
+      createDesign(payload, {
+        onSuccess: (data) => {
+          console.log(" Success:", data);
+          toast({
+            title: "Design created",
+            description: "The design has been created successfully",
+          });
+          router.push("/admin/designs");
+        },
+        onError: (error: AxiosError) => {
+          const errorData = error.response?.data as any;
+          let errorMessage = "Design creation failed";
+
+          if (errorData?.errors) {
+            const validationErrors = Object.entries(errorData.errors)
+              .map(([field, messages]) => `${field}: ${(messages as string[]).join(', ')}`)
+              .join('; ');
+            errorMessage = `Validation failed: ${validationErrors}`;
+          } else if (errorData?.message) {
+            errorMessage = errorData.message;
+          }
+
+          toast({
+            title: "Error",
+            description: errorMessage,
+            variant: "destructive",
+          });
+        },
+      });
+    } catch (err) {
+      console.error("❌ Caught error:", err);
+    }
   };
-
-  if (!createDesign) {
-    toast({
-      title: "Error",
-      description: "API function not available",
-      variant: "destructive",
-    });
-    return;
-  }
-
-  console.log("🔄 Calling createDesign...");
-  
-  try {
-    createDesign(payload, {
-      onSuccess: (data) => {
-        console.log(" Success:", data);
-        toast({
-          title: "Design created",
-          description: "The design has been created successfully",
-        });
-        router.push("/admin/designs");
-      },
-      onError: (error: AxiosError) => {
-        const errorData = error.response?.data as any;
-        let errorMessage = "Design creation failed";
-        
-        if (errorData?.errors) {
-          const validationErrors = Object.entries(errorData.errors)
-            .map(([field, messages]) => `${field}: ${(messages as string[]).join(', ')}`)
-            .join('; ');
-          errorMessage = `Validation failed: ${validationErrors}`;
-        } else if (errorData?.message) {
-          errorMessage = errorData.message;
-        }
-        
-        toast({
-          title: "Error",
-          description: errorMessage,
-          variant: "destructive",
-        });
-      },
-    });
-  } catch (err) {
-    console.error("❌ Caught error:", err);
-  }
-};
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -211,7 +211,7 @@ export default function NewDesignPage() {
     // console.log("🖱️ Submit button clicked!");
     // console.log("🔍 Button disabled?", isPending);
     // console.log("📋 Current form state:", form.formState);
-    
+
     // Don't prevent default - let the form handle it
     // Just log for debugging
   };
@@ -222,7 +222,7 @@ export default function NewDesignPage() {
         <h1 className="text-2xl font-bold">New Design</h1>
       </div>
 
-      
+
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -356,9 +356,11 @@ export default function NewDesignPage() {
             <div className="flex flex-wrap gap-4">
               {images.map((image) => (
                 <div key={image} className="relative">
-                  <img
+                  <Image
                     src={image}
                     alt="Design"
+                    width={128}
+                    height={128}
                     className="h-32 w-32 rounded-md object-cover"
                   />
                   <Button
@@ -421,11 +423,11 @@ export default function NewDesignPage() {
           </div>
 
           <div className="flex justify-end">
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isPending}
               onClick={handleSubmitClick}
-              className = "cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
             >
               {isPending ? "Creating..." : "Create Design"}
             </Button>

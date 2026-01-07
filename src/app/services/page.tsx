@@ -14,15 +14,12 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { services } from "@/data/services";
-import { useTheme } from "@/hooks/useTheme";
 
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showAnswer, setShowAnswer] = useState(new Set());
   const [toggleChevron, setToggleChevron] = useState(false);
   const [currentIndex, setCurrentIndex] = useState<Record<string, number>>({});
-    const {themeMode} = useTheme();
-  
 
   useEffect(() => {
     const initialIndex: Record<string, number> = {};
@@ -66,21 +63,24 @@ export default function ServicesPage() {
     : services;
 
   return (
-    <main className="container mx-auto px-4 py-16">
+    <main className="min-h-screen bg-background dark:bg-gray-900 text-foreground">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-          <p className="text-lg mb-8">
-            TailorCraft tailoring services for every occasion, crafted with
-            precision and style.
-          </p>
-        </motion.div>
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Our Services</h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8">
+              TailorCraft tailoring services for every occasion, crafted with
+              precision and style.
+            </p>
+          </motion.div>
+        </div>
+        <div className="absolute inset-0 bg-grid-primary/5 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-0"></div>
       </section>
 
       {/* Category Filter */}
@@ -88,11 +88,10 @@ export default function ServicesPage() {
         <div className="flex flex-wrap justify-center gap-4">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`px-4 py-1 rounded-full transition-colors ${
-              selectedCategory === null
-                ? `${themeMode === "dark" ? "text-black/90 bg-white/80" : "text-white/90 bg-black/80"}`
-                : `${themeMode === "dark" ? "text-white/80 " : "text-black/80"}`
-            }`}
+            className={`px-6 py-2 rounded-full transition-all font-medium ${selectedCategory === null
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              }`}
           >
             All Services
           </button>
@@ -102,11 +101,10 @@ export default function ServicesPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-1 rounded-full capitalize transition-colors ${
-                  selectedCategory === category
-                    ? `${themeMode === "dark" ? "text-black/90 bg-white/80" : "text-white/90 bg-black/80"}`
-                    :  `${themeMode === "dark" ? "text-white/80 " : "text-black/80"}`
-                }`}
+                className={`px-6 py-2 rounded-full capitalize transition-all font-medium ${selectedCategory === category
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                  }`}
               >
                 {category}
               </button>
@@ -116,7 +114,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="container mx-auto px-4 mb-16">
+      <section className="container mx-auto px-4 mb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredServices.map((service, index) => (
             <motion.div
@@ -125,17 +123,16 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className=" bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-border/50 hover:shadow-lg transition-all duration-300"
             >
               <div className="relative h-64">
                 {service.imageUrl.map((image, idx) => (
                   <div
                     key={idx}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                      currentIndex[service.id] === idx
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${currentIndex[service.id] === idx
                         ? "opacity-100"
                         : "opacity-0"
-                    }`}
+                      }`}
                   >
                     <Image
                       src={image}
@@ -145,39 +142,39 @@ export default function ServicesPage() {
                     />
                   </div>
                 ))}
-                <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
                   {service.category}
                 </div>
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2  text-white/80">{service.title}</h3>
-                <p className="text-gray-300 mb-4">
+                <h3 className="text-2xl font-bold mb-2 text-foreground">{service.title}</h3>
+                <p className="text-muted-foreground mb-4">
                   {service.description}
                 </p>
 
                 <div className="flex items-center mb-4">
-                  <Clock size={16} className="text-gray-300 mr-2" />
-                  <span className="text-gray-300 dark:text-gray-300 text-sm">
+                  <Clock size={16} className="text-muted-foreground mr-2" />
+                  <span className="text-muted-foreground text-sm">
                     Estimated Time: {service.estimatedDays} days
                   </span>
                 </div>
 
                 <div className="flex items-center mb-6">
-                  <DollarSign size={16} className="text-gray-300 mr-2" />
-                  <span className="text-gray-300 text-sm">
+                  <DollarSign size={16} className="text-muted-foreground mr-2" />
+                  <span className="text-muted-foreground text-sm">
                     Price Range: {service.priceRange}
                   </span>
                 </div>
 
-                <h4 className="font-semibold mb-2 text-white/80">Features:</h4>
+                <h4 className="font-semibold mb-2 text-foreground">Features:</h4>
                 <ul className="mb-6">
                   {service.features?.map((feature, idx) => (
                     <li key={idx} className="flex items-start mb-1">
                       <Star
                         size={16}
-                        className="text-gray-300 mr-2 mt-1 flex-shrink-0"
+                        className="text-primary mr-2 mt-1 flex-shrink-0"
                       />
-                      <span className="text-gray-300 dark:text-gray-300 text-sm">
+                      <span className="text-muted-foreground text-sm">
                         {feature}
                       </span>
                     </li>
@@ -186,7 +183,7 @@ export default function ServicesPage() {
 
                 <Link
                   href={`/booking?service=${service.category}`}
-                  className="block w-full bg-primary text-white text-center py-2 rounded-md hover:bg-primary-dark transition-colors"
+                  className="block w-full bg-primary text-primary-foreground text-center py-3 rounded-lg hover:bg-primary/90 transition-colors font-semibold"
                 >
                   Book Now
                 </Link>
@@ -197,17 +194,17 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Section */}
-      <section className="bg-gray-900 py-16 rounded-2xl">
+      <section className="py-24 bg-muted/50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center max-w-xl mx-auto mb-12"
+            className="text-center max-w-2xl mx-auto mb-16"
           >
-            <h2 className="text-3xl font-bold mb-4 text-white/80">Our Tailoring Process</h2>
-            <p className="text-gray-300">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Our Tailoring Process</h2>
+            <p className="text-muted-foreground text-lg">
               We follow a meticulous process to ensure your garments are
               perfectly crafted to your specifications.
             </p>
@@ -216,25 +213,25 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                icon: <Users size={32} className="text-gray-900" />,
+                icon: <Users size={32} className="text-primary" />,
                 title: "Consultation",
                 description:
                   "Meet with our expert tailors to discuss your style preferences and needs.",
               },
               {
-                icon: <Scissors size={32} className="text-gray-900" />,
+                icon: <Scissors size={32} className="text-primary" />,
                 title: "Measurement",
                 description:
                   "We take precise measurements to ensure the perfect fit for your custom garments.",
               },
               {
-                icon: <Bookmark size={32} className="text-gray-900" />,
+                icon: <Bookmark size={32} className="text-primary" />,
                 title: "Creation",
                 description:
                   "Our skilled tailors craft your garment with meticulous attention to detail.",
               },
               {
-                icon: <Star size={32} className="text-gray-900" />,
+                icon: <Star size={32} className="text-primary" />,
                 title: "Final Fitting",
                 description:
                   "Try on your finished garment for any final adjustments before delivery.",
@@ -246,11 +243,11 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-lg shadow-md text-center"
+                className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm border border-border/50 hover:shadow-md transition-shadow duration-300 text-center"
               >
                 <div className="flex justify-center mb-4">{step.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-gray-900">{step.title}</h3>
-                <p className="text-gray-900">
+                <h3 className="text-xl font-bold mb-3 text-foreground">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">
                   {step.description}
                 </p>
               </motion.div>
@@ -260,18 +257,18 @@ export default function ServicesPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="container mx-auto px-4 py-16">
+      <section className="container mx-auto px-4 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-xl mx-auto mb-12"
+          className="text-center max-w-2xl mx-auto mb-16"
         >
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Frequently Asked Questions
           </h2>
-          <p className={`${themeMode === "dark" ? "text-gray-300" : "text-black/70"}`}>
+          <p className="text-muted-foreground text-lg">
             Everything you need to know about our tailoring services.
           </p>
         </motion.div>
@@ -310,15 +307,14 @@ export default function ServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-6 bg-gray-800 rounded-lg p-6 shadow-md"
+              className="mb-4 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-shadow"
             >
-              <h3 className="text-xl font-bold mb-2 flex justify-between cursor-pointer text-gray-300">
+              <h3 className="text-xl font-bold mb-2 flex justify-between items-center cursor-pointer text-foreground">
                 {faq.question}
                 <ChevronDown
                   onClick={() => toggleAnswer(index)}
-                  className={`${
-                    showAnswer.has(index) ? "transform rotate-180" : ""
-                  }`}
+                  className={`transition-transform duration-300 text-muted-foreground ${showAnswer.has(index) ? "transform rotate-180" : ""
+                    }`}
                 />
               </h3>
 
@@ -331,7 +327,7 @@ export default function ServicesPage() {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
-                <p className="text-gray-300 p-2">
+                <p className="text-muted-foreground pt-2 leading-relaxed">
                   {faq.answer}
                 </p>
               </motion.div>
@@ -341,29 +337,31 @@ export default function ServicesPage() {
       </section>
 
       {/* Call to Action */}
-      <section className=" py-16">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-4">
+      <section className="container mx-auto px-4 pb-24">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-primary text-primary-foreground rounded-2xl p-12 text-center shadow-xl relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-10"></div>
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready for a TailorCraft Experience?
             </h2>
-            <p className="max-w-xl mx-auto mb-8">
+            <p className="text-primary-foreground/90 text-lg mb-10">
               Get started with your custom tailoring journey today. Our expert
               tailors are ready to create the perfect garment for you.
             </p>
             <Link
               href="/booking"
-              className="inline-block bg-white text-black/80 font-medium px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center justify-center bg-background text-foreground font-semibold px-8 py-4 rounded-lg hover:bg-background/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Book an Appointment
             </Link>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
     </main>
   );
