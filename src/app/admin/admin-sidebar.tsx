@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { LayoutDashboard, Star, Users, Scissors, FileText, Settings, Locate, CircleDollarSignIcon } from "lucide-react";
+import { LayoutDashboard, Star, Users, Scissors, FileText, Settings, Locate, CircleDollarSignIcon, Mail, MessageSquare } from "lucide-react";
 import { useAuthStore } from "@/store/authstore";
 import { cn } from "@/_utils/utils";
 import { useUIStore } from "@/store/uiStore";
@@ -45,6 +45,16 @@ const navItems = [
     name: "Reviews",
     href: "/admin/reviews",
     icon: Star,
+  },
+  {
+    name: "Messages",
+    href: "/admin/messages",
+    icon: Mail,
+  },
+  {
+    name: "Feedback",
+    href: "/admin/feedback",
+    icon: MessageSquare,
   },
   {
     name: "Settings",
@@ -112,8 +122,8 @@ export default function AdminSidebar() {
         </div>
 
         <div className="border-t p-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={logout}
             className="w-full text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 cursor-pointer"
           >

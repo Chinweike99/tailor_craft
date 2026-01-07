@@ -4,15 +4,17 @@ import { useGet } from "@/_utils/useApi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/_card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Users, Scissors, DollarSign, Package } from "lucide-react";
+import { useMemo } from "react";
 
 export default function AdminDashboardPage() {
   const { data, isLoading } = useGet<any>(
     ["admin-stats"],
-    "/client/stats"
+    "/client/stats",
+    true,
+    { staleTime: 2 * 60 * 1000 } // Cache for 2 minutes
   );
 
-  console.log("Data: ", data)
-  const dashboardStats = data?.stats;
+  const dashboardStats = useMemo(() => data?.stats, [data]);
 
   return (
     <div className="space-y-6">

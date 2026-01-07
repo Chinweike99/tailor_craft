@@ -1,4 +1,4 @@
-export const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
+export const BASE_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://tailorcraft.onrender.com/api/v1";
 export const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "";
 
 export const USER_ROLES = {

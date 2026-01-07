@@ -34,7 +34,7 @@ export default function ClientPaymentsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Payment History</h1>
         <div className="flex items-center space-x-4">
-          <Button variant="outline" disabled>
+          <Button variant="outline"  className="text-white">
             <DollarSign className="mr-2 h-4 w-4" />
             {isAdmin ? "Total Payments" : "Total Spent"}: {formatCurrency(totalAmount)}
           </Button>

@@ -407,7 +407,7 @@ export default function NewBookingPage() {
                       <div className="grid grid-cols-2 gap-2 mt-2">
                         {uploadedImages.map((image, index) => (
                           <div key={index} className="relative">
-                            <Image
+                            <img
                               src={image}
                               alt={`Upload ${index + 1}`}
                               className="w-full h-20 object-cover rounded"

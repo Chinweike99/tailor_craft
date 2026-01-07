@@ -298,7 +298,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                   {design.images && design.images.length > 0 ? (
                     <div className="space-y-3">
                       <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <Image
+                        <img
                           src={design.images[currentImageIndex]}
                           alt={design.title}
                           className="w-full h-full object-cover"
