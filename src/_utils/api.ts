@@ -9,10 +9,24 @@ const apiClient: AxiosInstance = axios.create({
   },
 });
 
+// Helper function to get token from cookie
+function getTokenFromCookie(): string | null {
+  if (typeof document === 'undefined') return null;
+  const cookies = document.cookie.split(';');
+  const authCookie = cookies.find(cookie => cookie.trim().startsWith('auth='));
+  return authCookie ? authCookie.split('=')[1] : null;
+}
+
 // Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    const { token } = useAuthStore.getState();
+    let { token } = useAuthStore.getState();
+    
+    // Fallback to cookie if store is not yet hydrated
+    if (!token) {
+      token = getTokenFromCookie();
+    }
+
     if (token) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;

@@ -9,9 +9,14 @@ import { Button } from '@/components/ui/Button';
 import TextArea from '@/components/ui/TextArea';
 
 
+import apiClient from '@/_utils/api';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { SuccessModal } from '@/components/ui/Successmodal';
+
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const {
     register,
@@ -22,22 +27,22 @@ export default function ContactPage() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    console.log('Contact form data:', data);
-    
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    reset();
-    
-    setTimeout(() => setIsSuccess(false), 5000);
+
+    try {
+      await apiClient.post('/contact', data);
+      setIsSuccessModalOpen(true);
+      reset();
+    } catch (error: any) {
+      console.error('Error sending message:', error);
+      toast.error(error.message || 'Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-6xl">
-      <motion.div 
+      <motion.div
         className="text-center mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -57,7 +62,7 @@ export default function ContactPage() {
         >
           <div className="bg-gray-900 rounded-lg shadow-lg p-8 text-white/80">
             <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-            
+
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold mb-2">Visit Our Shop</h3>
@@ -67,7 +72,7 @@ export default function ContactPage() {
                   Lagos, Nigeria
                 </address>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Opening Hours</h3>
                 <p className="text-gray-300">
@@ -76,7 +81,7 @@ export default function ContactPage() {
                   Sunday: Closed
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Contact Details</h3>
                 <p className="text-gray-300">
@@ -84,7 +89,7 @@ export default function ContactPage() {
                   Email: info@tailoringplatform.com
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
                 <div className="flex space-x-4">
@@ -125,17 +130,9 @@ export default function ContactPage() {
         >
           <div className="bg-gray-800 rounded-lg shadow-lg p-8 text-white/80">
             <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
-            
-            {isSuccess && (
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6"
-              >
-                Thank you for your message! We&apos;ll get back to you as soon as possible.
-              </motion.div>
-            )}
-            
+
+
+
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div>
                 <Input
@@ -146,13 +143,13 @@ export default function ContactPage() {
                   error={errors.message}
                 />
               </div>
-              
+
               <div>
                 <Input
                   label="Email"
                   id="email"
                   type="email"
-                  {...register('email', { 
+                  {...register('email', {
                     required: 'Email is required',
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -163,7 +160,7 @@ export default function ContactPage() {
                   error={errors.message}
                 />
               </div>
-              
+
               <div>
                 <Input
                   label="Subject"
@@ -173,7 +170,7 @@ export default function ContactPage() {
                   error={errors.message}
                 />
               </div>
-              
+
               <div>
                 <TextArea
                   label="Message"
@@ -184,7 +181,7 @@ export default function ContactPage() {
                   error={errors.message}
                 />
               </div>
-              
+
               <div>
                 <Button
                   type="submit"
@@ -218,7 +215,7 @@ export default function ContactPage() {
       {/* Floating WhatsApp Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <a
-          href="https://wa.me/09166330306" 
+          href="https://wa.me/09166330306"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
@@ -228,6 +225,12 @@ export default function ContactPage() {
           </svg>
         </a>
       </div>
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+        title="Message Sent!"
+        message="Thank you for contacting us. We will get back to you shortly."
+      />
     </div>
   );
 }
