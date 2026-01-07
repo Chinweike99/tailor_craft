@@ -5,7 +5,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "next-themes";
 import { ToastContainer } from "react-toastify";
 import { ReactNode, useState } from "react";
-// import { SessionProvider } from "next-auth/react";
 import { StoreProvider } from "@/store/storeprovider";
 import { AuthInitializer } from "@/components/AuthInitializer";
 import { TokenDebugger } from "@/components/TokenDebugger";
@@ -16,8 +15,8 @@ export function Providers({ children }: { children: ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 5 * 60 * 1000, // 5 minutes
-            gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+            staleTime: 5 * 60 * 1000,
+            gcTime: 10 * 60 * 1000,
             refetchOnWindowFocus: false,
             refetchOnReconnect: false,
             retry: 1,
@@ -39,6 +38,5 @@ export function Providers({ children }: { children: ReactNode }) {
           </ThemeProvider>
         </QueryClientProvider>
       </StoreProvider>
-    // </SessionProvider>
   );
 }
