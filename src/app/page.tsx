@@ -162,7 +162,7 @@ export default function HomePage() {
                 className="mt-10 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center "
                 variants={itemVariants}
               >
-                <Link href="/booking" className="w-full sm:w-auto">
+                <Link href="/contact" className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-primary/25 transform hover:scale-105 transition-all duration-300"
@@ -419,7 +419,7 @@ export default function HomePage() {
               </p>
 
               <div className="mt-10">
-                <Link href="/booking">
+                <Link href="/contact">
                   <Button
                     size="lg"
                     variant="secondary"

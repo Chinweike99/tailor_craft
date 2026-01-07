@@ -38,7 +38,7 @@ export default function FeedbackSection() {
     };
 
     return (
-        <section className="py-16 bg-gray-50 dark:bg-gray-900/50">
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
             <div className="container mx-auto px-4 max-w-4xl">
                 <motion.div
                     className="text-center mb-10"
@@ -63,7 +63,7 @@ export default function FeedbackSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-8"
+                    className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
                 >
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
