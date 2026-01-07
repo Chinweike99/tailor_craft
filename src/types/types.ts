@@ -25,7 +25,7 @@ export interface Measurements {
     wrist?: number;
     armLength?: number;
     height?: number;
-    other?: string; 
+    other?: string;
 }
 
 // Services 
@@ -66,7 +66,7 @@ export interface Booking {
     serviceType: ServiceCategory;
     specificStyle?: string;
     date: string;
-    status:  'pending' | 'confirmed' | 'completed' | 'cancelled';
+    status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
     measurements?: Measurements;
     inspirationPhotoUrl?: string;
     notes?: string;
@@ -99,11 +99,37 @@ export interface BookingFormData {
 }
 
 // Contact form data
+// Contact form data
 export interface ContactFormData {
     name: string;
     email: string;
     subject: string;
     message: string;
+}
+
+export interface ContactMessage {
+    id: string;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    read: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface FeedbackFormData {
+    email: string;
+    message: string;
+}
+
+export interface Feedback {
+    id: string;
+    email: string;
+    message: string;
+    isRead: boolean;
+    createdAt: string;
+    updatedAt: string;
 }
 
 
@@ -114,30 +140,30 @@ export type ThemeMode = 'light' | 'dark';
 
 
 interface Address {
-  city: string;
-  state: string;
-  street: string;
-  country: string;
+    city: string;
+    state: string;
+    street: string;
+    country: string;
 }
 
 export interface CustomDesign {
-  title: string;
-  images: string[];
-  description: string;
+    title: string;
+    images: string[];
+    description: string;
 }
 
 export interface ClientData {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  bio: string;
-  address: Address;
-  preferredPickupAddress: Address;
-  profileImage: string;
-  createdAt: string;
-  updatedAt: string;
-  Booking: Booking[];
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    bio: string;
+    address: Address;
+    preferredPickupAddress: Address;
+    profileImage: string;
+    createdAt: string;
+    updatedAt: string;
+    Booking: Booking[];
 }
 
 
