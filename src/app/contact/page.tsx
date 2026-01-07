@@ -13,11 +13,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SuccessModal } from '@/components/ui/Successmodal';
 
-import apiClient from '@/_utils/api';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { SuccessModal } from '@/components/ui/Successmodal';
-
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);

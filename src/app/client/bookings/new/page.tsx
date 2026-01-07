@@ -81,7 +81,7 @@ export default function NewBookingPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const preSelectedDesignId = searchParams.get('designId');
-  
+
   const [selectedTab, setSelectedTab] = useState<"existing" | "custom">(
     preSelectedDesignId ? "existing" : "existing"
   );
@@ -166,56 +166,56 @@ export default function NewBookingPage() {
 
 
   const onSubmit = async (values: FormData) => {
-  try {
-    const payload: any = {
-      deliveryDate: values.deliveryDate.toISOString(),
-      // Fix: Send undefined instead of null, or empty string
-      notes: values.notes || undefined, // or values.notes || ""
-      measurements: {
-        chest: parseFloat(values.measurements.chest),
-        waist: parseFloat(values.measurements.waist),
-        hips: parseFloat(values.measurements.hips),
-        length: parseFloat(values.measurements.length),
-      },
-    };
-
-    if (selectedTab === "existing" && values.designId) {
-      payload.designId = values.designId;
-    } else if (selectedTab === "custom" && values.customDesign) {
-      payload.customDesign = {
-        title: values.customDesign.title,
-        description: values.customDesign.description,
-        images: uploadedImages,
+    try {
+      const payload: any = {
+        deliveryDate: values.deliveryDate.toISOString(),
+        // Fix: Send undefined instead of null, or empty string
+        notes: values.notes || undefined, // or values.notes || ""
+        measurements: {
+          chest: parseFloat(values.measurements.chest),
+          waist: parseFloat(values.measurements.waist),
+          hips: parseFloat(values.measurements.hips),
+          length: parseFloat(values.measurements.length),
+        },
       };
-    }
 
-    createBooking(payload, {
-      // onSuccess: (data) => {
-      onSuccess: () => {
-        setShowSuccessModal(true);
-        redirectTimerRef.current = setTimeout(() => {
-          setShowSuccessModal(false);
-          router.push('/client/bookings/booking');
-        }, 4000);
-      },
-      onError: (error) => {
-        let errorMessage = "An unexpected error occurred";
-        if (error instanceof AxiosError) {
-          errorMessage = error.message;
-        }
-        form.setError("root", {
-          message: errorMessage,
-        });
+      if (selectedTab === "existing" && values.designId) {
+        payload.designId = values.designId;
+      } else if (selectedTab === "custom" && values.customDesign) {
+        payload.customDesign = {
+          title: values.customDesign.title,
+          description: values.customDesign.description,
+          images: uploadedImages,
+        };
       }
-    });
-    
-  } catch (error) {
-    console.error("Submit error:", error);
-    form.setError("root", {
-      message: "An unexpected error occurred",
-    });
-  }
-};
+
+      createBooking(payload, {
+        // onSuccess: (data) => {
+        onSuccess: () => {
+          setShowSuccessModal(true);
+          redirectTimerRef.current = setTimeout(() => {
+            setShowSuccessModal(false);
+            router.push('/client/bookings/booking');
+          }, 4000);
+        },
+        onError: (error) => {
+          let errorMessage = "An unexpected error occurred";
+          if (error instanceof AxiosError) {
+            errorMessage = error.message;
+          }
+          form.setError("root", {
+            message: errorMessage,
+          });
+        }
+      });
+
+    } catch (error) {
+      console.error("Submit error:", error);
+      form.setError("root", {
+        message: "An unexpected error occurred",
+      });
+    }
+  };
 
 
 
@@ -323,6 +323,8 @@ export default function NewBookingPage() {
                           <Image
                             src={selectedDesignDetails.images[0]}
                             alt={selectedDesignDetails.title}
+                            width={80}
+                            height={80}
                             className="w-20 h-20 object-cover rounded-lg"
                           />
                         ) : (
@@ -361,7 +363,7 @@ export default function NewBookingPage() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="customDesign.description"
@@ -402,14 +404,16 @@ export default function NewBookingPage() {
                         </span>
                       </label>
                     </div>
-                    
+
                     {uploadedImages.length > 0 && (
                       <div className="grid grid-cols-2 gap-2 mt-2">
                         {uploadedImages.map((image, index) => (
                           <div key={index} className="relative">
-                            <img
+                            <Image
                               src={image}
                               alt={`Upload ${index + 1}`}
+                              width={200}
+                              height={80}
                               className="w-full h-20 object-cover rounded"
                             />
                             <button
@@ -433,7 +437,7 @@ export default function NewBookingPage() {
               <div>
                 <FormLabel className="text-lg font-semibold">Measurements (in inches)</FormLabel>
                 <p className="text-sm text-gray-600 mb-4">Please provide accurate measurements for the best fit</p>
-                
+
                 <div className="grid grid-cols-2 gap-3">
                   <FormField
                     control={form.control}
@@ -545,13 +549,13 @@ export default function NewBookingPage() {
                           disabled={(date: Date) => {
                             const today = new Date();
                             today.setHours(0, 0, 0, 0);
-                            
+
                             if (selectedDesignDetails) {
                               const minDeliveryDate = new Date(today);
                               minDeliveryDate.setDate(today.getDate() + selectedDesignDetails.minimumDeliveryTime);
                               return date < minDeliveryDate;
                             }
-                            
+
                             return date < today;
                           }}
                           initialFocus
@@ -576,13 +580,13 @@ export default function NewBookingPage() {
                     <FormLabel>Additional Notes</FormLabel>
                     <FormControl>
                       <TextArea
-                          placeholder="Any special instructions or requirements?"
-                          rows={3}
-                          {...field}
-                          value={field.value ?? ''}
-                          label=""
-                        />
-                      
+                        placeholder="Any special instructions or requirements?"
+                        rows={3}
+                        {...field}
+                        value={field.value ?? ''}
+                        label=""
+                      />
+
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -600,10 +604,10 @@ export default function NewBookingPage() {
             >
               Cancel
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={isPending || isUploading}
-              className= "border bg-gray-50 cursor-pointer text-black hover:bg-gray-50"
+              className="border bg-gray-50 cursor-pointer text-black hover:bg-gray-50"
             >
               {isPending ? "Creating Booking..." : "Create Booking"}
             </Button>
