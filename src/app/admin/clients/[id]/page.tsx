@@ -166,6 +166,8 @@ export default function ClientDetailsPage() {
                     <Image
                       src={clientData.profileImage}
                       alt={clientData.name}
+                      width={32}
+                      height={32}
                       className="w-full h-full object-cover"
                     />
                   ) : (

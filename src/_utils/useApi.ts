@@ -4,7 +4,15 @@ import { AxiosError } from "axios";
 import apiClient from "./api";
 import { useAuthStore } from "@/store/authstore";
 
-export const useGet = <T>(key: string[], url: string, enabled = true) => {
+export const useGet = <T>(
+  key: string[], 
+  url: string, 
+  enabled = true,
+  options?: {
+    staleTime?: number;
+    refetchOnMount?: boolean;
+  }
+) => {
   return useQuery<T, AxiosError>({
     queryKey: key,
     queryFn: async () => {
@@ -12,6 +20,8 @@ export const useGet = <T>(key: string[], url: string, enabled = true) => {
       return response as T;
     },
     enabled,
+    staleTime: options?.staleTime,
+    refetchOnMount: options?.refetchOnMount ?? false,
   });
 };
 
