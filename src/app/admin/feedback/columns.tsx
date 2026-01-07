@@ -44,12 +44,10 @@ export const columns: ColumnDef<Feedback>[] = [
         id: "actions",
         cell: ({ row }) => {
             const feedback = row.original;
-            // eslint-disable-next-line
             const { mutate: markAsRead, isPending: isMarkingRead } = usePatch(
                 ["feedback"],
                 `/feedback/${feedback.id}/read`
             );
-            // eslint-disable-next-line
             const { mutate: deleteFeedback, isPending: isDeleting } = useDelete(
                 ["feedback"],
                 "/feedback"

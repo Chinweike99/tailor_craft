@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Trash2, X, Clock, DollarSign, Package, ArrowRight } from 'lucide-react';
 import { useToast } from "@/components/ui/components/use-toast";
 import Link from "next/link";
-import { useDelete, useGet,  usePatchDesign } from "@/_utils/useApi";
+import { useDelete, useGet, usePatchDesign } from "@/_utils/useApi";
 import { Button } from "@/components/ui/Button";
 import Image from 'next/image';
 
@@ -57,7 +57,7 @@ interface DesignModalProps {
   onUpdate: (design: Design) => void;
 }
 
-const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  index }) => {
+const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete, index }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const formatPrice = (price: number): string => {
@@ -99,9 +99,9 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
             <Package className="w-16 h-16 text-gray-400" />
           </div>
         )}
-        
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        
+
         <div className="absolute bottom-4 left-4 z-10 px-2 bg-gray-500 rounded-xl">
           <span className="px-3 py-1 text-sm md:text-xl font-semibold rounded-full">
             {design.category.charAt(0).toUpperCase() + design.category.slice(1)}
@@ -124,7 +124,7 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
               <EyeOff className="w-4 h-4 text-gray-400" />
             }
           </motion.button> */}
-          
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -147,15 +147,15 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
       </div>
 
       <div className="p-6 flex flex-col flex-grow">
-        <motion.h3 
+        <motion.h3
           className="text-xl mb-2"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0.8 }}
         >
           {design.title}
         </motion.h3>
-        
-        <motion.p 
+
+        <motion.p
           className="mb-4 flex-grow text-gray-300"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 0.6 : 1 }}
@@ -163,8 +163,8 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
         >
           {design.description}
         </motion.p>
-        
-        <motion.div 
+
+        <motion.div
           className="md:text-xl flex justify-between items-center mt-auto pt-4 border-t border-gray-700"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0 }}
@@ -176,7 +176,7 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
           <span className="font-medium">{design.minimumDeliveryTime} days</span>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="flex flex-wrap gap-1.5 mt-4"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 0.8 : 0 }}
@@ -197,7 +197,7 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
           )}
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="pt-2 mt-2"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 0.6 : 0 }}
@@ -208,7 +208,7 @@ const DesignCard: React.FC<DesignCardProps> = ({ design, onView, onDelete,  inde
           </div>
         </motion.div>
       </div>
-      
+
       <div
         className="p-4 border-t border-gray-700 font-medium flex items-center justify-center group-hover:bg-primary/5 transition-colors"
       >
@@ -251,7 +251,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
 
   if (!design || !formData) return null;
 
-   return (
+  return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -277,7 +277,7 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                   variant="outline"
                   size="sm"
                   onClick={() => setEditMode(!editMode)}
-                  className = "bg-white cursor-pointer"
+                  className="bg-white cursor-pointer"
                 >
                   <Edit className="w-4 h-4 mr-2" />
                   {editMode ? 'Cancel' : 'Edit'}
@@ -298,9 +298,11 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                   {design.images && design.images.length > 0 ? (
                     <div className="space-y-3">
                       <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <img
+                        <Image
                           src={design.images[currentImageIndex]}
                           alt={design.title}
+                          width={800}
+                          height={450}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -310,15 +312,16 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                             <button
                               key={index}
                               onClick={() => setCurrentImageIndex(index)}
-                              className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${
-                                currentImageIndex === index
-                                  ? 'border-blue-500'
-                                  : 'border-transparent'
-                              }`}
+                              className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 ${currentImageIndex === index
+                                ? 'border-blue-500'
+                                : 'border-transparent'
+                                }`}
                             >
                               <Image
                                 src={image}
                                 alt={`${design.title} ${index + 1}`}
+                                width={64}
+                                height={64}
                                 className="w-full h-full object-cover"
                               />
                             </button>
@@ -344,8 +347,8 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                         <input
                           type="text"
                           value={formData.title || ''}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                            setFormData({...formData, title: e.target.value})
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setFormData({ ...formData, title: e.target.value })
                           }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
@@ -357,8 +360,8 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                         </label>
                         <textarea
                           value={formData.description || ''}
-                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => 
-                            setFormData({...formData, description: e.target.value})
+                          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                            setFormData({ ...formData, description: e.target.value })
                           }
                           rows={3}
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -373,10 +376,10 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                           <input
                             type="number"
                             value={formData.priceRange?.min || ''}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                               setFormData({
-                                ...formData, 
-                                priceRange: {...formData.priceRange, min: parseInt(e.target.value) || 0}
+                                ...formData,
+                                priceRange: { ...formData.priceRange, min: parseInt(e.target.value) || 0 }
                               })
                             }
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -390,10 +393,10 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                           <input
                             type="number"
                             value={formData.priceRange?.max || ''}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                               setFormData({
-                                ...formData, 
-                                priceRange: {...formData.priceRange, max: parseInt(e.target.value) || 0}
+                                ...formData,
+                                priceRange: { ...formData.priceRange, max: parseInt(e.target.value) || 0 }
                               })
                             }
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -408,8 +411,8 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
                         <input
                           type="number"
                           value={formData.minimumDeliveryTime || ''}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                            setFormData({...formData, minimumDeliveryTime: parseInt(e.target.value) || 0})
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setFormData({ ...formData, minimumDeliveryTime: parseInt(e.target.value) || 0 })
                           }
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
@@ -467,14 +470,12 @@ const DesignModal: React.FC<DesignModalProps> = ({ design, isOpen, onClose, onUp
 
                       <div>
                         <h4 className="text-sm font-semibold text-gray-900 mb-2">Status</h4>
-                        <span className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium ${
-                          design.isActive 
-                            ? 'bg-green-600 text-white' 
-                            : 'bg-gray-100 text-gray-600'
-                        }`}>
-                          <div className={`w-2 h-2 rounded-full mr-2 ${
-                            design.isActive ? 'bg-white' : 'bg-gray-400'
-                          }`} />
+                        <span className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium ${design.isActive
+                          ? 'bg-green-600 text-white'
+                          : 'bg-gray-100 text-gray-600'
+                          }`}>
+                          <div className={`w-2 h-2 rounded-full mr-2 ${design.isActive ? 'bg-white' : 'bg-gray-400'
+                            }`} />
                           {design.isActive ? 'Active' : 'Inactive'}
                         </span>
                       </div>
@@ -522,7 +523,7 @@ const AdminDesignsPage: React.FC = () => {
   const [selectedDesign, setSelectedDesign] = useState<Design | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { toast } = useToast();
-  
+
   // Using your existing API calls
   const { data: designsResponse, isLoading, refetch } = useGet<DesignResponse>(["designs"], "/design");
   const designs = designsResponse?.response?.data || [];
@@ -554,29 +555,29 @@ const AdminDesignsPage: React.FC = () => {
 
 
   const handleToggleActive = (id: string, isActive: boolean): void => {
-  updateDesign({ id, isActive }, {
-    onSuccess: () => {
-      toast({
-        title: "Status updated", 
-        description: `Design ${isActive ? 'activated' : 'deactivated'} successfully`,
-      });
-      refetch();
-    },
-  });
-};
+    updateDesign({ id, isActive }, {
+      onSuccess: () => {
+        toast({
+          title: "Status updated",
+          description: `Design ${isActive ? 'activated' : 'deactivated'} successfully`,
+        });
+        refetch();
+      },
+    });
+  };
 
   const handleUpdateDesign = (updatedDesign: Design): void => {
-  updateDesign(updatedDesign, {
-    onSuccess: () => {
-      toast({
-        title: "Design updated",
-        description: "The design has been updated successfully",
-      });
-      refetch();
-      setSelectedDesign(updatedDesign);
-    },
-  });
-};
+    updateDesign(updatedDesign, {
+      onSuccess: () => {
+        toast({
+          title: "Design updated",
+          description: "The design has been updated successfully",
+        });
+        refetch();
+        setSelectedDesign(updatedDesign);
+      },
+    });
+  };
 
 
   if (isLoading) {
@@ -591,7 +592,7 @@ const AdminDesignsPage: React.FC = () => {
             </Button>
           </Link>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }, (_, i) => (
             <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
@@ -650,7 +651,7 @@ const AdminDesignsPage: React.FC = () => {
                 design={design}
                 onView={handleViewDesign}
                 onDelete={handleDelete}
-                onToggleActive={handleToggleActive} index={0}              />
+                onToggleActive={handleToggleActive} index={0} />
             </motion.div>
           ))}
         </AnimatePresence>
